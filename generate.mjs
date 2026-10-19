@@ -324,8 +324,11 @@ function readTokens(now) {
   const t = { input: 0, output: 0, cacheWrite: 0, cacheRead: 0, messages: 0 };
   const byModel = {};
   const dayTotal = {};
+  const byDevice = {};
   for (const dt of dates)
-    for (const [model, v] of Object.entries(days[dt])) {
+    for (const [dev, models] of Object.entries(Object.values(days[dt]).some((v) => typeof v.i === 'number') ? { pc: days[dt] } : days[dt]))
+    for (const [model, v] of Object.entries(models)) {
+      byDevice[dev] = (byDevice[dev] || 0) + v.i + v.o + v.cw + v.cr;
       const sum = v.i + v.o + v.cw + v.cr;
       t.input += v.i; t.output += v.o; t.cacheWrite += v.cw; t.cacheRead += v.cr; t.messages += v.n;
       byModel[modelName(model)] = (byModel[modelName(model)] || 0) + sum;
@@ -334,6 +337,7 @@ function readTokens(now) {
   const today = new Intl.DateTimeFormat('en-CA', { timeZone: TZ }).format(now);
   return {
     ...t, total: t.input + t.output + t.cacheWrite + t.cacheRead, since: dates[0], days: dates.length,
+    devices: Object.entries(byDevice).map(([name, total]) => ({ name, total })).sort((a, b) => b.total - a.total),
     models: Object.entries(byModel).map(([name, total]) => ({ name, total })).sort((a, b) => b.total - a.total),
     daily: Array.from({ length: 14 }, (_, i) => {
       const dt = addDays(today, i - 13);
@@ -393,6 +397,7 @@ function demoData() {
     tokens: {
       total: 144524758, input: 1138, output: 684684, cacheWrite: 2180692, cacheRead: 141658244, messages: 548, since: '2026-10-13', days: 7,
       models: [{ name: 'Sonnet 5.5', total: 144524758 }],
+      devices: [{ name: 'pc-main', total: 100e6 }, { name: 'laptop', total: 44524758 }],
       daily: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 12e6, 31e6, 18e6, 40e6].map((total, i) => ({ date: new Date(Date.UTC(2026, 9, 6 + i)).toISOString().slice(0, 10), total })),
     },
     waka: {
@@ -622,7 +627,7 @@ function render(d) {
     [['Output', t.output], ['Input + cache write', t.input + t.cacheWrite], ['Cache read', t.cacheRead]].forEach(([l, v], i) => {
       parts.push(text(t1.x + PAD, y + 154 + i * 22, l, { size: 12 }), text(t1.x + t1.w - PAD, y + 154 + i * 22, tokShort(v), { size: 13, fill: C.text, weight: 700, anchor: 'end' }));
     });
-    parts.push(card(t2.x, y, t2.w, HT, 'Tokens per day · last 14 days', C.purple, t.models.slice(0, 2).map((m) => m.name).join(' · ')));
+    parts.push(card(t2.x, y, t2.w, HT, 'Tokens per day · last 14 days', C.purple, t.models.slice(0, 2).map((m) => m.name).join(' · ') + (t.devices && t.devices.length > 1 ? ` · ${t.devices.length} devices` : '')));
     const tmax = Math.max(...t.daily.map((x) => x.total));
     const tpk = t.daily.findIndex((x) => x.total === tmax);
     columns(parts, t2.x + PAD, y + 70, t2.w - 2 * PAD, 96,
