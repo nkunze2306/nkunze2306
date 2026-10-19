@@ -9,6 +9,7 @@ const TZ = process.env.STATS_TZ || 'Europe/Berlin';
 const LINE_CAP = Number(process.env.STATS_LINE_CAP || 10000); // ignoriert Mega-Commits (Asset-Importe etc.)
 const MAX_PAGES = Number(process.env.STATS_MAX_PAGES || 30); // 100 Commits pro Seite und Repo
 const OUT = process.env.STATS_OUT || 'stats.svg';
+const OUT_JSON = process.env.STATS_JSON || 'stats.json';
 const AI_RE =
   /co-authored-by:[^\n]*(claude|anthropic|copilot|chatgpt|openai|codex|gemini|cursor|aider|devin)|generated with \[?claude/i;
 
@@ -100,9 +101,9 @@ async function fetchData() {
   const monthKeys = [];
   for (let i = 11; i >= 0; i--) {
     const d = new Date(now.getFullYear(), now.getMonth() - i, 1);
-    monthKeys.push({ key: `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}`, label: d.toLocaleString('en', { month: 'short' })[0] });
+    monthKeys.push({ key: `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}`, label: d.toLocaleString('en', { month: 'short' })[0], name: d.toLocaleString('en', { month: 'long', year: 'numeric' }) });
   }
-  const monthly = new Map(monthKeys.map((m) => [m.key, { label: m.label, human: 0, ai: 0 }]));
+  const monthly = new Map(monthKeys.map((m) => [m.key, { label: m.label, name: m.name, human: 0, ai: 0 }]));
   const weekday = Array(7).fill(0);
   const hours = Array(24).fill(0);
   const repoCount = new Map();
@@ -453,4 +454,5 @@ ${parts.join('\n')}
 
 const data = process.argv.includes('--demo') ? demoData() : await fetchData();
 writeFileSync(OUT, render(data));
+writeFileSync(OUT_JSON, JSON.stringify(data));
 console.log(`geschrieben: ${OUT}`);
