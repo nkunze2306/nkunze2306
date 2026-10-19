@@ -3,7 +3,7 @@
 //           node generate.mjs --demo   (Dummy-Daten zum Design-Check)
 import { writeFileSync } from 'node:fs';
 
-const TOKEN = process.env.STATS_TOKEN || process.env.GITHUB_TOKEN;
+const TOKEN = (process.env.STATS_TOKEN || process.env.GITHUB_TOKEN || '').trim() || undefined;
 const LOGIN = process.env.STATS_LOGIN || process.env.GITHUB_REPOSITORY_OWNER;
 const TZ = process.env.STATS_TZ || 'Europe/Berlin';
 const LINE_CAP = Number(process.env.STATS_LINE_CAP || 10000); // ignoriert Mega-Commits (Asset-Importe etc.)
