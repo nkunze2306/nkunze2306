@@ -504,30 +504,63 @@ function render(d) {
   }
   y += 70;
 
-  // Commits + Heatmap
-  const [a, b] = rowX([32, 68]);
+  // ===== Zeile 1: Commits | Lines of code | Coding time (all-time) =====
+  const k = d.waka;
   const st = streaks(d.weeks);
-  const H1 = 214, HR = 236; // Heatmap-Karte + darunter das Radar; die linke Karte reicht über beide
-  parts.push(card(a.x, y, a.w, H1 + G + HR, 'Commits · all-time', C.green));
-  parts.push(text(a.x + PAD, y + 106, num(d.commitsAll), { size: 62, fill: C.text, weight: 800 }));
-  parts.push(text(a.x + PAD, y + 132, `${num(d.commitsYear)} in the last 12 months`, { size: 12.5 }));
-  parts.push(`<line x1="${a.x + PAD}" x2="${a.x + a.w - PAD}" y1="${y + 156}" y2="${y + 156}" stroke="${C.line}"/>`);
-  parts.push(text(a.x + PAD, y + 188, 'Total contributions', { size: 12.5 }));
-  parts.push(text(a.x + a.w - PAD, y + 190, num(d.totalContribAll), { size: 24, fill: C.text, weight: 700, anchor: 'end' }));
-  // Aufteilung der Contributions (Commits / Pull requests / Issues / Code review)
-  const mix = [['Commits', d.commitsAll, C.green], ['Pull requests', d.pr.total, C.blue], ['Issues', d.issues.total, C.pink], ['Code review', d.reviews, C.purple]];
-  const mixTotal = mix.reduce((s, m) => s + m[1], 0) || 1;
-  parts.push(`<line x1="${a.x + PAD}" x2="${a.x + a.w - PAD}" y1="${y + 214}" y2="${y + 214}" stroke="${C.line}"/>`);
-  parts.push(text(a.x + PAD, y + 240, 'BREAKDOWN', { size: 10, fill: C.dim, weight: 700, ls: 1 }));
-  mix.forEach(([l, v, c], i) => {
-    const ry = y + 268 + i * 52;
-    parts.push(`<circle cx="${a.x + PAD + 4}" cy="${ry - 4}" r="4.5" fill="${c}"/>`);
-    parts.push(text(a.x + PAD + 15, ry, l, { size: 12.5, fill: '#e6e6e6' }));
-    parts.push(text(a.x + a.w - PAD, ry, `${num(v)} · ${Math.round((v / mixTotal) * 100)}%`, { size: 12.5, fill: C.text, weight: 700, anchor: 'end' }));
-    parts.push(bar(a.x + PAD, ry + 10, a.w - 2 * PAD, 6, v / mixTotal, c));
+  const [c1, c2, c3] = k ? rowX([26, 40, 34]) : [...rowX([32, 68]), null];
+  const R1 = 232;
+
+  parts.push(card(c1.x, y, c1.w, R1, 'Commits', C.green));
+  parts.push(text(c1.x + PAD, y + 102, num(d.commitsAll), { size: 48, fill: C.text, weight: 800 }));
+  parts.push(text(c1.x + PAD, y + 126, `${num(d.commitsYear)} in last 12 mo.`, { size: 12 }));
+  parts.push(`<line x1="${c1.x + PAD}" x2="${c1.x + c1.w - PAD}" y1="${y + 150}" y2="${y + 150}" stroke="${C.line}"/>`);
+  parts.push(text(c1.x + PAD, y + 178, 'TOTAL CONTRIBUTIONS', { size: 9.5, fill: C.dim, weight: 700, ls: 1 }));
+  parts.push(text(c1.x + PAD, y + 208, num(d.totalContribAll), { size: 26, fill: C.text, weight: 700 }));
+
+  parts.push(card(c2.x, y, c2.w, R1, 'Lines of code', C.pink, `net ${net >= 0 ? '+' : '−'}${short(Math.abs(net))}`));
+  parts.push(line(c2.x + PAD, y + 82, [[`+${short(add)}`, { size: 32, weight: 800, fill: C.green }], [`−${short(d.del)}`, { size: 32, weight: 800, fill: C.pink, dx: 18 }]]));
+  parts.push(text(c2.x + PAD, y + 102, 'added / removed', { size: 11.5, fill: C.dim }));
+  const lbw = c2.w - 2 * PAD - 4;
+  parts.push(`<rect x="${c2.x + PAD}" y="${y + 114}" width="${Math.max(8, lbw * hr)}" height="10" rx="5" fill="${C.green}"/>`);
+  if (hr < 1) parts.push(`<rect x="${c2.x + PAD + lbw * hr + 4}" y="${y + 114}" width="${Math.max(8, lbw * (1 - hr))}" height="10" rx="5" fill="${C.purple}"/>`);
+  parts.push(`<circle cx="${c2.x + PAD + 4}" cy="${y + 143}" r="4" fill="${C.green}"/>`);
+  parts.push(line(c2.x + PAD + 13, y + 147, [['Human', { weight: 700, fill: C.text, size: 12 }], [`  ${Math.round(hr * 100)}%`, { size: 12 }]]));
+  parts.push(`<circle cx="${c2.x + c2.w / 2 + 4}" cy="${y + 143}" r="4" fill="${C.purple}"/>`);
+  parts.push(line(c2.x + c2.w / 2 + 13, y + 147, [['AI-assisted', { weight: 700, fill: C.text, size: 12 }], [`  ${Math.round((1 - hr) * 100)}%`, { size: 12 }]]));
+  parts.push(`<line x1="${c2.x + PAD}" x2="${c2.x + c2.w - PAD}" y1="${y + 166}" y2="${y + 166}" stroke="${C.line}"/>`);
+  const mini = [['PROCESSED', short(add + d.del)], ['REFACTORED', short(d.changed || 0)], ...(d.linesAllRepos ? [['ALL REPOS', short(d.linesAllRepos.total)]] : [])];
+  mini.forEach(([l, v], i) => {
+    const mx0 = c2.x + PAD + (i * (c2.w - 2 * PAD)) / mini.length;
+    parts.push(text(mx0, y + 188, l, { size: 9, fill: C.dim, weight: 700, ls: 0.8 }));
+    parts.push(text(mx0, y + 212, v, { size: 17, fill: C.text, weight: 700 }));
   });
 
-  parts.push(card(b.x, y, b.w, H1, `${num(d.contribYear)} contributions in the last year`, C.purple));
+  if (k) {
+    parts.push(card(c3.x, y, c3.w, R1, 'Coding time · all-time', C.blue));
+    parts.push(text(c3.x + PAD, y + 88, dur(k.allTimeSec), { size: 32, fill: C.text, weight: 800 }));
+    parts.push(text(c3.x + PAD, y + 110, `tracked since ${new Date(k.trackedSince + 'T00:00:00Z').toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}`, { size: 11.5, fill: C.dim }));
+    parts.push(`<line x1="${c3.x + PAD}" x2="${c3.x + c3.w - PAD}" y1="${y + 130}" y2="${y + 130}" stroke="${C.line}"/>`);
+    [['Last 7 days', k.last7Sec], ['Daily average', k.avgSec], ['Weekly average', k.weekAvgSec || k.avgSec * 7]].forEach(([l, v], i) => {
+      parts.push(text(c3.x + PAD, y + 156 + i * 24, l, { size: 12 }), text(c3.x + c3.w - PAD, y + 156 + i * 24, dur(v), { size: 13, fill: C.text, weight: 700, anchor: 'end' }));
+    });
+  }
+  y += R1 + G;
+
+  // ===== Zeile 2: Aufteilung der Contributions | Heatmap =====
+  const [m1, b] = rowX([30, 70]);
+  const R2 = 214;
+  const mix = [['Commits', d.commitsAll, C.green], ['Pull requests', d.pr.total, C.blue], ['Issues', d.issues.total, C.pink], ['Code review', d.reviews, C.purple]];
+  const mixTotal = mix.reduce((s, m) => s + m[1], 0) || 1;
+  parts.push(card(m1.x, y, m1.w, R2, 'Contributions', C.green));
+  mix.forEach(([l, v, c], i) => {
+    const ry = y + 64 + i * 37;
+    parts.push(`<circle cx="${m1.x + PAD + 4}" cy="${ry - 4}" r="4.5" fill="${c}"/>`);
+    parts.push(text(m1.x + PAD + 15, ry, l, { size: 12.5, fill: '#e6e6e6' }));
+    parts.push(text(m1.x + m1.w - PAD, ry, `${num(v)} · ${Math.round((v / mixTotal) * 100)}%`, { size: 12.5, fill: C.text, weight: 700, anchor: 'end' }));
+    parts.push(bar(m1.x + PAD, ry + 9, m1.w - 2 * PAD, 6, v / mixTotal, c));
+  });
+
+  parts.push(card(b.x, y, b.w, R2, `${num(d.contribYear)} contributions in the last year`, C.purple));
   const lv = ['#1f2523', '#0e4f35', '#12804f', '#1fb870', C.green];
   const lgx = b.x + b.w - PAD;
   parts.push(text(lgx - 5 * 11 - 42, y + 30, 'Less', { size: 10.5, anchor: 'end' }));
@@ -563,12 +596,14 @@ function render(d) {
     parts.push(line(sx, y + 180, [[v, { size: 22, weight: 700, fill: c }], i < 3 ? [' days', { size: 12, fill: C.mute }] : ['', {}]]));
     parts.push(text(sx, y + 198, l.toUpperCase(), { size: 9.5, fill: C.dim, weight: 700, ls: 1 }));
   });
+  y += R2 + G;
 
-  // Activity overview (Radar wie bei GitHub): Anteil an allen Contributions, längste Achse = größter Wert
-  const ay = y + H1 + G;
-  parts.push(card(b.x, ay, b.w, HR, 'Activity overview', C.green, 'share of all contributions'));
+  // ===== Zeile 3: Activity overview (Radar wie bei GitHub) | Coding time der letzten 14 Tage =====
+  const [n1, n2] = k ? rowX([40, 60]) : [{ x: M, w: CW }, null];
+  const R3 = 236;
+  parts.push(card(n1.x, y, n1.w, R3, 'Activity overview', C.green));
   {
-    const R = 58, cx = b.x + b.w / 2, cy = ay + 136;
+    const R = 58, cx = n1.x + n1.w / 2, cy = y + 136;
     const axes = [['Code review', d.reviews, 0, -1], ['Issues', d.issues.total, 1, 0], ['Pull requests', d.pr.total, 0, 1], ['Commits', d.commitsAll, -1, 0]];
     const mx = Math.max(1, ...axes.map((x) => x[1]));
     parts.push(`<line x1="${cx}" y1="${cy - R - 6}" x2="${cx}" y2="${cy + R + 6}" stroke="${C.green}" stroke-opacity="0.75" stroke-width="1.6"/>`);
@@ -584,53 +619,18 @@ function render(d) {
       parts.push(text(lx, ty + 15, l, { size: 12, fill: C.mute, anchor }));
     });
   }
-  y += H1 + G + HR + G;
-
-  // Lines of code
-  const H4 = 232;
-  parts.push(card(M, y, CW, H4, 'Lines of code · all-time', C.pink, `net ${net >= 0 ? '+' : '−'}${short(Math.abs(net))}`));
-  parts.push(line(M + PAD, y + 84, [[`+${short(add)}`, { size: 38, weight: 800, fill: C.green }], [`−${short(d.del)}`, { size: 38, weight: 800, fill: C.pink, dx: 22 }],
-    [' added / removed', { size: 12.5, dx: 12 }]]));
-  const bw = CW - 2 * PAD - 4;
-  parts.push(`<rect x="${M + PAD}" y="${y + 104}" width="${Math.max(8, bw * hr)}" height="12" rx="6" fill="${C.green}"/>`);
-  if (hr < 1) parts.push(`<rect x="${M + PAD + bw * hr + 4}" y="${y + 104}" width="${Math.max(8, bw * (1 - hr))}" height="12" rx="6" fill="${C.purple}"/>`);
-  parts.push(`<circle cx="${M + PAD + 4}" cy="${y + 135}" r="4.5" fill="${C.green}"/>`);
-  parts.push(line(M + PAD + 14, y + 139, [['Human', { weight: 700, fill: C.text, size: 12.5 }], [`  ${num(d.addHuman)} lines · ${Math.round(hr * 100)}%`, { size: 12.5 }]]));
-  parts.push(`<circle cx="${M + CW / 2 + 4}" cy="${y + 135}" r="4.5" fill="${C.purple}"/>`);
-  parts.push(line(M + CW / 2 + 14, y + 139, [['AI-assisted', { weight: 700, fill: C.text, size: 12.5 }], [`  ${num(d.addAI)} lines · ${Math.round((1 - hr) * 100)}%`, { size: 12.5 }]]));
-  parts.push(text(M + PAD, y + 157, 'AI-assisted = commits with an AI co-author trailer (Claude, Copilot, …)', { size: 10, fill: C.dim }));
-  parts.push(`<line x1="${M + PAD}" x2="${M + CW - PAD}" y1="${y + 172}" y2="${y + 172}" stroke="${C.line}"/>`);
-  const cols3 = [['Processed', `${short(add + d.del)} lines`, 'added + removed'], ['Refactored', `${short(d.changed || 0)} lines`, 'rewritten in place'],
-    ...(d.linesAllRepos ? [['Total in all repos', `${short(d.linesAllRepos.total)} lines`, `${d.linesAllRepos.repos} repos`]] : [])];
-  cols3.forEach(([l, v, sub], i) => {
-    const cx = M + PAD + (i * (CW - 2 * PAD)) / cols3.length;
-    parts.push(text(cx, y + 194, l.toUpperCase(), { size: 10, fill: C.dim, weight: 700, ls: 1 }));
-    parts.push(line(cx, y + 217, [[v, { weight: 700, fill: C.text, size: 17 }], ['  ' + sub, { size: 11, fill: C.dim }]]));
-  });
-  y += H4 + G;
-
-
-  // WakaTime
-  if (d.waka) {
-    const k = d.waka;
-    const [k1, k2] = rowX([32, 68]);
-    const HK = 222;
-    parts.push(card(k1.x, y, k1.w, HK, 'Coding time · all-time', C.blue));
-    parts.push(text(k1.x + PAD, y + 90, dur(k.allTimeSec), { size: 33, fill: C.text, weight: 800 }));
-    parts.push(text(k1.x + PAD, y + 112, `tracked since ${new Date(k.trackedSince + 'T00:00:00Z').toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}`, { size: 11.5, fill: C.dim }));
-    parts.push(`<line x1="${k1.x + PAD}" x2="${k1.x + k1.w - PAD}" y1="${y + 130}" y2="${y + 130}" stroke="${C.line}"/>`);
-    parts.push(text(k1.x + PAD, y + 154, 'Last 7 days', { size: 12 }), text(k1.x + k1.w - PAD, y + 154, dur(k.last7Sec), { size: 13, fill: C.text, weight: 700, anchor: 'end' }));
-    parts.push(text(k1.x + PAD, y + 178, 'Daily average', { size: 12 }), text(k1.x + k1.w - PAD, y + 178, dur(k.avgSec), { size: 13, fill: C.text, weight: 700, anchor: 'end' }));
-    parts.push(text(k1.x + PAD, y + 202, 'Weekly average', { size: 12 }), text(k1.x + k1.w - PAD, y + 202, dur(k.weekAvgSec || k.avgSec * 7), { size: 13, fill: C.text, weight: 700, anchor: 'end' }));
-    parts.push(card(k2.x, y, k2.w, HK, 'Coding time · last 14 days', C.blue, k.best ? `Best day: ${new Date(k.best.date + 'T00:00:00Z').toLocaleDateString('en-GB', { day: 'numeric', month: 'short', timeZone: 'UTC' })} · ${dur(k.best.sec)}` : ''));
+  if (k) {
+    parts.push(card(n2.x, y, n2.w, R3, 'Coding time · last 14 days', C.blue, k.best ? `Best day: ${new Date(k.best.date + 'T00:00:00Z').toLocaleDateString('en-GB', { day: 'numeric', month: 'short', timeZone: 'UTC' })} · ${dur(k.best.sec)}` : ''));
     const series = k.daily.map((x) => ({ start: x.date, sec: x.sec }));
     const kmax = Math.max(...series.map((x) => x.sec));
     const pk = series.findIndex((x) => x.sec === kmax);
-    columns(parts, k2.x + PAD, y + 66, k2.w - 2 * PAD, 92,
+    columns(parts, n2.x + PAD, y + 78, n2.w - 2 * PAD, 118,
       series.map((x, i) => ({ value: x.sec / 3600, text: x.sec ? `${(x.sec / 3600).toFixed(1)}h` : '–', label: String(Number(x.start.slice(8))), color: i === pk && kmax > 0 ? C.blue : C.bar, strong: i === pk && kmax > 0 })),
       { labelSize: 10.5, valueSize: 10 });
-    y += HK + G;
+  }
+  y += R3 + G;
 
+  if (k) {
     const [k3, k4] = rowX([50, 50]);
     const HL = 40 + Math.max(k.languages.slice(0, 5).length, k.editors.slice(0, 4).length) * 26 + 22;
     const list = (r, title, color, items) => {

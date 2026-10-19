@@ -17,7 +17,7 @@
   main { max-width: 1040px; margin: 0 auto; padding: 24px 16px 40px; }
   .grid { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 12px; }
   .c2 { grid-column: span 2; } .c3 { grid-column: span 3; } .c4 { grid-column: span 4; } .c5 { grid-column: span 5; }
-  .c6 { grid-column: span 6; } .c7 { grid-column: span 7; } .c8 { grid-column: span 8; } .c12 { grid-column: span 12; }
+  .c6 { grid-column: span 6; } .c7 { grid-column: span 7; } .c8 { grid-column: span 8; } .c9 { grid-column: span 9; } .c12 { grid-column: span 12; }
 
   header { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; margin-bottom: 14px; }
   .avatar { width: 48px; height: 48px; border-radius: 50%; border: 1.5px solid var(--green); box-shadow: 0 0 14px #34f5a055; background: #0f1f18; object-fit: cover; }
@@ -105,7 +105,7 @@
   @media (max-width: 760px) {
     .tall { grid-row: auto; }
     .cols.thin .v { display: none; } .hero { font-size: 52px; }
-    .c2 { grid-column: span 6; } .c3, .c4, .c5, .c6, .c7, .c8 { grid-column: span 12; }
+    .c2 { grid-column: span 6; } .c3, .c4, .c5, .c6, .c7, .c8, .c9 { grid-column: span 12; }
     .c4.half { grid-column: span 6; }
     .pills { margin-left: 0; } .repo { grid-template-columns: 100px 1fr 40px; }
   }
@@ -250,8 +250,8 @@ function render(d) {
     const bestTxt = k.best ? `Best day: ${new Date(k.best.date + 'T00:00:00Z').toLocaleDateString('en-GB', { day: 'numeric', month: 'short', timeZone: 'UTC' })} · ${dur(k.best.sec)}` : '';
     window.__wakaWeeks = `<div class="cols" style="--c:var(--blue)">${wcols}</div><div class="axis thin">${waxis}</div>`; // Wochenansicht, per Umschalter
     wakaHtml = `
-    ${card('c4', 'Coding time · all-time', 'blue', '', `<div class="hero" style="font-size:clamp(34px,6vw,44px)">${dur(k.allTimeSec)}</div><div class="sub">tracked since ${since}</div><div class="split"><span>Last 7 days</span><b>${dur(k.last7Sec)}</b></div><div class="split" style="margin-top:8px;border:0;padding-top:0"><span>Daily average</span><b>${dur(k.avgSec)}</b></div><div class="split" style="margin-top:8px;border:0;padding-top:0"><span>Weekly average</span><b>${dur(k.weekAvgSec || k.avgSec * 7)}</b></div>`, 'Total comes directly from WakaTime all-time. The weekly chart and weekly average are calculated from stored daily totals.')}
-    ${card('c8', 'Coding time', 'blue', `<span class="tog"><button data-wview="weeks">Weekly</button><button class="on" data-wview="days">Daily</button></span>`, `<div id="wakaChart"><div class="cols" style="--c:var(--blue)">${kcols}</div><div class="axis thin">${kaxis}</div></div>`)}
+    ${card('c4', 'Coding time · all-time', 'blue', '', `<div class="hero" style="font-size:clamp(34px,6vw,44px)">${dur(k.allTimeSec)}</div><div class="sub">tracked since ${since}</div><div class="split"><span>Last 7 days</span><b>${dur(k.last7Sec)}</b></div><div class="split" style="margin-top:8px;border:0;padding-top:0"><span>Daily average</span><b>${dur(k.avgSec)}</b></div><div class="split" style="margin-top:8px;border:0;padding-top:0"><span>Weekly average</span><b>${dur(k.weekAvgSec || k.avgSec * 7)}</b></div>`, 'Total comes directly from WakaTime all-time. The weekly chart and weekly average are calculated from stored daily totals.')}<!--SPLIT-->
+    ${card('c7', 'Coding time', 'blue', `<span class="tog"><button data-wview="weeks">Weekly</button><button class="on" data-wview="days">Daily</button></span>`, `<div id="wakaChart"><div class="cols" style="--c:var(--blue)">${kcols}</div><div class="axis thin">${kaxis}</div></div>`)}<!--SPLIT-->
     ${card('c6', 'Time by language', 'yellow', '', list(k.languages.slice(0, 5)))}
     ${card('c6', 'Time by editor', 'purple', '', list(k.editors.slice(0, 4)))}`;
   }
@@ -270,6 +270,7 @@ function render(d) {
   }
 
   const wakaViews = d.waka ? null : null;
+  const wk = wakaHtml ? wakaHtml.split('<!--SPLIT-->') : ['', '', ''];
   document.getElementById('app').innerHTML = `
   <header>
     <img class="avatar" src="https://github.com/${esc(d.login)}.png?size=96" alt="" onerror="this.style.visibility='hidden'">
@@ -278,20 +279,25 @@ function render(d) {
   </header>
   <nav class="btns"><a class="btn primary" href="https://github.com/${esc(d.login)}">View on GitHub</a><a class="btn" href="https://github.com/${esc(d.login)}?tab=repositories">Repositories</a><a class="btn" href="https://github.com/${esc(d.login)}/${esc(d.login)}">Source code</a></nav>
   <div class="grid">
-    ${card('c4 tall', 'Commits · all-time', 'green', '', `<div class="hero" id="hero" data-n="${d.commitsAll}">0</div><div class="sub">${fmt(d.commitsYear)} in the last 12 months</div><div class="split"><span>Total contributions</span><b>${fmt(d.totalContribAll)}</b></div>${mixHtml}`, 'Every commit you authored on any branch of any repo (private, org, forks), de-duplicated. Contributions = commits + PRs + issues + reviews')}
-    ${card('c8 heatcard', `${fmt(d.contribYear)} contributions in the last year`, 'purple',
-      `<span class="legend">Less<span></span><i></i><i class="l1"></i><i class="l2"></i><i class="l3"></i><i class="l4"></i><span></span>More</span>`,
-      `${yearBtns}<div id="heatBox">${hb.html}</div>`)}
-    ${card('c8', 'Activity overview', 'green', 'share of all contributions', radar)}
-
-    ${card('c12', 'Lines of code · all-time', 'pink', `net ${net >= 0 ? '+' : '−'}${short(Math.abs(net))}`,
+    ${card('c3', 'Commits · all-time', 'green', '', `<div class="hero" id="hero" data-n="${d.commitsAll}">0</div><div class="sub">${fmt(d.commitsYear)} in the last 12 months</div><div class="split"><span>Total contributions</span><b>${fmt(d.totalContribAll)}</b></div>`, 'Every commit you authored on any branch of any repo (private, org, forks), de-duplicated. Contributions = commits + PRs + issues + reviews')}
+    ${card('c5', 'Lines of code · all-time', 'pink', `net ${net >= 0 ? '+' : '−'}${short(Math.abs(net))}`,
       `<div class="row" style="margin-bottom:14px"><span class="hero2 grow">+${short(add)}</span><span class="hero2 shrink">−${short(d.del)}</span><span class="sub">added / removed</span></div>
        <div class="seg"><i style="flex:${d.addHuman || 1};background:var(--green)" ${tip(`Human: ${fmt(d.addHuman)} lines`)}></i><i style="flex:${d.addAI || 0.001};background:var(--purple);${d.addAI ? '' : 'display:none'}" ${tip(`AI-assisted: ${fmt(d.addAI)} lines`)}></i></div>
        <div class="legend2"><span><em style="background:var(--green)"></em><b>Human</b> ${fmt(d.addHuman)} lines · ${Math.round(hr * 100)}%</span><span><em style="background:var(--purple)"></em><b>AI-assisted</b> ${fmt(d.addAI)} lines · ${Math.round((1 - hr) * 100)}%</span></div>
        <div class="note">AI-assisted = commits with an AI co-author trailer (Claude, Copilot, …)</div>
        <div class="split"><span>Processed (added + removed)</span><b>${short(add + d.del)} lines</b></div><div class="split" style="margin-top:8px;border:0;padding-top:0" data-tip="Lines that were rewritten in place: min(added, removed) per commit"><span>Refactored (rewritten in place)</span><b>${short(d.changed || 0)} lines</b></div>${d.linesAllRepos ? `<div class="split" style="margin-top:8px;border:0;padding-top:0"><span>Total in all ${d.linesAllRepos.repos} repos</span><b>${short(d.linesAllRepos.total)} lines</b></div>` : ''}`, 'All lines added and removed in your commits on every branch, no cap')}
 
-    ${wakaHtml}
+
+    ${wk[0]}
+
+    ${card('c3', 'Contributions', 'green', `${fmt(mixTotal)} total`, mixHtml, 'Commits + pull requests + issues + code reviews')}
+    ${card('c9 heatcard', `${fmt(d.contribYear)} contributions in the last year`, 'purple',
+      `<span class="legend">Less<span></span><i></i><i class="l1"></i><i class="l2"></i><i class="l3"></i><i class="l4"></i><span></span>More</span>`,
+      `${yearBtns}<div id="heatBox">${hb.html}</div>`)}
+
+    ${card('c5', 'Activity overview', 'green', 'share of all contributions', radar)}
+    ${wk[1]}
+    ${wk[2]}
     ${tokensHtml}
 
     ${card('c4', 'Pull requests', 'blue', '', `<div class="row"><span class="big">${fmt(d.pr.total)}</span><span class="sub">${fmt(d.pr.merged)} merged · ${pct(d.pr.merged, d.pr.total)}%</span></div><div class="track"><div class="fill" style="--w:${pct(d.pr.merged, d.pr.total)}%"></div></div>`)}
