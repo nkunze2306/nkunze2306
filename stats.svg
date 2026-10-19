@@ -17,15 +17,15 @@
 <circle cx="28" cy="101" r="11" fill="#34f5a0" fill-opacity="0.13" stroke="#34f5a0" stroke-opacity="0.55"/>
 <circle cx="28" cy="101" r="3.2" fill="#34f5a0"/>
 <text x="47" y="105" font-size="11" fill="#9a9a9a" font-weight="700" text-anchor="start" letter-spacing="1.1">COMMITS · ALL-TIME</text>
-<text x="23" y="181" font-size="62" fill="#ffffff" font-weight="800" text-anchor="start">308</text>
-<text x="23" y="207" font-size="12.5" fill="#9a9a9a" font-weight="400" text-anchor="start">257 in the last 12 months</text>
+<text x="23" y="181" font-size="62" fill="#ffffff" font-weight="800" text-anchor="start">309</text>
+<text x="23" y="207" font-size="12.5" fill="#9a9a9a" font-weight="400" text-anchor="start">258 in the last 12 months</text>
 <line x1="23" x2="204.92" y1="231" y2="231" stroke="#262626"/>
 <text x="23" y="263" font-size="12.5" fill="#9a9a9a" font-weight="400" text-anchor="start">Total contributions</text>
-<text x="204.92" y="265" font-size="24" fill="#ffffff" font-weight="700" text-anchor="end">568</text>
+<text x="204.92" y="265" font-size="24" fill="#ffffff" font-weight="700" text-anchor="end">569</text>
 <rect x="238.92" y="75" width="480.08" height="214" rx="16" fill="#121212" stroke="#262626"/>
 <circle cx="265.91999999999996" cy="101" r="11" fill="#b794ff" fill-opacity="0.13" stroke="#b794ff" stroke-opacity="0.55"/>
 <circle cx="265.91999999999996" cy="101" r="3.2" fill="#b794ff"/>
-<text x="284.91999999999996" y="105" font-size="11" fill="#9a9a9a" font-weight="700" text-anchor="start" letter-spacing="1.1">259 CONTRIBUTIONS IN THE LAST YEAR</text>
+<text x="284.91999999999996" y="105" font-size="11" fill="#9a9a9a" font-weight="700" text-anchor="start" letter-spacing="1.1">260 CONTRIBUTIONS IN THE LAST YEAR</text>
 <text x="600" y="105" font-size="10.5" fill="#9a9a9a" font-weight="400" text-anchor="end">Less</text>
 <rect x="608" y="96" width="9" height="9" rx="2" fill="#1f2523"/>
 <rect x="619" y="96" width="9" height="9" rx="2" fill="#0e4f35"/>
@@ -399,7 +399,7 @@
 <rect x="680.5" y="174.4" width="6.2" height="6.2" rx="1.8" fill="#1f2523"/>
 <rect x="688.8" y="125.0" width="6.2" height="6.2" rx="1.8" fill="#1f2523"/>
 <rect x="688.8" y="133.2" width="6.2" height="6.2" rx="1.8" fill="#1fb870"/>
-<text x="277.4" y="196.59547169811322" font-size="10" fill="#9a9a9a" font-weight="400" text-anchor="start">Nov</text><text x="277.4" y="209.59547169811322" font-size="9.5" fill="#ffffff" font-weight="600" text-anchor="start">63</text><text x="318.5" y="196.59547169811322" font-size="10" fill="#9a9a9a" font-weight="400" text-anchor="start">Dec</text><text x="318.5" y="209.59547169811322" font-size="9.5" fill="#ffffff" font-weight="600" text-anchor="start">70</text><text x="351.4" y="196.59547169811322" font-size="10" fill="#9a9a9a" font-weight="400" text-anchor="start">Jan</text><text x="351.4" y="209.59547169811322" font-size="9.5" fill="#ffffff" font-weight="600" text-anchor="start">0</text><text x="384.3" y="196.59547169811322" font-size="10" fill="#9a9a9a" font-weight="400" text-anchor="start">Feb</text><text x="384.3" y="209.59547169811322" font-size="9.5" fill="#ffffff" font-weight="600" text-anchor="start">9</text><text x="417.3" y="196.59547169811322" font-size="10" fill="#9a9a9a" font-weight="400" text-anchor="start">Mar</text><text x="417.3" y="209.59547169811322" font-size="9.5" fill="#ffffff" font-weight="600" text-anchor="start">21</text><text x="458.4" y="196.59547169811322" font-size="10" fill="#9a9a9a" font-weight="400" text-anchor="start">Apr</text><text x="458.4" y="209.59547169811322" font-size="9.5" fill="#ffffff" font-weight="600" text-anchor="start">8</text><text x="491.3" y="196.59547169811322" font-size="10" fill="#9a9a9a" font-weight="400" text-anchor="start">May</text><text x="491.3" y="209.59547169811322" font-size="9.5" fill="#ffffff" font-weight="600" text-anchor="start">12</text><text x="532.4" y="196.59547169811322" font-size="10" fill="#9a9a9a" font-weight="400" text-anchor="start">Jun</text><text x="532.4" y="209.59547169811322" font-size="9.5" fill="#ffffff" font-weight="600" text-anchor="start">6</text><text x="565.4" y="196.59547169811322" font-size="10" fill="#9a9a9a" font-weight="400" text-anchor="start">Jul</text><text x="565.4" y="209.59547169811322" font-size="9.5" fill="#ffffff" font-weight="600" text-anchor="start">6</text><text x="598.3" y="196.59547169811322" font-size="10" fill="#9a9a9a" font-weight="400" text-anchor="start">Aug</text><text x="598.3" y="209.59547169811322" font-size="9.5" fill="#ffffff" font-weight="600" text-anchor="start">10</text><text x="639.4" y="196.59547169811322" font-size="10" fill="#9a9a9a" font-weight="400" text-anchor="start">Sep</text><text x="639.4" y="209.59547169811322" font-size="9.5" fill="#ffffff" font-weight="600" text-anchor="start">4</text><text x="672.3" y="196.59547169811322" font-size="10" fill="#9a9a9a" font-weight="400" text-anchor="start">Oct</text><text x="672.3" y="209.59547169811322" font-size="9.5" fill="#ffffff" font-weight="600" text-anchor="start">30</text>
+<text x="277.4" y="196.59547169811322" font-size="10" fill="#9a9a9a" font-weight="400" text-anchor="start">Nov</text><text x="277.4" y="209.59547169811322" font-size="9.5" fill="#ffffff" font-weight="600" text-anchor="start">63</text><text x="318.5" y="196.59547169811322" font-size="10" fill="#9a9a9a" font-weight="400" text-anchor="start">Dec</text><text x="318.5" y="209.59547169811322" font-size="9.5" fill="#ffffff" font-weight="600" text-anchor="start">70</text><text x="351.4" y="196.59547169811322" font-size="10" fill="#9a9a9a" font-weight="400" text-anchor="start">Jan</text><text x="351.4" y="209.59547169811322" font-size="9.5" fill="#ffffff" font-weight="600" text-anchor="start">0</text><text x="384.3" y="196.59547169811322" font-size="10" fill="#9a9a9a" font-weight="400" text-anchor="start">Feb</text><text x="384.3" y="209.59547169811322" font-size="9.5" fill="#ffffff" font-weight="600" text-anchor="start">9</text><text x="417.3" y="196.59547169811322" font-size="10" fill="#9a9a9a" font-weight="400" text-anchor="start">Mar</text><text x="417.3" y="209.59547169811322" font-size="9.5" fill="#ffffff" font-weight="600" text-anchor="start">21</text><text x="458.4" y="196.59547169811322" font-size="10" fill="#9a9a9a" font-weight="400" text-anchor="start">Apr</text><text x="458.4" y="209.59547169811322" font-size="9.5" fill="#ffffff" font-weight="600" text-anchor="start">8</text><text x="491.3" y="196.59547169811322" font-size="10" fill="#9a9a9a" font-weight="400" text-anchor="start">May</text><text x="491.3" y="209.59547169811322" font-size="9.5" fill="#ffffff" font-weight="600" text-anchor="start">12</text><text x="532.4" y="196.59547169811322" font-size="10" fill="#9a9a9a" font-weight="400" text-anchor="start">Jun</text><text x="532.4" y="209.59547169811322" font-size="9.5" fill="#ffffff" font-weight="600" text-anchor="start">6</text><text x="565.4" y="196.59547169811322" font-size="10" fill="#9a9a9a" font-weight="400" text-anchor="start">Jul</text><text x="565.4" y="209.59547169811322" font-size="9.5" fill="#ffffff" font-weight="600" text-anchor="start">6</text><text x="598.3" y="196.59547169811322" font-size="10" fill="#9a9a9a" font-weight="400" text-anchor="start">Aug</text><text x="598.3" y="209.59547169811322" font-size="9.5" fill="#ffffff" font-weight="600" text-anchor="start">10</text><text x="639.4" y="196.59547169811322" font-size="10" fill="#9a9a9a" font-weight="400" text-anchor="start">Sep</text><text x="639.4" y="209.59547169811322" font-size="9.5" fill="#ffffff" font-weight="600" text-anchor="start">4</text><text x="672.3" y="196.59547169811322" font-size="10" fill="#9a9a9a" font-weight="400" text-anchor="start">Oct</text><text x="672.3" y="209.59547169811322" font-size="9.5" fill="#ffffff" font-weight="600" text-anchor="start">31</text>
 <line x1="260.91999999999996" x2="697" y1="225" y2="225" stroke="#262626"/>
 <text x="260.91999999999996" y="255" text-anchor="start"><tspan font-size="22" font-weight="700" fill="#fbbf24">1</tspan><tspan font-size="12" font-weight="400" fill="#9a9a9a"> days</tspan></text>
 <text x="260.91999999999996" y="273" font-size="9.5" fill="#6a6a6a" font-weight="700" text-anchor="start" letter-spacing="1">CURRENT STREAK</text>
@@ -412,14 +412,14 @@
 <rect x="1" y="301" width="718" height="164" rx="16" fill="#121212" stroke="#262626"/>
 <circle cx="28" cy="327" r="11" fill="#ff5c9a" fill-opacity="0.13" stroke="#ff5c9a" stroke-opacity="0.55"/>
 <circle cx="28" cy="327" r="3.2" fill="#ff5c9a"/>
-<text x="47" y="331" font-size="11" fill="#9a9a9a" font-weight="700" text-anchor="start" letter-spacing="1.1">LINES OF CODE · ALL-TIME</text><text x="697" y="331" font-size="12" fill="#9a9a9a" font-weight="400" text-anchor="end">net +58k</text>
+<text x="47" y="331" font-size="11" fill="#9a9a9a" font-weight="700" text-anchor="start" letter-spacing="1.1">LINES OF CODE · ALL-TIME</text><text x="697" y="331" font-size="12" fill="#9a9a9a" font-weight="400" text-anchor="end">total 91k · net +58k</text>
 <text x="23" y="385" text-anchor="start"><tspan font-size="38" font-weight="800" fill="#34f5a0">+74k</tspan><tspan font-size="38" font-weight="800" fill="#ff5c9a" dx="22">−16k</tspan><tspan font-size="12.5" font-weight="400" fill="#9a9a9a" dx="12"> added / removed</tspan></text>
-<rect x="23" y="405" width="614.5723666505195" height="12" rx="6" fill="#34f5a0"/>
-<rect x="641.5723666505195" y="405" width="55.427633349480566" height="12" rx="6" fill="#b794ff"/>
+<rect x="23" y="405" width="614.5558276595173" height="12" rx="6" fill="#34f5a0"/>
+<rect x="641.5558276595173" y="405" width="55.444172340482794" height="12" rx="6" fill="#b794ff"/>
 <circle cx="27" cy="436" r="4.5" fill="#34f5a0"/>
 <text x="37" y="440" text-anchor="start"><tspan font-size="12.5" font-weight="700" fill="#ffffff">Human</tspan><tspan font-size="12.5" font-weight="400" fill="#9a9a9a">  68.168 lines · 92%</tspan></text>
 <circle cx="364" cy="436" r="4.5" fill="#b794ff"/>
-<text x="374" y="440" text-anchor="start"><tspan font-size="12.5" font-weight="700" fill="#ffffff">AI-assisted</tspan><tspan font-size="12.5" font-weight="400" fill="#9a9a9a">  6.148 lines · 8%</tspan></text>
+<text x="374" y="440" text-anchor="start"><tspan font-size="12.5" font-weight="700" fill="#ffffff">AI-assisted</tspan><tspan font-size="12.5" font-weight="400" fill="#9a9a9a">  6.150 lines · 8%</tspan></text>
 <text x="23" y="458" font-size="10" fill="#6a6a6a" font-weight="400" text-anchor="start">AI-assisted = commits with an AI co-author trailer (Claude, Copilot, …)</text>
 <rect x="1" y="477" width="197.78" height="108" rx="16" fill="#121212" stroke="#262626"/>
 <circle cx="28" cy="503" r="11" fill="#38bdf8" fill-opacity="0.13" stroke="#38bdf8" stroke-opacity="0.55"/>
@@ -552,12 +552,12 @@
 <circle cx="28" cy="1155" r="11" fill="#fbbf24" fill-opacity="0.13" stroke="#fbbf24" stroke-opacity="0.55"/>
 <circle cx="28" cy="1155" r="3.2" fill="#fbbf24"/>
 <text x="47" y="1159" font-size="11" fill="#9a9a9a" font-weight="700" text-anchor="start" letter-spacing="1.1">LANGUAGES · BY CODE</text><text x="332" y="1159" font-size="12" fill="#9a9a9a" font-weight="400" text-anchor="end">Top: Dart</text>
-<rect x="23" y="1181" width="160.11085216559573" height="11" rx="5.5" fill="#00B4AB"/>
-<rect x="187.11085216559573" y="1181" width="67.57734848723612" height="11" rx="5.5" fill="#7355dd"/>
-<rect x="258.6882006528318" y="1181" width="31.179672173049884" height="11" rx="5.5" fill="#8b949e"/>
-<rect x="293.8678728258817" y="1181" width="14.837268261032115" height="11" rx="5.5" fill="#e34c26"/>
-<rect x="312.70514108691384" y="1181" width="9.136688149185002" height="11" rx="5.5" fill="#aace60"/>
-<rect x="325.8418292360988" y="1181" width="6.158170763901158" height="11" rx="5.5" fill="#f34b7d"/>
+<rect x="23" y="1181" width="160.10941702505883" height="11" rx="5.5" fill="#00B4AB"/>
+<rect x="187.10941702505883" y="1181" width="67.57674276319632" height="11" rx="5.5" fill="#7355dd"/>
+<rect x="258.68615978825517" y="1181" width="31.179392696606797" height="11" rx="5.5" fill="#8b949e"/>
+<rect x="293.86555248486195" y="1181" width="14.839725696269657" height="11" rx="5.5" fill="#e34c26"/>
+<rect x="312.70527818113163" y="1181" width="9.136606253227553" height="11" rx="5.5" fill="#aace60"/>
+<rect x="325.8418844343592" y="1181" width="6.158115565640847" height="11" rx="5.5" fill="#f34b7d"/>
 <circle cx="27" cy="1225" r="4.5" fill="#00B4AB"/>
 <text x="38" y="1229" text-anchor="start"><tspan font-size="13" font-weight="600" fill="#ffffff">Dart</tspan><tspan font-size="13" font-weight="400" fill="#9a9a9a">  55%</tspan></text>
 <circle cx="181.5" cy="1225" r="4.5" fill="#7355dd"/>
@@ -631,15 +631,15 @@
 <text x="612.7" y="1480.557142857143" font-size="11.5" fill="#ffffff" font-weight="700" text-anchor="middle">4</text>
 <text x="612.7" y="1513" font-size="11" fill="#6a6a6a" font-weight="400" text-anchor="middle">Sep</text>
 <rect x="649.3" y="1468.3" width="39.3" height="26.7" rx="3" fill="#34f5a0"/>
-<rect x="649.3" y="1448.9" width="39.3" height="17.8" rx="3" fill="#b794ff"/>
-<text x="668.9" y="1441.9285714285713" font-size="11.5" fill="#ffffff" font-weight="700" text-anchor="middle">30</text>
+<rect x="649.3" y="1447.4" width="39.3" height="19.3" rx="3" fill="#b794ff"/>
+<text x="668.9" y="1440.442857142857" font-size="11.5" fill="#ffffff" font-weight="700" text-anchor="middle">31</text>
 <text x="668.9" y="1513" font-size="11" fill="#6a6a6a" font-weight="400" text-anchor="middle">Oct</text>
 <rect x="1" y="1549" width="268.28" height="186" rx="16" fill="#121212" stroke="#262626"/>
 <circle cx="28" cy="1575" r="11" fill="#fbbf24" fill-opacity="0.13" stroke="#fbbf24" stroke-opacity="0.55"/>
 <circle cx="28" cy="1575" r="3.2" fill="#fbbf24"/>
 <text x="47" y="1579" font-size="11" fill="#9a9a9a" font-weight="700" text-anchor="start" letter-spacing="1.1">BY WEEKDAY</text><text x="247.27999999999997" y="1579" font-size="12" fill="#9a9a9a" font-weight="400" text-anchor="end">Peak: Wed</text>
-<rect x="26.5" y="1640.6" width="25.0" height="58.4" rx="3" fill="#2f3340"/>
-<text x="39.0" y="1634.6" font-size="10.5" fill="#9a9a9a" font-weight="400" text-anchor="middle">41</text>
+<rect x="26.5" y="1639.2" width="25.0" height="59.8" rx="3" fill="#2f3340"/>
+<text x="39.0" y="1633.2" font-size="10.5" fill="#9a9a9a" font-weight="400" text-anchor="middle">42</text>
 <text x="39.0" y="1715" font-size="10.5" fill="#6a6a6a" font-weight="400" text-anchor="middle">Mon</text>
 <rect x="58.6" y="1633.5" width="25.0" height="65.5" rx="3" fill="#2f3340"/>
 <text x="71.1" y="1627.5" font-size="10.5" fill="#9a9a9a" font-weight="400" text-anchor="middle">46</text>
@@ -696,8 +696,8 @@
 <text x="524.7" y="1613.8" font-size="8.5" fill="#9a9a9a" font-weight="400" text-anchor="middle">33</text>
 <rect x="534.6" y="1615.0" width="13.1" height="84.0" rx="3" fill="#b794ff"/>
 <text x="541.2" y="1609.0" font-size="8.5" fill="#ffffff" font-weight="700" text-anchor="middle">35</text>
-<rect x="551.0" y="1665.4" width="13.1" height="33.6" rx="3" fill="#2f3340"/>
-<text x="557.6" y="1659.4" font-size="8.5" fill="#9a9a9a" font-weight="400" text-anchor="middle">14</text>
+<rect x="551.0" y="1663.0" width="13.1" height="36.0" rx="3" fill="#2f3340"/>
+<text x="557.6" y="1657.0" font-size="8.5" fill="#9a9a9a" font-weight="400" text-anchor="middle">15</text>
 <rect x="567.4" y="1665.4" width="13.1" height="33.6" rx="3" fill="#2f3340"/>
 <text x="574.0" y="1659.4" font-size="8.5" fill="#9a9a9a" font-weight="400" text-anchor="middle">14</text>
 <rect x="583.8" y="1653.4" width="13.1" height="45.6" rx="3" fill="#2f3340"/>
