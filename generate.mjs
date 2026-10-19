@@ -507,13 +507,25 @@ function render(d) {
   // Commits + Heatmap
   const [a, b] = rowX([32, 68]);
   const st = streaks(d.weeks);
-  const H1 = 214;
-  parts.push(card(a.x, y, a.w, H1, 'Commits · all-time', C.green));
+  const H1 = 214, HR = 236; // Heatmap-Karte + darunter das Radar; die linke Karte reicht über beide
+  parts.push(card(a.x, y, a.w, H1 + G + HR, 'Commits · all-time', C.green));
   parts.push(text(a.x + PAD, y + 106, num(d.commitsAll), { size: 62, fill: C.text, weight: 800 }));
   parts.push(text(a.x + PAD, y + 132, `${num(d.commitsYear)} in the last 12 months`, { size: 12.5 }));
   parts.push(`<line x1="${a.x + PAD}" x2="${a.x + a.w - PAD}" y1="${y + 156}" y2="${y + 156}" stroke="${C.line}"/>`);
   parts.push(text(a.x + PAD, y + 188, 'Total contributions', { size: 12.5 }));
   parts.push(text(a.x + a.w - PAD, y + 190, num(d.totalContribAll), { size: 24, fill: C.text, weight: 700, anchor: 'end' }));
+  // Aufteilung der Contributions (Commits / Pull requests / Issues / Code review)
+  const mix = [['Commits', d.commitsAll, C.green], ['Pull requests', d.pr.total, C.blue], ['Issues', d.issues.total, C.pink], ['Code review', d.reviews, C.purple]];
+  const mixTotal = mix.reduce((s, m) => s + m[1], 0) || 1;
+  parts.push(`<line x1="${a.x + PAD}" x2="${a.x + a.w - PAD}" y1="${y + 214}" y2="${y + 214}" stroke="${C.line}"/>`);
+  parts.push(text(a.x + PAD, y + 240, 'BREAKDOWN', { size: 10, fill: C.dim, weight: 700, ls: 1 }));
+  mix.forEach(([l, v, c], i) => {
+    const ry = y + 268 + i * 52;
+    parts.push(`<circle cx="${a.x + PAD + 4}" cy="${ry - 4}" r="4.5" fill="${c}"/>`);
+    parts.push(text(a.x + PAD + 15, ry, l, { size: 12.5, fill: '#e6e6e6' }));
+    parts.push(text(a.x + a.w - PAD, ry, `${num(v)} · ${Math.round((v / mixTotal) * 100)}%`, { size: 12.5, fill: C.text, weight: 700, anchor: 'end' }));
+    parts.push(bar(a.x + PAD, ry + 10, a.w - 2 * PAD, 6, v / mixTotal, c));
+  });
 
   parts.push(card(b.x, y, b.w, H1, `${num(d.contribYear)} contributions in the last year`, C.purple));
   const lv = ['#1f2523', '#0e4f35', '#12804f', '#1fb870', C.green];
@@ -551,7 +563,28 @@ function render(d) {
     parts.push(line(sx, y + 180, [[v, { size: 22, weight: 700, fill: c }], i < 3 ? [' days', { size: 12, fill: C.mute }] : ['', {}]]));
     parts.push(text(sx, y + 198, l.toUpperCase(), { size: 9.5, fill: C.dim, weight: 700, ls: 1 }));
   });
-  y += H1 + G;
+
+  // Activity overview (Radar wie bei GitHub): Anteil an allen Contributions, längste Achse = größter Wert
+  const ay = y + H1 + G;
+  parts.push(card(b.x, ay, b.w, HR, 'Activity overview', C.green, 'share of all contributions'));
+  {
+    const R = 58, cx = b.x + b.w / 2, cy = ay + 136;
+    const axes = [['Code review', d.reviews, 0, -1], ['Issues', d.issues.total, 1, 0], ['Pull requests', d.pr.total, 0, 1], ['Commits', d.commitsAll, -1, 0]];
+    const mx = Math.max(1, ...axes.map((x) => x[1]));
+    parts.push(`<line x1="${cx}" y1="${cy - R - 6}" x2="${cx}" y2="${cy + R + 6}" stroke="${C.green}" stroke-opacity="0.75" stroke-width="1.6"/>`);
+    parts.push(`<line x1="${cx - R - 6}" y1="${cy}" x2="${cx + R + 6}" y2="${cy}" stroke="${C.green}" stroke-opacity="0.75" stroke-width="1.6"/>`);
+    const pts = axes.map(([, v, dx, dy]) => [cx + dx * (v / mx) * R, cy + dy * (v / mx) * R]);
+    parts.push(`<polygon points="${pts.map((p) => p.map((n) => n.toFixed(1)).join(',')).join(' ')}" fill="${C.green}" fill-opacity="0.28" stroke="${C.green}" stroke-width="1.6" stroke-linejoin="round"/>`);
+    pts.forEach(([px, py]) => parts.push(`<circle cx="${px.toFixed(1)}" cy="${py.toFixed(1)}" r="3.8" fill="${C.green}" stroke="#ffffff" stroke-width="1.6"/>`));
+    axes.forEach(([l, v, dx, dy]) => {
+      const lx = cx + dx * (R + 16);
+      const anchor = dx === 0 ? 'middle' : dx > 0 ? 'start' : 'end';
+      const ty = dy < 0 ? cy - R - 32 : dy > 0 ? cy + R + 22 : cy - 2;
+      parts.push(text(lx, ty, `${Math.round((v / mixTotal) * 100)}%`, { size: 13, fill: C.text, weight: 700, anchor }));
+      parts.push(text(lx, ty + 15, l, { size: 12, fill: C.mute, anchor }));
+    });
+  }
+  y += H1 + G + HR + G;
 
   // Lines of code
   const H4 = 232;
