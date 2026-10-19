@@ -69,6 +69,7 @@
   .cols.thin .v { font-size: 9px; font-weight: 500; }
   .months span { display: flex; flex-direction: column; gap: 1px; } .months small { font-size: 9.5px; color: var(--text); font-weight: 600; }
   .peakv { color: var(--text); }
+  .years { display: flex; justify-content: flex-end; margin: -2px 0 10px; }
   .tog { display: inline-flex; gap: 2px; background: #1a1a1a; border: 1px solid var(--line); border-radius: 999px; padding: 2px; }
   .tog button { font: inherit; font-size: 11px; color: var(--mute); background: none; border: 0; border-radius: 999px; padding: 3px 11px; cursor: pointer; }
   .tog button.on { background: var(--blue); color: #04121a; font-weight: 700; }
@@ -123,17 +124,13 @@ function streaks(weeks) {
   return { current, longest, active, best };
 }
 
-function render(d) {
-  const st = streaks(d.weeks);
-  const add = d.addHuman + d.addAI, hr = add ? d.addHuman / add : 1;
-  document.title = `${d.name} · GitHub Stats`;
-
-  // heatmap
-  const max = Math.max(1, ...d.weeks.flat().map((x) => x.count));
+function heatBlock(weeks, skipFirst = true) {
+  const st = streaks(weeks);
+  const max = Math.max(1, ...weeks.flat().map((x) => x.count));
   let cells = '', months = '', lastM = -1;
   const monthSum = {};
-  d.weeks.flat().forEach((x) => { monthSum[x.date.slice(0, 7)] = (monthSum[x.date.slice(0, 7)] || 0) + x.count; });
-  d.weeks.forEach((w, wi) => {
+  weeks.flat().forEach((x) => { monthSum[x.date.slice(0, 7)] = (monthSum[x.date.slice(0, 7)] || 0) + x.count; });
+  weeks.forEach((w, wi) => {
     w.forEach((day) => {
       const dow = new Date(day.date + 'T00:00:00Z').getUTCDay();
       const l = day.count === 0 ? 0 : Math.min(4, Math.ceil((day.count / max) * 4));
@@ -142,10 +139,22 @@ function render(d) {
     });
     const m = new Date(w[0].date + 'T00:00:00Z').getUTCMonth();
     if (m !== lastM) {
-      if (lastM !== -1) months += `<span style="grid-column:${wi + 1} / span 4">${new Date(Date.UTC(2000, m, 1)).toLocaleString('en', { month: 'short' })}<small>${fmt(monthSum[w[0].date.slice(0, 7)] || 0)}</small></span>`;
+      if (lastM !== -1 || !skipFirst) months += `<span style="grid-column:${wi + 1} / span 4">${new Date(Date.UTC(2000, m, 1)).toLocaleString('en', { month: 'short' })}<small>${fmt(monthSum[w[0].date.slice(0, 7)] || 0)}</small></span>`;
       lastM = m;
     }
   });
+  const cols = `grid-template-columns:repeat(${weeks.length}, minmax(0, 1fr))`;
+  const html = `<div class="heat" style="${cols}">${cells}</div><div class="months" style="${cols}">${months}</div>
+       <div class="stats4"><div><b style="color:var(--yellow)">${st.current} days</b><small>Current streak</small></div><div><b>${st.longest} days</b><small>Longest streak</small></div><div><b>${st.active} days</b><small>Active days</small></div><div><b>${st.best}</b><small>Best day</small></div></div>`;
+  return { html, total: weeks.flat().reduce((sum, x) => sum + x.count, 0) };
+}
+
+function render(d) {
+  const hb = heatBlock(d.weeks);
+  const yearList = d.calendars ? Object.keys(d.calendars).sort().reverse() : [];
+  const yearBtns = yearList.length ? `<div class="years"><span class="tog"><button class="on" data-year="last">Last 12 months</button>${yearList.map((y) => `<button data-year="${y}">${y}</button>`).join('')}</span></div>` : '';
+  const add = d.addHuman + d.addAI, hr = add ? d.addHuman / add : 1;
+  document.title = `${d.name} · GitHub Stats`;
 
   // languages
   const langs = d.languages.slice(0, 6).map((l) => ({ ...l, color: vivid(l.color) })), lt = langs.reduce((s, l) => s + l.size, 0) || 1;
@@ -219,7 +228,7 @@ function render(d) {
     const taxis = t.daily.map((x) => `<span>${Number(x.date.slice(8))}</span>`).join('');
     const tsince = new Date(t.since + 'T00:00:00Z').toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric', timeZone: 'UTC' });
     tokensHtml = `
-    ${card('c4', 'Claude tokens · all-time', 'purple', '', `<div class="hero" style="font-size:clamp(34px,6vw,44px)">${tokShort(t.total)}</div><div class="sub">since ${tsince} · ${fmt(t.messages)} replies</div><div class="split"><span>Output</span><b>${tokShort(t.output)}</b></div><div class="split" style="margin-top:8px;border:0;padding-top:0"><span>Input + cache write</span><b>${tokShort(t.input + t.cacheWrite)}</b></div><div class="split" style="margin-top:8px;border:0;padding-top:0"><span>Cache read</span><b>${tokShort(t.cacheRead)}</b></div>`, 'Claude Code usage recorded locally. Total = input + output + cache write + cache read tokens')}
+    ${card('c4', 'Claude tokens · all-time', 'purple', '', `<div class="hero" style="font-size:clamp(34px,6vw,44px)">${tokShort(t.total)}</div><div class="sub">since ${tsince} · ${fmt(t.messages)} replies</div><div class="split"><span>Output</span><b>${tokShort(t.output)}</b></div><div class="split" style="margin-top:8px;border:0;padding-top:0"><span>Input + cache write</span><b>${tokShort(t.input + t.cacheWrite)}</b></div><div class="split" style="margin-top:8px;border:0;padding-top:0"><span>Cache read</span><b>${tokShort(t.cacheRead)}</b></div>`, 'Claude Code usage recorded on this PC since it was first used here. Total = input + output + cache write + cache read tokens. Usage on other devices or in the web app is not included.')}
     ${card('c8', 'Tokens per day · last 14 days', 'purple', t.models.slice(0, 2).map((m) => esc(m.name)).join(' · '), `<div class="cols" style="--c:var(--purple)">${tcols}</div><div class="axis thin">${taxis}</div>`)}`;
   }
 
@@ -232,10 +241,9 @@ function render(d) {
   </header>
   <div class="grid">
     ${card('c4', 'Commits · all-time', 'green', '', `<div class="hero" id="hero" data-n="${d.commitsAll}">0</div><div class="sub">${fmt(d.commitsYear)} in the last 12 months</div><div class="split"><span>Total contributions</span><b>${fmt(d.totalContribAll)}</b></div>`, 'Every commit you authored on any branch of any repo (private, org, forks), de-duplicated. Contributions = commits + PRs + issues + reviews')}
-    ${card('c8', `${fmt(d.contribYear)} contributions in the last year`, 'purple',
+    ${card('c8 heatcard', `${fmt(d.contribYear)} contributions in the last year`, 'purple',
       `<span class="legend">Less<span></span><i></i><i class="l1"></i><i class="l2"></i><i class="l3"></i><i class="l4"></i><span></span>More</span>`,
-      `<div class="heat">${cells}</div><div class="months">${months}</div>
-       <div class="stats4"><div><b style="color:var(--yellow)">${st.current} days</b><small>Current streak</small></div><div><b>${st.longest} days</b><small>Longest streak</small></div><div><b>${st.active} days</b><small>Active days</small></div><div><b>${st.best}</b><small>Best day</small></div></div>`)}
+      `${yearBtns}<div id="heatBox">${hb.html}</div>`)}
 
     ${card('c12', 'Lines of code · all-time', 'pink', `net ${net >= 0 ? '+' : '−'}${short(Math.abs(net))}`,
       `<div class="row" style="margin-bottom:14px"><span class="hero2 grow">+${short(add)}</span><span class="hero2 shrink">−${short(d.del)}</span><span class="sub">added / removed</span></div>
@@ -267,6 +275,19 @@ function render(d) {
     ${card('c8', 'By hour of day', 'purple', `Peak ${String(hpeak).padStart(2, '0')}:00 · ${mood}`, `<div class="cols thin">${hh}</div><div class="axis thin">${hAxis}</div>`)}
   </div>
   <footer>Updated ${upd} · generated automatically by GitHub Actions</footer>`;
+
+  document.addEventListener('click', (e) => {
+    const b = e.target.closest && e.target.closest('[data-year]');
+    if (!b) return;
+    const key = b.dataset.year;
+    const weeks = key === 'last' ? d.weeks : d.calendars[key];
+    const r = heatBlock(weeks, key === 'last');
+    document.getElementById('heatBox').innerHTML = r.html;
+    document.querySelectorAll('[data-year]').forEach((x) => x.classList.toggle('on', x === b));
+    document.querySelector('.heatcard .t').childNodes[1].nodeValue = fmt(r.total) + ' contributions in ' + (key === 'last' ? 'the last year' : key);
+  });
+  const hashYear = (location.hash.match(/year=(\w+)/) || [])[1]; // Deep-Link, z. B. #year=2025
+  if (hashYear) { const yb = document.querySelector('[data-year="' + hashYear + '"]'); if (yb) yb.click(); }
 
   if (d.waka) {
     // Ansichten des Coding-Time-Charts für den Umschalter merken

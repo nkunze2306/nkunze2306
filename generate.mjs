@@ -57,10 +57,11 @@ async function fetchData() {
   let yq = 'query($login:String!){ user(login:$login){';
   for (let y = startYear; y <= now.getUTCFullYear(); y++) {
     const to = y === now.getUTCFullYear() ? now.toISOString() : `${y}-12-31T23:59:59Z`;
-    yq += `y${y}: contributionsCollection(from:"${y}-01-01T00:00:00Z",to:"${to}"){ totalPullRequestReviewContributions }`;
+    yq += `y${y}: contributionsCollection(from:"${y}-01-01T00:00:00Z",to:"${to}"){ totalPullRequestReviewContributions contributionCalendar{ weeks{ contributionDays{ date contributionCount } } } }`;
   }
   yq += '} }';
-  const reviewsContrib = Object.values((await gql(yq, { login: LOGIN })).user).reduce((s, y) => s + y.totalPullRequestReviewContributions, 0);
+  const yearData = (await gql(yq, { login: LOGIN })).user;
+  const reviewsContrib = Object.values(yearData).reduce((s, y) => s + y.totalPullRequestReviewContributions, 0);
   const reviewsSearch = (await gql(`query($q:String!){ search(query:$q,type:ISSUE,first:1){ issueCount } }`, { q: `type:pr reviewed-by:${LOGIN}` })).search.issueCount;
   const reviews = Math.max(reviewsContrib, reviewsSearch);
 
@@ -173,6 +174,9 @@ async function fetchData() {
   );
   const contribYear = weeks.flat().reduce((s, d) => s + d.count, 0);
   const commitsAll = seen.size;
+  // pro Jahr: GitHub-Kalender, pro Tag das Maximum aus GitHub und den eigenen Commits
+  const calendars = Object.fromEntries(Object.entries(yearData).map(([k, v]) => [k.slice(1),
+    v.contributionCalendar.weeks.map((w) => w.contributionDays.map((x) => ({ date: x.date, count: Math.max(x.contributionCount, daily.get(x.date) || 0) })))]));
 
   // Sprachen, Sterne, Forks nur aus Repos mit eigener Aktivität bzw. eigenen Originalen
   const owned = repos.filter((r) => r.nameWithOwner.startsWith(`${LOGIN}/`) && !r.isFork);
@@ -211,7 +215,7 @@ async function fetchData() {
     orgs: u.organizations.totalCount, gists: u.gists.totalCount, starred: u.starredRepositories.totalCount,
     commitsAll, commitsYear,
     totalContribAll: commitsAll + u.pullRequests.totalCount + u.issues.totalCount + reviews, contribYear,
-    weeks,
+    weeks, calendars,
     pr: { total: u.pullRequests.totalCount, merged: u.mergedPRs.totalCount },
     issues: { total: u.issues.totalCount, closed: u.closedIssues.totalCount },
     reviews,
@@ -360,6 +364,16 @@ function demoData() {
     followers: 64, following: 48, orgs: 2, gists: 5, starred: 203,
     commitsAll: 2847, commitsYear: 2009, totalContribAll: 3141, contribYear: 2151,
     weeks,
+    calendars: Object.fromEntries([2025, 2026].map((y) => {
+      const out = []; let wk = [];
+      for (let t = Date.UTC(y, 0, 1); t <= Date.UTC(y, 11, 31); t += 864e5) {
+        const dt = new Date(t);
+        wk.push({ date: dt.toISOString().slice(0, 10), count: rnd() < 0.4 ? 0 : Math.floor(rnd() * rnd() * 12) });
+        if (dt.getUTCDay() === 6) { out.push(wk); wk = []; }
+      }
+      if (wk.length) out.push(wk);
+      return [String(y), out];
+    })),
     pr: { total: 143, merged: 121 }, issues: { total: 62, closed: 55 }, reviews: 89, stars: 318,
     forks: 41, forksReceived: 12, watchers: 22, reposOwn: 27, reposContrib: 14,
     addHuman: 136000, addAI: 48000, del: 61000, changed: 38000, linesAllRepos: { total: 2410000, repos: 18 },
