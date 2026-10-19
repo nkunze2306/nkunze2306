@@ -103,6 +103,7 @@
 const COL = { green: '#34f5a0', purple: '#b794ff', blue: '#38bdf8', pink: '#ff5c9a', yellow: '#fbbf24' };
 const fmt = (n) => Math.round(n).toLocaleString('de-DE');
 const short = (n) => (n >= 1e6 ? (n / 1e6).toFixed(2).replace(/\.?0+$/, '') + 'M' : n >= 1000 ? Math.round(n / 1000) + 'k' : String(Math.round(n)));
+const tokShort = (n) => (n >= 1e9 ? (n / 1e9).toFixed(2) + 'B' : n >= 1e6 ? (n / 1e6).toFixed(1) + 'M' : n >= 1e3 ? (n / 1e3).toFixed(1) + 'k' : String(Math.round(n)));
 const vivid = (hex) => { const n = parseInt(hex.slice(1), 16); return 0.299 * (n >> 16) + 0.587 * ((n >> 8) & 255) + 0.114 * (n & 255) < 90 ? '#8b949e' : hex; };
 const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]);
 const pct = (a, b) => (b ? Math.round((a / b) * 100) : 0);
@@ -192,7 +193,20 @@ function render(d) {
     ${card('c6', 'Time by editor', 'purple', '', list(k.editors.slice(0, 4)))}`;
   }
 
-    document.getElementById('app').innerHTML = `
+    // Claude-Code-Token
+  let tokensHtml = '';
+  if (d.tokens) {
+    const t = d.tokens;
+    const tmax = Math.max(...t.daily.map((x) => x.total)), tpk = t.daily.findIndex((x) => x.total === tmax);
+    const tcols = t.daily.map((x, i) => `<div class="col" ${tip(`${x.date}: ${fmt(x.total)} tokens`)}><b class="v${i === tpk && tmax ? ' peakv' : ''}">${x.total ? tokShort(x.total) : '–'}</b><i class="${i === tpk && tmax ? 'peak' : 'gray'}" style="--h:${Math.max(6, tmax ? (x.total / tmax) * 100 : 0)}%"></i></div>`).join('');
+    const taxis = t.daily.map((x) => `<span>${Number(x.date.slice(8))}</span>`).join('');
+    const tsince = new Date(t.since + 'T00:00:00Z').toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric', timeZone: 'UTC' });
+    tokensHtml = `
+    ${card('c4', 'Claude tokens · all-time', 'purple', '', `<div class="hero" style="font-size:clamp(34px,6vw,44px)">${tokShort(t.total)}</div><div class="sub">since ${tsince} · ${fmt(t.messages)} replies</div><div class="split"><span>Output</span><b>${tokShort(t.output)}</b></div><div class="split" style="margin-top:8px;border:0;padding-top:0"><span>Input + cache write</span><b>${tokShort(t.input + t.cacheWrite)}</b></div><div class="split" style="margin-top:8px;border:0;padding-top:0"><span>Cache read</span><b>${tokShort(t.cacheRead)}</b></div>`, 'Claude Code usage recorded locally. Total = input + output + cache write + cache read tokens')}
+    ${card('c8', 'Tokens per day · last 14 days', 'purple', t.models.slice(0, 2).map((m) => esc(m.name)).join(' · '), `<div class="cols" style="--c:var(--purple)">${tcols}</div><div class="axis thin">${taxis}</div>`)}`;
+  }
+
+  document.getElementById('app').innerHTML = `
   <header>
     <img class="avatar" src="https://github.com/${esc(d.login)}.png?size=96" alt="" onerror="this.style.visibility='hidden'">
     <div class="who"><b>${esc(d.name)}</b><a href="https://github.com/${esc(d.login)}"><span>@${esc(d.login)} · joined ${d.joined}</span></a></div>
@@ -213,6 +227,7 @@ function render(d) {
        <div class="split"><span>Processed (added + removed)</span><b>${short(add + d.del)} lines</b></div><div class="split" style="margin-top:8px;border:0;padding-top:0" data-tip="Lines that were rewritten in place: min(added, removed) per commit"><span>Refactored (rewritten in place)</span><b>${short(d.changed || 0)} lines</b></div>${d.linesAllRepos ? `<div class="split" style="margin-top:8px;border:0;padding-top:0"><span>Total in all ${d.linesAllRepos.repos} repos</span><b>${short(d.linesAllRepos.total)} lines</b></div>` : ''}`, 'All lines added and removed in your commits on every branch, no cap')}
 
     ${wakaHtml}
+    ${tokensHtml}
 
     ${card('c4', 'Pull requests', 'blue', '', `<div class="row"><span class="big">${fmt(d.pr.total)}</span><span class="sub">${fmt(d.pr.merged)} merged · ${pct(d.pr.merged, d.pr.total)}%</span></div><div class="track"><div class="fill" style="--w:${pct(d.pr.merged, d.pr.total)}%"></div></div>`)}
     ${card('c4', 'Issues', 'pink', '', `<div class="row"><span class="big">${fmt(d.issues.total)}</span><span class="sub">${fmt(d.issues.closed)} closed · ${pct(d.issues.closed, d.issues.total)}%</span></div><div class="track"><div class="fill" style="--w:${pct(d.issues.closed, d.issues.total)}%"></div></div>`)}

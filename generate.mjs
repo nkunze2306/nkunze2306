@@ -10,6 +10,7 @@ const MAX_PAGES = Number(process.env.STATS_MAX_PAGES || 50); // 100 Commits pro 
 const OUT = process.env.STATS_OUT || 'stats.svg';
 const OUT_JSON = process.env.STATS_JSON || 'stats.json';
 const WAKA_KEY = (process.env.WAKATIME_API_KEY || '').trim();
+const TOKENS_FILE = process.env.STATS_TOKENS || 'tokens.json'; // wird lokal von track-tokens.mjs gepflegt
 const WAKA_FILE = process.env.STATS_WAKA || 'wakatime.json'; // Tageswerte, werden Lauf für Lauf aufsummiert
 const AI_RE =
   /co-authored-by:[^\n]*(claude|anthropic|copilot|chatgpt|openai|codex|gemini|cursor|aider|devin)|generated with \[?claude/i;
@@ -224,6 +225,7 @@ async function fetchData() {
     monthly: [...monthly.values()],
     topRepos, weekday, hours, updated: now,
     waka: await fetchWaka(now),
+    tokens: readTokens(now),
   };
 }
 
@@ -293,6 +295,38 @@ async function fetchWaka(now) {
   };
 }
 
+// ---------------------------------------------------------------- Claude-Code-Token (lokal erfasst)
+const modelName = (id) => {
+  const parts = id.replace(/^claude-/, '').split('-').filter((x) => !/^\d{8}$/.test(x));
+  return parts.length ? parts[0][0].toUpperCase() + parts[0].slice(1) + (parts.length > 1 ? ' ' + parts.slice(1).join('.') : '') : id;
+};
+
+function readTokens(now) {
+  if (!existsSync(TOKENS_FILE)) return null;
+  const { days } = JSON.parse(readFileSync(TOKENS_FILE, 'utf8'));
+  const dates = Object.keys(days).sort();
+  if (!dates.length) return null;
+  const t = { input: 0, output: 0, cacheWrite: 0, cacheRead: 0, messages: 0 };
+  const byModel = {};
+  const dayTotal = {};
+  for (const dt of dates)
+    for (const [model, v] of Object.entries(days[dt])) {
+      const sum = v.i + v.o + v.cw + v.cr;
+      t.input += v.i; t.output += v.o; t.cacheWrite += v.cw; t.cacheRead += v.cr; t.messages += v.n;
+      byModel[modelName(model)] = (byModel[modelName(model)] || 0) + sum;
+      dayTotal[dt] = (dayTotal[dt] || 0) + sum;
+    }
+  const today = new Intl.DateTimeFormat('en-CA', { timeZone: TZ }).format(now);
+  return {
+    ...t, total: t.input + t.output + t.cacheWrite + t.cacheRead, since: dates[0], days: dates.length,
+    models: Object.entries(byModel).map(([name, total]) => ({ name, total })).sort((a, b) => b.total - a.total),
+    daily: Array.from({ length: 14 }, (_, i) => {
+      const dt = addDays(today, i - 13);
+      return { date: dt, total: dayTotal[dt] || 0 };
+    }),
+  };
+}
+
 function demoData() {
   let seed = 7;
   const rnd = () => ((seed = (seed * 16807) % 2147483647) / 2147483647);
@@ -331,6 +365,11 @@ function demoData() {
     weekday: [40, 62, 44, 48, 46, 28, 32],
     hours: [30, 22, 12, 6, 4, 3, 5, 9, 16, 24, 32, 38, 48, 52, 44, 40, 46, 42, 38, 50, 58, 66, 92, 30],
     updated: new Date('2026-10-19T12:00:00Z'),
+    tokens: {
+      total: 144524758, input: 1138, output: 684684, cacheWrite: 2180692, cacheRead: 141658244, messages: 548, since: '2026-10-13', days: 7,
+      models: [{ name: 'Sonnet 5.5', total: 144524758 }],
+      daily: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 12e6, 31e6, 18e6, 40e6].map((total, i) => ({ date: new Date(Date.UTC(2026, 9, 6 + i)).toISOString().slice(0, 10), total })),
+    },
     waka: {
       allTimeSec: 412 * 3600 + 35 * 60, trackedSince: '2026-09-01', trackedDays: 49, last7Sec: 18 * 3600 + 20 * 60, avgSec: 9360,
       best: { date: '2026-10-12', sec: 6 * 3600 + 2 * 60 },
@@ -349,6 +388,7 @@ const W = 720, M = 1, G = 12, CW = W - 2 * M, PAD = 22;
 
 const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]);
 const num = (n) => Math.round(n).toLocaleString('de-DE');
+const tokShort = (n) => (n >= 1e9 ? `${(n / 1e9).toFixed(2)}B` : n >= 1e6 ? `${(n / 1e6).toFixed(1)}M` : n >= 1e3 ? `${(n / 1e3).toFixed(1)}k` : String(Math.round(n)));
 const dur = (sec) => { const h = Math.floor(sec / 3600), m = Math.round((sec % 3600) / 60); return h ? `${num(h)}h ${String(m).padStart(2, '0')}m` : `${m}m`; };
 const short = (n) => (n >= 1e6 ? `${(n / 1e6).toFixed(2).replace(/.?0+$/, '')}M` : n >= 1000 ? `${Math.round(n / 1000)}k` : String(Math.round(n)));
 // fast schwarze Sprachfarben (z. B. ShaderLab) sind auf dunklem Grund unsichtbar
@@ -540,6 +580,27 @@ function render(d) {
     list(k3, 'Time by language', C.yellow, k.languages.slice(0, 5));
     list(k4, 'Time by editor', C.purple, k.editors.slice(0, 4));
     y += HL + G;
+  }
+
+  // Claude-Code-Token (lokal erfasst)
+  if (d.tokens) {
+    const t = d.tokens;
+    const [t1, t2] = rowX([32, 68]);
+    const HT = 214;
+    parts.push(card(t1.x, y, t1.w, HT, 'Claude tokens · all-time', C.purple));
+    parts.push(text(t1.x + PAD, y + 92, tokShort(t.total), { size: 40, fill: C.text, weight: 800 }));
+    parts.push(text(t1.x + PAD, y + 114, `since ${new Date(t.since + 'T00:00:00Z').toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric', timeZone: 'UTC' })} · ${num(t.messages)} replies`, { size: 11.5, fill: C.dim }));
+    parts.push(`<line x1="${t1.x + PAD}" x2="${t1.x + t1.w - PAD}" y1="${y + 130}" y2="${y + 130}" stroke="${C.line}"/>`);
+    [['Output', t.output], ['Input + cache write', t.input + t.cacheWrite], ['Cache read', t.cacheRead]].forEach(([l, v], i) => {
+      parts.push(text(t1.x + PAD, y + 154 + i * 22, l, { size: 12 }), text(t1.x + t1.w - PAD, y + 154 + i * 22, tokShort(v), { size: 13, fill: C.text, weight: 700, anchor: 'end' }));
+    });
+    parts.push(card(t2.x, y, t2.w, HT, 'Tokens per day · last 14 days', C.purple, t.models.slice(0, 2).map((m) => m.name).join(' · ')));
+    const tmax = Math.max(...t.daily.map((x) => x.total));
+    const tpk = t.daily.findIndex((x) => x.total === tmax);
+    columns(parts, t2.x + PAD, y + 70, t2.w - 2 * PAD, 96,
+      t.daily.map((x, i) => ({ value: x.total, text: x.total ? tokShort(x.total) : '–', label: String(Number(x.date.slice(8))), color: i === tpk && tmax > 0 ? C.purple : C.bar, strong: i === tpk && tmax > 0 })),
+      { labelSize: 10.5, valueSize: 9.5 });
+    y += HT + G;
   }
 
   // PR / Issues / Reviews / Stars
