@@ -620,7 +620,7 @@ function render(d) {
     });
   }
   if (k) {
-    parts.push(card(n2.x, y, n2.w, R3, 'Coding time · last 14 days', C.blue, k.best ? `Best day: ${new Date(k.best.date + 'T00:00:00Z').toLocaleDateString('en-GB', { day: 'numeric', month: 'short', timeZone: 'UTC' })} · ${dur(k.best.sec)}` : ''));
+    parts.push(card(n2.x, y, n2.w, R3, 'Coding time · last 14 days', C.blue, k.best ? `Best ever: ${new Date(k.best.date + 'T00:00:00Z').toLocaleDateString('en-GB', { day: 'numeric', month: 'short', timeZone: 'UTC' })} · ${dur(k.best.sec)}` : ''));
     const series = k.daily.map((x) => ({ start: x.date, sec: x.sec }));
     const kmax = Math.max(...series.map((x) => x.sec));
     const pk = series.findIndex((x) => x.sec === kmax);
