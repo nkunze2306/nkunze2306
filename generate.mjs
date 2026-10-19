@@ -464,7 +464,7 @@ function render(d) {
 
   // Lines of code
   const H4 = 164;
-  parts.push(card(M, y, CW, H4, 'Lines of code · all-time', C.pink, `net ${net >= 0 ? '+' : '−'}${short(Math.abs(net))}`));
+  parts.push(card(M, y, CW, H4, 'Lines of code · all-time', C.pink, `total ${short(add + d.del)} · net ${net >= 0 ? '+' : '−'}${short(Math.abs(net))}`));
   parts.push(line(M + PAD, y + 84, [[`+${short(add)}`, { size: 38, weight: 800, fill: C.green }], [`−${short(d.del)}`, { size: 38, weight: 800, fill: C.pink, dx: 22 }],
     [' added / removed', { size: 12.5, dx: 12 }]]));
   const bw = CW - 2 * PAD - 4;
