@@ -171,7 +171,28 @@ function render(d) {
   const upd = new Date(d.updated).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
   const net = add - d.del;
 
-  document.getElementById('app').innerHTML = `
+  // WakaTime
+  let wakaHtml = '';
+  if (d.waka) {
+    const k = d.waka;
+    const dur = (sec) => { const h = Math.floor(sec / 3600), m = Math.round((sec % 3600) / 60); return h ? fmt(h) + 'h ' + String(m).padStart(2, '0') + 'm' : m + 'm'; };
+    const dmax = Math.max(...k.daily.map((x) => x.sec)), dpk = k.daily.findIndex((x) => x.sec === dmax);
+    const kcols = k.daily.map((x, i) => `<div class="col" ${tip(`${x.date}: ${dur(x.sec)}`)}><b class="v${i === dpk && dmax ? ' peakv' : ''}">${x.sec ? (x.sec / 3600).toFixed(1) + 'h' : '–'}</b><i class="${i === dpk && dmax ? 'peak' : 'gray'}" style="--h:${Math.max(6, dmax ? (x.sec / dmax) * 100 : 0)}%"></i></div>`).join('');
+    const kaxis = k.daily.map((x) => `<span>${Number(x.date.slice(8))}</span>`).join('');
+    const list = (items) => {
+      const tot = items.reduce((s2, x) => s2 + x.sec, 0) || 1, mx = Math.max(1, ...items.map((x) => x.sec));
+      return items.map((x) => `<div class="repo" style="grid-template-columns:130px 1fr 110px" ${tip(`${x.name}: ${dur(x.sec)}`)}><span>${esc(x.name)}</span><div class="track"><div class="fill" style="--w:${(x.sec / mx) * 100}%"></div></div><span>${dur(x.sec)} · ${Math.round((x.sec / tot) * 100)}%</span></div>`).join('');
+    };
+    const since = new Date(k.trackedSince + 'T00:00:00Z').toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric', timeZone: 'UTC' });
+    const bestTxt = k.best ? `Best day: ${new Date(k.best.date + 'T00:00:00Z').toLocaleDateString('en-GB', { day: 'numeric', month: 'short', timeZone: 'UTC' })} · ${dur(k.best.sec)}` : '';
+    wakaHtml = `
+    ${card('c4', 'Coding time · all-time', 'blue', '', `<div class="hero" style="font-size:clamp(34px,6vw,44px)">${dur(k.allTimeSec)}</div><div class="sub">tracked since ${since}</div><div class="split"><span>Last 7 days</span><b>${dur(k.last7Sec)}</b></div><div class="split" style="margin-top:8px;border:0;padding-top:0"><span>Daily average</span><b>${dur(k.avgSec)}</b></div>`, 'WakaTime total, accumulated across runs because the free plan only shows recent days')}
+    ${card('c8', 'Coding time · last 14 days', 'blue', bestTxt, `<div class="cols" style="--c:var(--blue)">${kcols}</div><div class="axis thin">${kaxis}</div>`)}
+    ${card('c6', 'Time by language', 'yellow', '', list(k.languages.slice(0, 5)))}
+    ${card('c6', 'Time by editor', 'purple', '', list(k.editors.slice(0, 4)))}`;
+  }
+
+    document.getElementById('app').innerHTML = `
   <header>
     <img class="avatar" src="https://github.com/${esc(d.login)}.png?size=96" alt="" onerror="this.style.visibility='hidden'">
     <div class="who"><b>${esc(d.name)}</b><a href="https://github.com/${esc(d.login)}"><span>@${esc(d.login)} · joined ${d.joined}</span></a></div>
@@ -184,6 +205,12 @@ function render(d) {
       `<div class="heat">${cells}</div><div class="months">${months}</div>
        <div class="stats4"><div><b style="color:var(--yellow)">${st.current} days</b><small>Current streak</small></div><div><b>${st.longest} days</b><small>Longest streak</small></div><div><b>${st.active} days</b><small>Active days</small></div><div><b>${st.best}</b><small>Best day</small></div></div>`)}
 
+    ${card('c12', 'Lines of code · all-time', 'pink', `net ${net >= 0 ? '+' : '−'}${short(Math.abs(net))}`,
+      `<div class="row" style="margin-bottom:14px"><span class="hero2 grow">+${short(add)}</span><span class="hero2 shrink">−${short(d.del)}</span><span class="sub">added / removed</span></div>
+       <div class="seg"><i style="flex:${d.addHuman || 1};background:var(--green)" ${tip(`Human: ${fmt(d.addHuman)} lines`)}></i><i style="flex:${d.addAI || 0.001};background:var(--purple);${d.addAI ? '' : 'display:none'}" ${tip(`AI-assisted: ${fmt(d.addAI)} lines`)}></i></div>
+       <div class="legend2"><span><em style="background:var(--green)"></em><b>Human</b> ${fmt(d.addHuman)} lines · ${Math.round(hr * 100)}%</span><span><em style="background:var(--purple)"></em><b>AI-assisted</b> ${fmt(d.addAI)} lines · ${Math.round((1 - hr) * 100)}%</span></div>
+       <div class="note">AI-assisted = commits with an AI co-author trailer (Claude, Copilot, …)</div>`, 'All lines added and removed in your commits on every branch, no cap')}
+
     ${card('c4', 'Pull requests', 'blue', '', `<div class="row"><span class="big">${fmt(d.pr.total)}</span><span class="sub">${fmt(d.pr.merged)} merged · ${pct(d.pr.merged, d.pr.total)}%</span></div><div class="track"><div class="fill" style="--w:${pct(d.pr.merged, d.pr.total)}%"></div></div>`)}
     ${card('c4', 'Issues', 'pink', '', `<div class="row"><span class="big">${fmt(d.issues.total)}</span><span class="sub">${fmt(d.issues.closed)} closed · ${pct(d.issues.closed, d.issues.total)}%</span></div><div class="track"><div class="fill" style="--w:${pct(d.issues.closed, d.issues.total)}%"></div></div>`)}
     ${card('c2', 'Reviews', 'purple', '', `<div class="big">${fmt(d.reviews)}</div>`)}
@@ -193,13 +220,9 @@ function render(d) {
     ${card('c3', 'Watchers', 'blue', '', `<div class="big">${fmt(d.watchers)}</div>`, 'People watching your own repositories')}
     ${card('c6', 'Repositories', 'green', '', `<div class="row"><span class="big">${fmt(d.reposOwn)}</span><span class="sub">own</span><span class="big" style="margin-left:18px">${fmt(d.reposContrib)}</span><span class="sub">contributed to</span></div>`)}
 
-    ${card('c12', 'Lines of code · all-time', 'pink', `net ${net >= 0 ? '+' : '−'}${short(Math.abs(net))}`,
-      `<div class="row" style="margin-bottom:14px"><span class="hero2 grow">+${short(add)}</span><span class="hero2 shrink">−${short(d.del)}</span><span class="sub">added / removed</span></div>
-       <div class="seg"><i style="flex:${d.addHuman || 1};background:var(--green)" ${tip(`Human: ${fmt(d.addHuman)} lines`)}></i><i style="flex:${d.addAI || 0.001};background:var(--purple);${d.addAI ? '' : 'display:none'}" ${tip(`AI-assisted: ${fmt(d.addAI)} lines`)}></i></div>
-       <div class="legend2"><span><em style="background:var(--green)"></em><b>Human</b> ${fmt(d.addHuman)} lines · ${Math.round(hr * 100)}%</span><span><em style="background:var(--purple)"></em><b>AI-assisted</b> ${fmt(d.addAI)} lines · ${Math.round((1 - hr) * 100)}%</span></div>
-       <div class="note">AI-assisted = commits with an AI co-author trailer (Claude, Copilot, …)</div>`, 'All lines added and removed in your commits on every branch, no cap')}
+    ${wakaHtml}
 
-    ${card('c6', 'Languages', 'yellow', langs[0] ? `Top: ${esc(langs[0].name)}` : '', `<div class="seg">${seg}</div><div class="legend2">${legend}</div>`)}
+    ${card('c6', 'Languages · by code', 'yellow', langs[0] ? `Top: ${esc(langs[0].name)}` : '', `<div class="seg">${seg}</div><div class="legend2">${legend}</div>`)}
 
     ${card('c6', 'Top repos by commits', 'blue', '', repos)}
 

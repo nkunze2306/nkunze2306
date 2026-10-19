@@ -1,7 +1,7 @@
 // Erzeugt stats.svg + stats.json aus den GitHub-Daten des Profils.
 // Nutzung:  node generate.mjs          (echte Daten, braucht STATS_TOKEN + STATS_LOGIN)
 //           node generate.mjs --demo   (Dummy-Daten zum Design-Check)
-import { writeFileSync } from 'node:fs';
+import { writeFileSync, readFileSync, existsSync } from 'node:fs';
 
 const TOKEN = (process.env.STATS_TOKEN || process.env.GITHUB_TOKEN || '').trim() || undefined;
 const LOGIN = process.env.STATS_LOGIN || process.env.GITHUB_REPOSITORY_OWNER;
@@ -9,6 +9,8 @@ const TZ = process.env.STATS_TZ || 'Europe/Berlin';
 const MAX_PAGES = Number(process.env.STATS_MAX_PAGES || 50); // 100 Commits pro Seite, Branch und Repo
 const OUT = process.env.STATS_OUT || 'stats.svg';
 const OUT_JSON = process.env.STATS_JSON || 'stats.json';
+const WAKA_KEY = (process.env.WAKATIME_API_KEY || '').trim();
+const WAKA_FILE = process.env.STATS_WAKA || 'wakatime.json'; // Tageswerte, werden Lauf für Lauf aufsummiert
 const AI_RE =
   /co-authored-by:[^\n]*(claude|anthropic|copilot|chatgpt|openai|codex|gemini|cursor|aider|devin)|generated with \[?claude/i;
 
@@ -131,7 +133,7 @@ async function fetchData() {
           const h = (await gql(
             `query($owner:String!,$name:String!,$ref:String!,$id:ID!,$after:String){ repository(owner:$owner,name:$name){
               ref(qualifiedName:$ref){ target{ ... on Commit{ history(first:100,after:$after,author:{id:$id}){
-                pageInfo{hasNextPage endCursor} nodes{ oid committedDate additions deletions message } } } } } } }`,
+                pageInfo{hasNextPage endCursor} nodes{ oid committedDate additions deletions message parents{totalCount} } } } } } } }`,
             { owner, name, ref: `refs/heads/${br}`, id: u.id, after },
           )).repository?.ref?.target?.history;
           if (!h) break;
@@ -149,6 +151,8 @@ async function fetchData() {
             hours[Number(p.hour)]++;
             repoCount.set(r.nameWithOwner, (repoCount.get(r.nameWithOwner) || 0) + 1);
             if (date.getTime() >= yearAgo) commitsYear++;
+            // Merge-Commits enthalten den Code anderer (ganzer Diff des Merges) -> nicht als eigene Zeilen zählen
+            if (c.parents.totalCount > 1) continue;
             if (ai) addAI += c.additions; else addHuman += c.additions;
             del += c.deletions;
           }
@@ -202,6 +206,70 @@ async function fetchData() {
     languages: [...langMap.values()].sort((a, b) => b.size - a.size),
     monthly: [...monthly.values()],
     topRepos, weekday, hours, updated: now,
+    waka: await fetchWaka(now),
+  };
+}
+
+// ---------------------------------------------------------------- WakaTime
+// Die kostenlose Version liefert nur wenige Tage. Deshalb werden die Tageswerte bei jedem Lauf in wakatime.json
+// gespeichert und über die Zeit aufsummiert.
+async function wakaGet(path) {
+  const res = await fetch('https://wakatime.com/api/v1/' + path, { headers: { Authorization: 'Basic ' + Buffer.from(WAKA_KEY).toString('base64') } });
+  const json = await res.json().catch(() => ({}));
+  if (!res.ok) throw new Error(`${res.status} ${JSON.stringify(json).slice(0, 160)}`);
+  return json;
+}
+
+const toMap = (arr = []) => Object.fromEntries(arr.filter((x) => x.total_seconds > 0).map((x) => [x.name, Math.round(x.total_seconds)]));
+const addDays = (dateStr, n) => new Date(Date.parse(dateStr + 'T00:00:00Z') + n * 864e5).toISOString().slice(0, 10);
+
+async function fetchWaka(now) {
+  const hist = existsSync(WAKA_FILE) ? JSON.parse(readFileSync(WAKA_FILE, 'utf8')) : { days: {} };
+  let apiAllTime = hist.apiAllTime || 0;
+  const today = new Intl.DateTimeFormat('en-CA', { timeZone: TZ }).format(now);
+
+  if (WAKA_KEY) {
+    for (const back of [13, 6, 2]) { // so viele Tage, wie der Account hergibt
+      try {
+        const r = await wakaGet(`users/current/summaries?start=${addDays(today, -back)}&end=${today}&timezone=${encodeURIComponent(TZ)}`);
+        for (const day of r.data) {
+          hist.days[day.range.date] = {
+            total: Math.round(day.grand_total.total_seconds),
+            languages: toMap(day.languages), editors: toMap(day.editors), categories: toMap(day.categories),
+          };
+        }
+        break;
+      } catch (e) { console.warn(`WakaTime summaries (${back + 1} Tage): ${e.message}`); }
+    }
+    try {
+      const a = await wakaGet('users/current/all_time_since_today');
+      apiAllTime = Math.max(apiAllTime, Math.round(a.data.total_seconds || 0));
+    } catch (e) { console.warn(`WakaTime all-time: ${e.message}`); }
+    hist.apiAllTime = apiAllTime;
+    hist.updated = now.toISOString();
+    writeFileSync(WAKA_FILE, JSON.stringify(hist));
+  }
+
+  const dates = Object.keys(hist.days).sort();
+  if (!dates.length) return null;
+  const sum = (key) => {
+    const m = {};
+    for (const dt of dates) for (const [k, v] of Object.entries(hist.days[dt][key] || {})) m[k] = (m[k] || 0) + v;
+    return Object.entries(m).map(([name, sec]) => ({ name, sec })).sort((a, b) => b.sec - a.sec);
+  };
+  const totals = dates.map((dt) => ({ date: dt, sec: hist.days[dt].total }));
+  const tracked = totals.reduce((s, x) => s + x.sec, 0);
+  const active = totals.filter((x) => x.sec > 0);
+  const best = active.reduce((b, x) => (x.sec > (b?.sec || 0) ? x : b), null);
+  const daily = Array.from({ length: 14 }, (_, i) => {
+    const dt = addDays(today, i - 13);
+    return { date: dt, sec: hist.days[dt]?.total || 0 };
+  });
+  return {
+    allTimeSec: Math.max(apiAllTime, tracked), trackedSince: dates[0], trackedDays: dates.length,
+    last7Sec: daily.slice(7).reduce((s, x) => s + x.sec, 0),
+    avgSec: active.length ? tracked / active.length : 0, best,
+    daily, languages: sum('languages'), editors: sum('editors'),
   };
 }
 
@@ -243,6 +311,13 @@ function demoData() {
     weekday: [40, 62, 44, 48, 46, 28, 32],
     hours: [30, 22, 12, 6, 4, 3, 5, 9, 16, 24, 32, 38, 48, 52, 44, 40, 46, 42, 38, 50, 58, 66, 92, 30],
     updated: new Date('2026-10-19T12:00:00Z'),
+    waka: {
+      allTimeSec: 412 * 3600 + 35 * 60, trackedSince: '2026-09-01', trackedDays: 49, last7Sec: 18 * 3600 + 20 * 60, avgSec: 9360,
+      best: { date: '2026-10-12', sec: 6 * 3600 + 2 * 60 },
+      daily: [2.1, 3.4, 0, 4.8, 5.2, 1.1, 0, 3.9, 4.4, 2.8, 6.0, 3.3, 0.6, 4.1].map((h, i) => ({ date: new Date(Date.UTC(2026, 9, 6 + i)).toISOString().slice(0, 10), sec: h * 3600 })),
+      languages: [['TypeScript', 160], ['C#', 110], ['Python', 70], ['HTML', 40], ['CSS', 20]].map(([name, h]) => ({ name, sec: h * 3600 })),
+      editors: [['VS Code', 300], ['Unity', 90], ['JetBrains Rider', 22]].map(([name, h]) => ({ name, sec: h * 3600 })),
+    },
   };
 }
 
@@ -254,6 +329,7 @@ const W = 720, M = 1, G = 12, CW = W - 2 * M, PAD = 22;
 
 const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]);
 const num = (n) => Math.round(n).toLocaleString('de-DE');
+const dur = (sec) => { const h = Math.floor(sec / 3600), m = Math.round((sec % 3600) / 60); return h ? `${num(h)}h ${String(m).padStart(2, '0')}m` : `${m}m`; };
 const short = (n) => (n >= 1e6 ? `${(n / 1e6).toFixed(2).replace(/.?0+$/, '')}M` : n >= 1000 ? `${Math.round(n / 1000)}k` : String(Math.round(n)));
 // fast schwarze Sprachfarben (z. B. ShaderLab) sind auf dunklem Grund unsichtbar
 const vivid = (hex) => { const n = parseInt(hex.slice(1), 16); return 0.299 * (n >> 16) + 0.587 * ((n >> 8) & 255) + 0.114 * (n & 255) < 90 ? '#8b949e' : hex; };
@@ -310,7 +386,7 @@ function columns(parts, x, y, w, h, items, { labelSize = 10.5, valueSize = 10.5,
     const bx = x + i * slot + (slot - bw) / 2;
     const hh = Math.max(3, (it.value / max) * h);
     parts.push(`<rect x="${bx.toFixed(1)}" y="${(y + h - hh).toFixed(1)}" width="${bw.toFixed(1)}" height="${hh.toFixed(1)}" rx="3" fill="${it.color}"/>`);
-    parts.push(text((bx + bw / 2).toFixed(1), (y + h - hh - 6).toFixed(1), num(it.value), { size: valueSize, fill: it.strong ? C.text : C.mute, weight: it.strong ? 700 : 400, anchor: 'middle' }));
+    parts.push(text((bx + bw / 2).toFixed(1), (y + h - hh - 6).toFixed(1), it.text ?? num(it.value), { size: valueSize, fill: it.strong ? C.text : C.mute, weight: it.strong ? 700 : 400, anchor: 'middle' }));
     if (it.label) parts.push(text((bx + bw / 2).toFixed(1), y + h + 16, it.label, { size: labelSize, fill: C.dim, anchor: 'middle' }));
   });
 }
@@ -386,6 +462,22 @@ function render(d) {
   });
   y += H1 + G;
 
+  // Lines of code
+  const H4 = 164;
+  parts.push(card(M, y, CW, H4, 'Lines of code · all-time', C.pink, `net ${net >= 0 ? '+' : '−'}${short(Math.abs(net))}`));
+  parts.push(line(M + PAD, y + 84, [[`+${short(add)}`, { size: 38, weight: 800, fill: C.green }], [`−${short(d.del)}`, { size: 38, weight: 800, fill: C.pink, dx: 22 }],
+    [' added / removed', { size: 12.5, dx: 12 }]]));
+  const bw = CW - 2 * PAD - 4;
+  parts.push(`<rect x="${M + PAD}" y="${y + 104}" width="${Math.max(8, bw * hr)}" height="12" rx="6" fill="${C.green}"/>`);
+  if (hr < 1) parts.push(`<rect x="${M + PAD + bw * hr + 4}" y="${y + 104}" width="${Math.max(8, bw * (1 - hr))}" height="12" rx="6" fill="${C.purple}"/>`);
+  parts.push(`<circle cx="${M + PAD + 4}" cy="${y + 135}" r="4.5" fill="${C.green}"/>`);
+  parts.push(line(M + PAD + 14, y + 139, [['Human', { weight: 700, fill: C.text, size: 12.5 }], [`  ${num(d.addHuman)} lines · ${Math.round(hr * 100)}%`, { size: 12.5 }]]));
+  parts.push(`<circle cx="${M + CW / 2 + 4}" cy="${y + 135}" r="4.5" fill="${C.purple}"/>`);
+  parts.push(line(M + CW / 2 + 14, y + 139, [['AI-assisted', { weight: 700, fill: C.text, size: 12.5 }], [`  ${num(d.addAI)} lines · ${Math.round((1 - hr) * 100)}%`, { size: 12.5 }]]));
+  parts.push(text(M + PAD, y + 157, 'AI-assisted = commits with an AI co-author trailer (Claude, Copilot, …)', { size: 10, fill: C.dim }));
+  y += H4 + G;
+
+
   // PR / Issues / Reviews / Stars
   const r2 = rowX([29, 29, 21, 21]);
   const H2 = 108;
@@ -414,27 +506,48 @@ function render(d) {
     [num(d.reposContrib), { size: 32, weight: 700, fill: C.text, dx: 26 }], [' contributed to', { size: 12, dx: 6 }]]));
   y += H3 + G;
 
-  // Lines of code
-  const H4 = 164;
-  parts.push(card(M, y, CW, H4, 'Lines of code · all-time', C.pink, `net ${net >= 0 ? '+' : '−'}${short(Math.abs(net))}`));
-  parts.push(line(M + PAD, y + 84, [[`+${short(add)}`, { size: 38, weight: 800, fill: C.green }], [`−${short(d.del)}`, { size: 38, weight: 800, fill: C.pink, dx: 22 }],
-    [' added / removed', { size: 12.5, dx: 12 }]]));
-  const bw = CW - 2 * PAD - 4;
-  parts.push(`<rect x="${M + PAD}" y="${y + 104}" width="${Math.max(8, bw * hr)}" height="12" rx="6" fill="${C.green}"/>`);
-  if (hr < 1) parts.push(`<rect x="${M + PAD + bw * hr + 4}" y="${y + 104}" width="${Math.max(8, bw * (1 - hr))}" height="12" rx="6" fill="${C.purple}"/>`);
-  parts.push(`<circle cx="${M + PAD + 4}" cy="${y + 135}" r="4.5" fill="${C.green}"/>`);
-  parts.push(line(M + PAD + 14, y + 139, [['Human', { weight: 700, fill: C.text, size: 12.5 }], [`  ${num(d.addHuman)} lines · ${Math.round(hr * 100)}%`, { size: 12.5 }]]));
-  parts.push(`<circle cx="${M + CW / 2 + 4}" cy="${y + 135}" r="4.5" fill="${C.purple}"/>`);
-  parts.push(line(M + CW / 2 + 14, y + 139, [['AI-assisted', { weight: 700, fill: C.text, size: 12.5 }], [`  ${num(d.addAI)} lines · ${Math.round((1 - hr) * 100)}%`, { size: 12.5 }]]));
-  parts.push(text(M + PAD, y + 157, 'AI-assisted = commits with an AI co-author trailer (Claude, Copilot, …)', { size: 10, fill: C.dim }));
-  y += H4 + G;
+  // WakaTime
+  if (d.waka) {
+    const k = d.waka;
+    const [k1, k2] = rowX([32, 68]);
+    const HK = 196;
+    parts.push(card(k1.x, y, k1.w, HK, 'Coding time · all-time', C.blue));
+    parts.push(text(k1.x + PAD, y + 90, dur(k.allTimeSec), { size: 33, fill: C.text, weight: 800 }));
+    parts.push(text(k1.x + PAD, y + 112, `tracked since ${new Date(k.trackedSince + 'T00:00:00Z').toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}`, { size: 11.5, fill: C.dim }));
+    parts.push(`<line x1="${k1.x + PAD}" x2="${k1.x + k1.w - PAD}" y1="${y + 130}" y2="${y + 130}" stroke="${C.line}"/>`);
+    parts.push(text(k1.x + PAD, y + 154, 'Last 7 days', { size: 12 }), text(k1.x + k1.w - PAD, y + 154, dur(k.last7Sec), { size: 13, fill: C.text, weight: 700, anchor: 'end' }));
+    parts.push(text(k1.x + PAD, y + 178, 'Daily average', { size: 12 }), text(k1.x + k1.w - PAD, y + 178, dur(k.avgSec), { size: 13, fill: C.text, weight: 700, anchor: 'end' }));
+    parts.push(card(k2.x, y, k2.w, HK, 'Coding time · last 14 days', C.blue, k.best ? `Best day: ${new Date(k.best.date + 'T00:00:00Z').toLocaleDateString('en-GB', { day: 'numeric', month: 'short', timeZone: 'UTC' })} · ${dur(k.best.sec)}` : ''));
+    const kmax = Math.max(...k.daily.map((x) => x.sec));
+    const pk = k.daily.findIndex((x) => x.sec === kmax);
+    columns(parts, k2.x + PAD, y + 66, k2.w - 2 * PAD, 92,
+      k.daily.map((x, i) => ({ value: x.sec / 3600, text: x.sec ? `${(x.sec / 3600).toFixed(1)}h` : '–', label: String(Number(x.date.slice(8))), color: i === pk && kmax > 0 ? C.blue : C.bar, strong: i === pk && kmax > 0 })),
+      { labelSize: 10.5, valueSize: 10 });
+    y += HK + G;
+
+    const [k3, k4] = rowX([50, 50]);
+    const HL = 40 + Math.max(k.languages.slice(0, 5).length, k.editors.slice(0, 4).length) * 26 + 22;
+    const list = (r, title, color, items) => {
+      parts.push(card(r.x, y, r.w, HL, title, color));
+      const tot = items.reduce((s, x) => s + x.sec, 0) || 1, mx = Math.max(1, ...items.map((x) => x.sec));
+      items.forEach((it, i) => {
+        const ry = y + 66 + i * 26;
+        parts.push(text(r.x + PAD, ry + 4, it.name.length > 15 ? it.name.slice(0, 14) + '…' : it.name, { size: 12.5, fill: '#e6e6e6' }));
+        parts.push(bar(r.x + 142, ry - 3, r.w - 142 - PAD - 92, 8, it.sec / mx, color));
+        parts.push(text(r.x + r.w - PAD, ry + 4, `${dur(it.sec)} · ${Math.round((it.sec / tot) * 100)}%`, { size: 11.5, anchor: 'end', fill: C.text, weight: 600 }));
+      });
+    };
+    list(k3, 'Time by language', C.yellow, k.languages.slice(0, 5));
+    list(k4, 'Time by editor', C.purple, k.editors.slice(0, 4));
+    y += HL + G;
+  }
 
   // Languages + Top repos
   const [l1, l2] = rowX([50, 50]);
   const H5 = 190;
   const langs = d.languages.slice(0, 6).map((l) => ({ ...l, color: vivid(l.color) }));
   const lt = langs.reduce((s, l) => s + l.size, 0) || 1;
-  parts.push(card(l1.x, y, l1.w, H5, 'Languages', C.yellow, langs[0] ? `Top: ${langs[0].name}` : ''));
+  parts.push(card(l1.x, y, l1.w, H5, 'Languages · by code', C.yellow, langs[0] ? `Top: ${langs[0].name}` : ''));
   const lw = l1.w - 2 * PAD - 4 * (langs.length - 1);
   let lx = l1.x + PAD;
   langs.forEach((l) => {
