@@ -202,10 +202,10 @@ function render(d) {
     };
     const since = new Date(k.trackedSince + 'T00:00:00Z').toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric', timeZone: 'UTC' });
     const bestTxt = k.best ? `Best day: ${new Date(k.best.date + 'T00:00:00Z').toLocaleDateString('en-GB', { day: 'numeric', month: 'short', timeZone: 'UTC' })} · ${dur(k.best.sec)}` : '';
-    window.__wakaViews = null; // wird unten gesetzt
+    window.__wakaWeeks = `<div class="cols" style="--c:var(--blue)">${wcols}</div><div class="axis thin">${waxis}</div>`; // Wochenansicht, per Umschalter
     wakaHtml = `
     ${card('c4', 'Coding time · all-time', 'blue', '', `<div class="hero" style="font-size:clamp(34px,6vw,44px)">${dur(k.allTimeSec)}</div><div class="sub">tracked since ${since}</div><div class="split"><span>Last 7 days</span><b>${dur(k.last7Sec)}</b></div><div class="split" style="margin-top:8px;border:0;padding-top:0"><span>Daily average</span><b>${dur(k.avgSec)}</b></div><div class="split" style="margin-top:8px;border:0;padding-top:0"><span>Weekly average</span><b>${dur(k.weekAvgSec || k.avgSec * 7)}</b></div>`, 'Total comes directly from WakaTime all-time. The weekly chart and weekly average are calculated from stored daily totals.')}
-    ${card('c8', 'Coding time', 'blue', `<span class="tog"><button class="on" data-wview="weeks">Weekly</button><button data-wview="days">Daily</button></span>`, `<div id="wakaChart"><div class="cols" style="--c:var(--blue)">${wcols}</div><div class="axis thin">${waxis}</div></div>`)}
+    ${card('c8', 'Coding time', 'blue', `<span class="tog"><button data-wview="weeks">Weekly</button><button class="on" data-wview="days">Daily</button></span>`, `<div id="wakaChart"><div class="cols" style="--c:var(--blue)">${kcols}</div><div class="axis thin">${kaxis}</div></div>`)}
     ${card('c6', 'Time by language', 'yellow', '', list(k.languages.slice(0, 5)))}
     ${card('c6', 'Time by editor', 'purple', '', list(k.editors.slice(0, 4)))}`;
   }
@@ -271,12 +271,12 @@ function render(d) {
   if (d.waka) {
     // Ansichten des Coding-Time-Charts für den Umschalter merken
     const box = document.getElementById('wakaChart');
-    const views = { weeks: box.innerHTML };
+    const views = { days: box.innerHTML, weeks: window.__wakaWeeks };
     document.addEventListener('click', (e) => {
       const b = e.target.closest && e.target.closest('[data-wview]');
       if (!b) return;
       document.querySelectorAll('[data-wview]').forEach((x) => x.classList.toggle('on', x === b));
-      if (b.dataset.wview === 'weeks') box.innerHTML = views.weeks;
+      if (views[b.dataset.wview]) box.innerHTML = views[b.dataset.wview];
       else {
         const k = d.waka, dmax = Math.max(...k.daily.map((x) => x.sec)), dpk = k.daily.findIndex((x) => x.sec === dmax);
         const h = (sec) => Math.floor(sec / 3600) + 'h ' + String(Math.round((sec % 3600) / 60)).padStart(2, '0') + 'm';

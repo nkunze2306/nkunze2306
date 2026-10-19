@@ -570,12 +570,12 @@ function render(d) {
     parts.push(text(k1.x + PAD, y + 154, 'Last 7 days', { size: 12 }), text(k1.x + k1.w - PAD, y + 154, dur(k.last7Sec), { size: 13, fill: C.text, weight: 700, anchor: 'end' }));
     parts.push(text(k1.x + PAD, y + 178, 'Daily average', { size: 12 }), text(k1.x + k1.w - PAD, y + 178, dur(k.avgSec), { size: 13, fill: C.text, weight: 700, anchor: 'end' }));
     parts.push(text(k1.x + PAD, y + 202, 'Weekly average', { size: 12 }), text(k1.x + k1.w - PAD, y + 202, dur(k.weekAvgSec || k.avgSec * 7), { size: 13, fill: C.text, weight: 700, anchor: 'end' }));
-    parts.push(card(k2.x, y, k2.w, HK, 'Coding time · per week', C.blue, (k.weeks || []).length ? `${k.weeksTracked || k.weeks.filter((w) => w.sec > 0).length} weeks tracked` : k.best ? `Best day: ${new Date(k.best.date + 'T00:00:00Z').toLocaleDateString('en-GB', { day: 'numeric', month: 'short', timeZone: 'UTC' })} · ${dur(k.best.sec)}` : ''));
-    const series = k.weeks || k.daily.map((x) => ({ start: x.date, sec: x.sec }));
+    parts.push(card(k2.x, y, k2.w, HK, 'Coding time · last 14 days', C.blue, k.best ? `Best day: ${new Date(k.best.date + 'T00:00:00Z').toLocaleDateString('en-GB', { day: 'numeric', month: 'short', timeZone: 'UTC' })} · ${dur(k.best.sec)}` : ''));
+    const series = k.daily.map((x) => ({ start: x.date, sec: x.sec }));
     const kmax = Math.max(...series.map((x) => x.sec));
     const pk = series.findIndex((x) => x.sec === kmax);
     columns(parts, k2.x + PAD, y + 66, k2.w - 2 * PAD, 92,
-      series.map((x, i) => ({ value: x.sec / 3600, text: x.sec ? `${(x.sec / 3600).toFixed(1)}h` : '–', label: `${Number(x.start.slice(8))}.${Number(x.start.slice(5, 7))}.`, color: i === pk && kmax > 0 ? C.blue : C.bar, strong: i === pk && kmax > 0 })),
+      series.map((x, i) => ({ value: x.sec / 3600, text: x.sec ? `${(x.sec / 3600).toFixed(1)}h` : '–', label: String(Number(x.start.slice(8))), color: i === pk && kmax > 0 ? C.blue : C.bar, strong: i === pk && kmax > 0 })),
       { labelSize: 10.5, valueSize: 10 });
     y += HK + G;
 
