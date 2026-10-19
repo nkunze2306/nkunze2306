@@ -110,7 +110,7 @@ async function fetchData() {
   const repoCount = new Map();
   const seen = new Set();
   const yearAgo = now.getTime() - 365 * 864e5;
-  let commitsYear = 0, addHuman = 0, addAI = 0, del = 0;
+  let commitsYear = 0, addHuman = 0, addAI = 0, del = 0, changed = 0;
 
   for (const r of repos) {
     const [owner, name] = r.nameWithOwner.split('/');
@@ -155,6 +155,7 @@ async function fetchData() {
             if (c.parents.totalCount > 1) continue;
             if (ai) addAI += c.additions; else addHuman += c.additions;
             del += c.deletions;
+            changed += Math.min(c.additions, c.deletions); // in beide Richtungen vorkommende Zeilen = umgeschrieben (Refactoring)
           }
           if (!h.pageInfo.hasNextPage) break;
           after = h.pageInfo.endCursor;
@@ -187,6 +188,22 @@ async function fetchData() {
   const topRepos = [...repoCount].sort((a, b) => b[1] - a[1]).slice(0, 5)
     .map(([full, count]) => ({ name: privateOf.get(full) ? `private repo ${++n}` : full.split('/')[1], count }));
 
+  // Gesamtzeilen aller Repos: Summe (Additions + Deletions) der Code-Frequency über alle Autoren
+  let linesTotal = 0, linesRepos = 0;
+  for (const r of repos.filter((x) => !x.isFork)) {
+    for (let t = 0; t < 6; t++) {
+      const res = await fetch(`https://api.github.com/repos/${r.nameWithOwner}/stats/code_frequency`, { headers: { Authorization: `bearer ${TOKEN}` } });
+      if (res.status === 202) { await new Promise((ok) => setTimeout(ok, 2500)); continue; } // GitHub rechnet noch
+      if (res.status !== 200) { console.warn(`Gesamtzeilen übersprungen: ${r.nameWithOwner} (${res.status})`); break; }
+      const weeks = await res.json();
+      if (Array.isArray(weeks) && weeks.length) {
+        linesTotal += weeks.reduce((sum, w) => sum + w[1] + w[2], 0); // Deletions sind negativ
+        linesRepos++;
+      }
+      break;
+    }
+  }
+
   return {
     login: u.login, name: u.name || u.login, joined: startYear,
     followers: rest.followers, following: rest.following,
@@ -202,7 +219,7 @@ async function fetchData() {
     forksReceived: owned.reduce((s, r) => s + r.forkCount, 0),
     watchers: owned.reduce((s, r) => s + r.watchers.totalCount, 0),
     reposOwn: u.ownRepos.totalCount, reposContrib: u.repositoriesContributedTo.totalCount,
-    addHuman, addAI, del,
+    addHuman, addAI, del, changed, linesAllRepos: { total: linesTotal, repos: linesRepos },
     languages: [...langMap.values()].sort((a, b) => b.size - a.size),
     monthly: [...monthly.values()],
     topRepos, weekday, hours, updated: now,
@@ -297,7 +314,7 @@ function demoData() {
     weeks,
     pr: { total: 143, merged: 121 }, issues: { total: 62, closed: 55 }, reviews: 89, stars: 318,
     forks: 41, forksReceived: 12, watchers: 22, reposOwn: 27, reposContrib: 14,
-    addHuman: 136000, addAI: 48000, del: 61000,
+    addHuman: 136000, addAI: 48000, del: 61000, changed: 38000, linesAllRepos: { total: 2410000, repos: 18 },
     languages: [
       { name: 'TypeScript', color: '#38bdf8', size: 31 }, { name: 'Python', color: '#b794ff', size: 24 },
       { name: 'C#', color: '#34f5a0', size: 18 }, { name: 'JavaScript', color: '#fbbf24', size: 11 },
@@ -463,8 +480,8 @@ function render(d) {
   y += H1 + G;
 
   // Lines of code
-  const H4 = 164;
-  parts.push(card(M, y, CW, H4, 'Lines of code · all-time', C.pink, `total ${short(add + d.del)} · net ${net >= 0 ? '+' : '−'}${short(Math.abs(net))}`));
+  const H4 = 232;
+  parts.push(card(M, y, CW, H4, 'Lines of code · all-time', C.pink, `net ${net >= 0 ? '+' : '−'}${short(Math.abs(net))}`));
   parts.push(line(M + PAD, y + 84, [[`+${short(add)}`, { size: 38, weight: 800, fill: C.green }], [`−${short(d.del)}`, { size: 38, weight: 800, fill: C.pink, dx: 22 }],
     [' added / removed', { size: 12.5, dx: 12 }]]));
   const bw = CW - 2 * PAD - 4;
@@ -475,6 +492,14 @@ function render(d) {
   parts.push(`<circle cx="${M + CW / 2 + 4}" cy="${y + 135}" r="4.5" fill="${C.purple}"/>`);
   parts.push(line(M + CW / 2 + 14, y + 139, [['AI-assisted', { weight: 700, fill: C.text, size: 12.5 }], [`  ${num(d.addAI)} lines · ${Math.round((1 - hr) * 100)}%`, { size: 12.5 }]]));
   parts.push(text(M + PAD, y + 157, 'AI-assisted = commits with an AI co-author trailer (Claude, Copilot, …)', { size: 10, fill: C.dim }));
+  parts.push(`<line x1="${M + PAD}" x2="${M + CW - PAD}" y1="${y + 172}" y2="${y + 172}" stroke="${C.line}"/>`);
+  const cols3 = [['Processed', `${short(add + d.del)} lines`, 'added + removed'], ['Refactored', `${short(d.changed || 0)} lines`, 'rewritten in place'],
+    ...(d.linesAllRepos ? [['Total in all repos', `${short(d.linesAllRepos.total)} lines`, `${d.linesAllRepos.repos} repos`]] : [])];
+  cols3.forEach(([l, v, sub], i) => {
+    const cx = M + PAD + (i * (CW - 2 * PAD)) / cols3.length;
+    parts.push(text(cx, y + 194, l.toUpperCase(), { size: 10, fill: C.dim, weight: 700, ls: 1 }));
+    parts.push(line(cx, y + 217, [[v, { weight: 700, fill: C.text, size: 17 }], ['  ' + sub, { size: 11, fill: C.dim }]]));
+  });
   y += H4 + G;
 
 

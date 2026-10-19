@@ -205,11 +205,12 @@ function render(d) {
       `<div class="heat">${cells}</div><div class="months">${months}</div>
        <div class="stats4"><div><b style="color:var(--yellow)">${st.current} days</b><small>Current streak</small></div><div><b>${st.longest} days</b><small>Longest streak</small></div><div><b>${st.active} days</b><small>Active days</small></div><div><b>${st.best}</b><small>Best day</small></div></div>`)}
 
-    ${card('c12', 'Lines of code · all-time', 'pink', `total ${short(add + d.del)} · net ${net >= 0 ? '+' : '−'}${short(Math.abs(net))}`,
+    ${card('c12', 'Lines of code · all-time', 'pink', `net ${net >= 0 ? '+' : '−'}${short(Math.abs(net))}`,
       `<div class="row" style="margin-bottom:14px"><span class="hero2 grow">+${short(add)}</span><span class="hero2 shrink">−${short(d.del)}</span><span class="sub">added / removed</span></div>
        <div class="seg"><i style="flex:${d.addHuman || 1};background:var(--green)" ${tip(`Human: ${fmt(d.addHuman)} lines`)}></i><i style="flex:${d.addAI || 0.001};background:var(--purple);${d.addAI ? '' : 'display:none'}" ${tip(`AI-assisted: ${fmt(d.addAI)} lines`)}></i></div>
        <div class="legend2"><span><em style="background:var(--green)"></em><b>Human</b> ${fmt(d.addHuman)} lines · ${Math.round(hr * 100)}%</span><span><em style="background:var(--purple)"></em><b>AI-assisted</b> ${fmt(d.addAI)} lines · ${Math.round((1 - hr) * 100)}%</span></div>
-       <div class="note">AI-assisted = commits with an AI co-author trailer (Claude, Copilot, …)</div>`, 'All lines added and removed in your commits on every branch, no cap')}
+       <div class="note">AI-assisted = commits with an AI co-author trailer (Claude, Copilot, …)</div>
+       <div class="split"><span>Processed (added + removed)</span><b>${short(add + d.del)} lines</b></div><div class="split" style="margin-top:8px;border:0;padding-top:0" data-tip="Lines that were rewritten in place: min(added, removed) per commit"><span>Refactored (rewritten in place)</span><b>${short(d.changed || 0)} lines</b></div>${d.linesAllRepos ? `<div class="split" style="margin-top:8px;border:0;padding-top:0"><span>Total in all ${d.linesAllRepos.repos} repos</span><b>${short(d.linesAllRepos.total)} lines</b></div>` : ''}`, 'All lines added and removed in your commits on every branch, no cap')}
 
     ${card('c4', 'Pull requests', 'blue', '', `<div class="row"><span class="big">${fmt(d.pr.total)}</span><span class="sub">${fmt(d.pr.merged)} merged · ${pct(d.pr.merged, d.pr.total)}%</span></div><div class="track"><div class="fill" style="--w:${pct(d.pr.merged, d.pr.total)}%"></div></div>`)}
     ${card('c4', 'Issues', 'pink', '', `<div class="row"><span class="big">${fmt(d.issues.total)}</span><span class="sub">${fmt(d.issues.closed)} closed · ${pct(d.issues.closed, d.issues.total)}%</span></div><div class="track"><div class="fill" style="--w:${pct(d.issues.closed, d.issues.total)}%"></div></div>`)}
