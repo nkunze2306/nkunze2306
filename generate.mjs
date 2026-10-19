@@ -211,7 +211,7 @@ function demoData() {
 
 const C = { bg: '#0a0a0a', card: '#121212', line: '#242424', text: '#ffffff', mute: '#8b8b8b', dim: '#5c5c5c',
   green: '#34f5a0', purple: '#b794ff', blue: '#38bdf8', pink: '#ff5c9a', yellow: '#fbbf24', track: '#2a2a2a' };
-const W = 720, M = 16, G = 10, CW = W - 2 * M;
+const W = 720, M = 1, G = 10, CW = W - 2 * M;
 
 const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]);
 const num = (n) => Math.round(n).toLocaleString('de-DE');
@@ -442,11 +442,10 @@ function render(d) {
   y += H6 + 12;
 
   parts.push(text(W - M, y + 4, `Updated ${dateStr} · generated daily by GitHub Actions`, { size: 9, fill: C.dim, anchor: 'end' }));
-  const H = y + 22;
+  const H = y + 14;
 
   return `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" font-family="'Segoe UI', -apple-system, 'Helvetica Neue', Arial, sans-serif">
 <defs><filter id="glow" x="-30%" y="-60%" width="160%" height="220%"><feGaussianBlur stdDeviation="2.6" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>
-<rect width="${W}" height="${H}" rx="18" fill="${C.bg}"/>
 ${parts.join('\n')}
 </svg>
 `;
