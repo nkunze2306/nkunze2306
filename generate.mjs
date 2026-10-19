@@ -252,7 +252,7 @@ async function fetchWaka(now) {
   const today = new Intl.DateTimeFormat('en-CA', { timeZone: TZ }).format(now);
 
   if (WAKA_KEY) {
-    for (const back of [200, 90, 30, 13, 6, 2]) { // so viele Tage, wie der Account hergibt
+    for (const back of Object.keys(hist.days).length >= 30 ? [13, 6, 2] : [200, 90, 30, 13, 6, 2]) { // so viele Tage, wie der Account hergibt
       try {
         const r = await wakaGet(`users/current/summaries?start=${addDays(today, -back)}&end=${today}&timezone=${encodeURIComponent(TZ)}`);
         for (const day of r.data) {

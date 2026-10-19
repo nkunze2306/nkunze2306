@@ -2,7 +2,7 @@ name: Update stats
 
 on:
   schedule:
-    - cron: '0 */3 * * *' # alle 3 Stunden
+    - cron: '0 * * * *' # stündlich
   workflow_dispatch: # manuell per Button
   push:
     branches: [main]
@@ -10,6 +10,11 @@ on:
 
 permissions:
   contents: write
+
+# nie zwei Läufe gleichzeitig (Push vom Skript, Zeitplan, manueller Start)
+concurrency:
+  group: update-stats
+  cancel-in-progress: false
 
 jobs:
   update:
@@ -29,10 +34,16 @@ jobs:
           STATS_LOGIN: ${{ github.repository_owner }}
           WAKATIME_API_KEY: ${{ secrets.WAKATIME_API_KEY }}
         run: node generate.mjs
+      - name: Bump image version in README when the card changed
+        # GitHub cached Bilder im README über einen Proxy. Eine neue URL erzwingt das Neuladen.
+        run: |
+          if ! git diff --quiet -- stats.svg; then
+            sed -i -E "s#stats\.svg(\?v=[0-9]+)?#stats.svg?v=$(date +%s)#" README.md
+          fi
       - name: Commit if changed
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add stats.svg stats.json
+          git add stats.svg stats.json README.md
           if [ -f wakatime.json ]; then git add wakatime.json; fi
-          git diff --cached --quiet || (git commit -m "chore: update stats" && git push)
+          git diff --cached --quiet || (git commit -m "chore: update stats" && git pull --rebase && git push)
