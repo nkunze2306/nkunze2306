@@ -337,6 +337,7 @@ function readTokens(now) {
   const today = new Intl.DateTimeFormat('en-CA', { timeZone: TZ }).format(now);
   return {
     ...t, total: t.input + t.output + t.cacheWrite + t.cacheRead, since: dates[0], days: dates.length,
+    avgPerReply: (t.input + t.output + t.cacheWrite + t.cacheRead) / Math.max(1, t.messages), avgOutput: t.output / Math.max(1, t.messages),
     devices: Object.entries(byDevice).map(([name, total]) => ({ name, total })).sort((a, b) => b.total - a.total),
     models: Object.entries(byModel).map(([name, total]) => ({ name, total })).sort((a, b) => b.total - a.total),
     daily: Array.from({ length: 14 }, (_, i) => {
@@ -395,7 +396,7 @@ function demoData() {
     hours: [30, 22, 12, 6, 4, 3, 5, 9, 16, 24, 32, 38, 48, 52, 44, 40, 46, 42, 38, 50, 58, 66, 92, 30],
     updated: new Date('2026-10-19T12:00:00Z'),
     tokens: {
-      total: 144524758, input: 1138, output: 684684, cacheWrite: 2180692, cacheRead: 141658244, messages: 548, since: '2026-10-13', days: 7,
+      total: 144524758, input: 1138, output: 684684, cacheWrite: 2180692, cacheRead: 141658244, messages: 548, since: '2026-10-13', days: 7, avgPerReply: 263730, avgOutput: 1249,
       models: [{ name: 'Sonnet 5.5', total: 144524758 }],
       devices: [{ name: 'pc-main', total: 100e6 }, { name: 'laptop', total: 44524758 }],
       daily: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 12e6, 31e6, 18e6, 40e6].map((total, i) => ({ date: new Date(Date.UTC(2026, 9, 6 + i)).toISOString().slice(0, 10), total })),
@@ -652,18 +653,18 @@ function render(d) {
   if (d.tokens) {
     const t = d.tokens;
     const [t1, t2] = rowX([32, 68]);
-    const HT = 214;
+    const HT = 252;
     parts.push(card(t1.x, y, t1.w, HT, 'Claude tokens · all-time', C.purple));
     parts.push(text(t1.x + PAD, y + 92, tokShort(t.total), { size: 40, fill: C.text, weight: 800 }));
     parts.push(text(t1.x + PAD, y + 114, `since ${new Date(t.since + 'T00:00:00Z').toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric', timeZone: 'UTC' })} · ${num(t.messages)} replies`, { size: 11.5, fill: C.dim }));
     parts.push(`<line x1="${t1.x + PAD}" x2="${t1.x + t1.w - PAD}" y1="${y + 130}" y2="${y + 130}" stroke="${C.line}"/>`);
-    [['Output', t.output], ['Input + cache write', t.input + t.cacheWrite], ['Cache read', t.cacheRead]].forEach(([l, v], i) => {
-      parts.push(text(t1.x + PAD, y + 154 + i * 22, l, { size: 12 }), text(t1.x + t1.w - PAD, y + 154 + i * 22, tokShort(v), { size: 13, fill: C.text, weight: 700, anchor: 'end' }));
+    [['Output', t.output], ['Input + cache write', t.input + t.cacheWrite], ['Cache read', t.cacheRead], ['Avg per reply', t.avgPerReply], ['Avg output / reply', t.avgOutput]].forEach(([l, v], i) => {
+      parts.push(text(t1.x + PAD, y + 154 + i * 21 + (i > 2 ? 6 : 0), l, { size: 12 }), text(t1.x + t1.w - PAD, y + 154 + i * 21 + (i > 2 ? 6 : 0), tokShort(v), { size: 13, fill: C.text, weight: 700, anchor: 'end' }));
     });
     parts.push(card(t2.x, y, t2.w, HT, 'Tokens per day · last 14 days', C.purple, t.models.slice(0, 2).map((m) => m.name).join(' · ') + (t.devices && t.devices.length > 1 ? ` · ${t.devices.length} devices` : '')));
     const tmax = Math.max(...t.daily.map((x) => x.total));
     const tpk = t.daily.findIndex((x) => x.total === tmax);
-    columns(parts, t2.x + PAD, y + 70, t2.w - 2 * PAD, 96,
+    columns(parts, t2.x + PAD, y + 76, t2.w - 2 * PAD, 130,
       t.daily.map((x, i) => ({ value: x.total, text: x.total ? tokShort(x.total) : '–', label: String(Number(x.date.slice(8))), color: i === tpk && tmax > 0 ? C.purple : C.bar, strong: i === tpk && tmax > 0 })),
       { labelSize: 10.5, valueSize: 9.5 });
     y += HT + G;
