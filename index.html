@@ -69,6 +69,9 @@
   .cols.thin .v { font-size: 9px; font-weight: 500; }
   .months span { display: flex; flex-direction: column; gap: 1px; } .months small { font-size: 9.5px; color: var(--text); font-weight: 600; }
   .peakv { color: var(--text); }
+  .tog { display: inline-flex; gap: 2px; background: #1a1a1a; border: 1px solid var(--line); border-radius: 999px; padding: 2px; }
+  .tog button { font: inherit; font-size: 11px; color: var(--mute); background: none; border: 0; border-radius: 999px; padding: 3px 11px; cursor: pointer; }
+  .tog button.on { background: var(--blue); color: #04121a; font-weight: 700; }
   .cols .col { flex: 1; height: 100%; display: flex; flex-direction: column; justify-content: flex-end; align-items: stretch; gap: 1.5px; min-width: 0; }
   .cols .col > i { display: block; border-radius: 3px; height: 0; transition: height 1s cubic-bezier(.2, .8, .2, 1); }
   .in .cols .col > i { height: var(--h); }
@@ -178,6 +181,19 @@ function render(d) {
     const k = d.waka;
     const dur = (sec) => { const h = Math.floor(sec / 3600), m = Math.round((sec % 3600) / 60); return h ? fmt(h) + 'h ' + String(m).padStart(2, '0') + 'm' : m + 'm'; };
     const dmax = Math.max(...k.daily.map((x) => x.sec)), dpk = k.daily.findIndex((x) => x.sec === dmax);
+    // Wochensummen aus den gespeicherten Tageswerten, Gesamtzeit = Summe aller Wochen
+    const hist = k.history || k.daily.map((x) => ({ date: x.date, sec: x.sec }));
+    const wkStart = (dt) => { const d0 = new Date(dt + 'T00:00:00Z'); return new Date(d0.getTime() - ((d0.getUTCDay() + 6) % 7) * 864e5).toISOString().slice(0, 10); };
+    const byWeek = {};
+    hist.forEach((x) => { const w = wkStart(x.date); byWeek[w] = (byWeek[w] || 0) + x.sec; });
+    const thisWeek = wkStart(k.daily[k.daily.length - 1].date);
+    const weekItems = Array.from({ length: 12 }, (_, i) => ({ start: new Date(Date.parse(thisWeek + 'T00:00:00Z') + (i - 11) * 7 * 864e5).toISOString().slice(0, 10), sec: 0 }));
+    weekItems.forEach((w) => { w.sec = byWeek[w.start] || 0; });
+    const allTimeSum = Object.values(byWeek).reduce((a, b) => a + b, 0);
+    const weeksTracked = Object.keys(byWeek).length;
+    const wmax = Math.max(...weekItems.map((x) => x.sec)), wpk = weekItems.findIndex((x) => x.sec === wmax);
+    const wcols = weekItems.map((x, i) => `<div class="col" ${tip(`Week of ${x.start}: ${dur(x.sec)}`)}><b class="v${i === wpk && wmax ? ' peakv' : ''}">${x.sec ? (x.sec / 3600).toFixed(1) + 'h' : '–'}</b><i class="${i === wpk && wmax ? 'peak' : 'gray'}" style="--h:${Math.max(6, wmax ? (x.sec / wmax) * 100 : 0)}%"></i></div>`).join('');
+    const waxis = weekItems.map((x) => `<span>${Number(x.start.slice(8))}.${Number(x.start.slice(5, 7))}.</span>`).join('');
     const kcols = k.daily.map((x, i) => `<div class="col" ${tip(`${x.date}: ${dur(x.sec)}`)}><b class="v${i === dpk && dmax ? ' peakv' : ''}">${x.sec ? (x.sec / 3600).toFixed(1) + 'h' : '–'}</b><i class="${i === dpk && dmax ? 'peak' : 'gray'}" style="--h:${Math.max(6, dmax ? (x.sec / dmax) * 100 : 0)}%"></i></div>`).join('');
     const kaxis = k.daily.map((x) => `<span>${Number(x.date.slice(8))}</span>`).join('');
     const list = (items) => {
@@ -186,9 +202,10 @@ function render(d) {
     };
     const since = new Date(k.trackedSince + 'T00:00:00Z').toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric', timeZone: 'UTC' });
     const bestTxt = k.best ? `Best day: ${new Date(k.best.date + 'T00:00:00Z').toLocaleDateString('en-GB', { day: 'numeric', month: 'short', timeZone: 'UTC' })} · ${dur(k.best.sec)}` : '';
+    window.__wakaViews = null; // wird unten gesetzt
     wakaHtml = `
-    ${card('c4', 'Coding time · all-time', 'blue', '', `<div class="hero" style="font-size:clamp(34px,6vw,44px)">${dur(k.allTimeSec)}</div><div class="sub">tracked since ${since}</div><div class="split"><span>Last 7 days</span><b>${dur(k.last7Sec)}</b></div><div class="split" style="margin-top:8px;border:0;padding-top:0"><span>Daily average</span><b>${dur(k.avgSec)}</b></div>`, 'WakaTime total, accumulated across runs because the free plan only shows recent days')}
-    ${card('c8', 'Coding time · last 14 days', 'blue', bestTxt, `<div class="cols" style="--c:var(--blue)">${kcols}</div><div class="axis thin">${kaxis}</div>`)}
+    ${card('c4', 'Coding time · all-time', 'blue', '', `<div class="hero" style="font-size:clamp(34px,6vw,44px)">${dur(k.allTimeSec)}</div><div class="sub">tracked since ${since}</div><div class="split"><span>Last 7 days</span><b>${dur(k.last7Sec)}</b></div><div class="split" style="margin-top:8px;border:0;padding-top:0"><span>Daily average</span><b>${dur(k.avgSec)}</b></div><div class="split" style="margin-top:8px;border:0;padding-top:0"><span>Weekly average</span><b>${dur(k.weekAvgSec || k.avgSec * 7)}</b></div>`, 'Total comes directly from WakaTime all-time. The weekly chart and weekly average are calculated from stored daily totals.')}
+    ${card('c8', 'Coding time', 'blue', `<span class="tog"><button class="on" data-wview="weeks">Weekly</button><button data-wview="days">Daily</button></span>`, `<div id="wakaChart"><div class="cols" style="--c:var(--blue)">${wcols}</div><div class="axis thin">${waxis}</div></div>`)}
     ${card('c6', 'Time by language', 'yellow', '', list(k.languages.slice(0, 5)))}
     ${card('c6', 'Time by editor', 'purple', '', list(k.editors.slice(0, 4)))}`;
   }
@@ -206,6 +223,7 @@ function render(d) {
     ${card('c8', 'Tokens per day · last 14 days', 'purple', t.models.slice(0, 2).map((m) => esc(m.name)).join(' · '), `<div class="cols" style="--c:var(--purple)">${tcols}</div><div class="axis thin">${taxis}</div>`)}`;
   }
 
+  const wakaViews = d.waka ? null : null;
   document.getElementById('app').innerHTML = `
   <header>
     <img class="avatar" src="https://github.com/${esc(d.login)}.png?size=96" alt="" onerror="this.style.visibility='hidden'">
@@ -249,6 +267,24 @@ function render(d) {
     ${card('c8', 'By hour of day', 'purple', `Peak ${String(hpeak).padStart(2, '0')}:00 · ${mood}`, `<div class="cols thin">${hh}</div><div class="axis thin">${hAxis}</div>`)}
   </div>
   <footer>Updated ${upd} · generated automatically by GitHub Actions</footer>`;
+
+  if (d.waka) {
+    // Ansichten des Coding-Time-Charts für den Umschalter merken
+    const box = document.getElementById('wakaChart');
+    const views = { weeks: box.innerHTML };
+    document.addEventListener('click', (e) => {
+      const b = e.target.closest && e.target.closest('[data-wview]');
+      if (!b) return;
+      document.querySelectorAll('[data-wview]').forEach((x) => x.classList.toggle('on', x === b));
+      if (b.dataset.wview === 'weeks') box.innerHTML = views.weeks;
+      else {
+        const k = d.waka, dmax = Math.max(...k.daily.map((x) => x.sec)), dpk = k.daily.findIndex((x) => x.sec === dmax);
+        const h = (sec) => Math.floor(sec / 3600) + 'h ' + String(Math.round((sec % 3600) / 60)).padStart(2, '0') + 'm';
+        box.innerHTML = '<div class="cols" style="--c:var(--blue)">' + k.daily.map((x, i) => '<div class="col" data-tip="' + x.date + ': ' + h(x.sec) + '"><b class="v' + (i === dpk && dmax ? ' peakv' : '') + '">' + (x.sec ? (x.sec / 3600).toFixed(1) + 'h' : '–') + '</b><i class="' + (i === dpk && dmax ? 'peak' : 'gray') + '" style="--h:' + Math.max(6, dmax ? (x.sec / dmax) * 100 : 0) + '%"></i></div>').join('') + '</div><div class="axis thin">' + k.daily.map((x) => '<span>' + Number(x.date.slice(8)) + '</span>').join('') + '</div>';
+      }
+      requestAnimationFrame(() => requestAnimationFrame(() => document.body.classList.add('in')));
+    });
+  }
 
   // Animationen: Balken einblenden, Hauptzahl hochzählen
   requestAnimationFrame(() => requestAnimationFrame(() => document.body.classList.add('in')));

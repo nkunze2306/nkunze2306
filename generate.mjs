@@ -248,7 +248,7 @@ async function fetchWaka(now) {
   const today = new Intl.DateTimeFormat('en-CA', { timeZone: TZ }).format(now);
 
   if (WAKA_KEY) {
-    for (const back of [13, 6, 2]) { // so viele Tage, wie der Account hergibt
+    for (const back of [200, 90, 30, 13, 6, 2]) { // so viele Tage, wie der Account hergibt
       try {
         const r = await wakaGet(`users/current/summaries?start=${addDays(today, -back)}&end=${today}&timezone=${encodeURIComponent(TZ)}`);
         for (const day of r.data) {
@@ -257,6 +257,7 @@ async function fetchWaka(now) {
             languages: toMap(day.languages), editors: toMap(day.editors), categories: toMap(day.categories),
           };
         }
+        console.log(`WakaTime summaries: ${r.data.length} Tage geholt`);
         break;
       } catch (e) { console.warn(`WakaTime summaries (${back + 1} Tage): ${e.message}`); }
     }
@@ -287,8 +288,18 @@ async function fetchWaka(now) {
     const dt = addDays(today, i - 13);
     return { date: dt, sec: hist.days[dt]?.total || 0 };
   });
+  const weekStart = (dt) => addDays(dt, -((new Date(dt + 'T00:00:00Z').getUTCDay() + 6) % 7)); // Montag
+  const byWeek = {};
+  for (const x of totals) byWeek[weekStart(x.date)] = (byWeek[weekStart(x.date)] || 0) + x.sec;
+  const thisWeek = weekStart(today);
+  const weeks = Array.from({ length: 12 }, (_, i) => {
+    const st = addDays(thisWeek, (i - 11) * 7);
+    return { start: st, sec: byWeek[st] || 0 };
+  });
   return {
-    allTimeSec: Math.max(apiAllTime, tracked), trackedSince: hist.apiSince || dates[0], trackedDays: dates.length,
+    allTimeSec: Math.max(apiAllTime, tracked), apiAllTimeSec: apiAllTime, trackedSince: hist.apiSince || dates[0], trackedDays: dates.length,
+    weekAvgSec: Math.max(apiAllTime, tracked) / Math.max(1, (Date.parse(today + 'T00:00:00Z') - Date.parse((hist.apiSince || dates[0]) + 'T00:00:00Z')) / (7 * 864e5)),
+    history: totals, weeks, weeksTracked: Object.keys(byWeek).length,
     last7Sec: daily.slice(7).reduce((s, x) => s + x.sec, 0),
     avgSec: active.length ? tracked / active.length : 0, best,
     daily, languages: sum('languages'), editors: sum('editors'),
@@ -371,7 +382,8 @@ function demoData() {
       daily: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 12e6, 31e6, 18e6, 40e6].map((total, i) => ({ date: new Date(Date.UTC(2026, 9, 6 + i)).toISOString().slice(0, 10), total })),
     },
     waka: {
-      allTimeSec: 412 * 3600 + 35 * 60, trackedSince: '2026-09-01', trackedDays: 49, last7Sec: 18 * 3600 + 20 * 60, avgSec: 9360,
+      allTimeSec: 412 * 3600 + 35 * 60, apiAllTimeSec: 412 * 3600 + 35 * 60, weeksTracked: 30, weekAvgSec: 61000, trackedSince: '2026-09-01',
+      weeks: [14, 18.3, 22, 9.5, 25.1, 19.8, 12.2, 27.4, 21, 16.6, 23.9, 18.3].map((h, i) => ({ start: new Date(Date.UTC(2026, 7, 3 + i * 7)).toISOString().slice(0, 10), sec: h * 3600 })), trackedDays: 49, last7Sec: 18 * 3600 + 20 * 60, avgSec: 9360,
       best: { date: '2026-10-12', sec: 6 * 3600 + 2 * 60 },
       daily: [2.1, 3.4, 0, 4.8, 5.2, 1.1, 0, 3.9, 4.4, 2.8, 6.0, 3.3, 0.6, 4.1].map((h, i) => ({ date: new Date(Date.UTC(2026, 9, 6 + i)).toISOString().slice(0, 10), sec: h * 3600 })),
       languages: [['TypeScript', 160], ['C#', 110], ['Python', 70], ['HTML', 40], ['CSS', 20]].map(([name, h]) => ({ name, sec: h * 3600 })),
@@ -550,18 +562,20 @@ function render(d) {
   if (d.waka) {
     const k = d.waka;
     const [k1, k2] = rowX([32, 68]);
-    const HK = 196;
+    const HK = 222;
     parts.push(card(k1.x, y, k1.w, HK, 'Coding time · all-time', C.blue));
     parts.push(text(k1.x + PAD, y + 90, dur(k.allTimeSec), { size: 33, fill: C.text, weight: 800 }));
     parts.push(text(k1.x + PAD, y + 112, `tracked since ${new Date(k.trackedSince + 'T00:00:00Z').toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}`, { size: 11.5, fill: C.dim }));
     parts.push(`<line x1="${k1.x + PAD}" x2="${k1.x + k1.w - PAD}" y1="${y + 130}" y2="${y + 130}" stroke="${C.line}"/>`);
     parts.push(text(k1.x + PAD, y + 154, 'Last 7 days', { size: 12 }), text(k1.x + k1.w - PAD, y + 154, dur(k.last7Sec), { size: 13, fill: C.text, weight: 700, anchor: 'end' }));
     parts.push(text(k1.x + PAD, y + 178, 'Daily average', { size: 12 }), text(k1.x + k1.w - PAD, y + 178, dur(k.avgSec), { size: 13, fill: C.text, weight: 700, anchor: 'end' }));
-    parts.push(card(k2.x, y, k2.w, HK, 'Coding time · last 14 days', C.blue, k.best ? `Best day: ${new Date(k.best.date + 'T00:00:00Z').toLocaleDateString('en-GB', { day: 'numeric', month: 'short', timeZone: 'UTC' })} · ${dur(k.best.sec)}` : ''));
-    const kmax = Math.max(...k.daily.map((x) => x.sec));
-    const pk = k.daily.findIndex((x) => x.sec === kmax);
+    parts.push(text(k1.x + PAD, y + 202, 'Weekly average', { size: 12 }), text(k1.x + k1.w - PAD, y + 202, dur(k.weekAvgSec || k.avgSec * 7), { size: 13, fill: C.text, weight: 700, anchor: 'end' }));
+    parts.push(card(k2.x, y, k2.w, HK, 'Coding time · per week', C.blue, (k.weeks || []).length ? `${k.weeksTracked || k.weeks.filter((w) => w.sec > 0).length} weeks tracked` : k.best ? `Best day: ${new Date(k.best.date + 'T00:00:00Z').toLocaleDateString('en-GB', { day: 'numeric', month: 'short', timeZone: 'UTC' })} · ${dur(k.best.sec)}` : ''));
+    const series = k.weeks || k.daily.map((x) => ({ start: x.date, sec: x.sec }));
+    const kmax = Math.max(...series.map((x) => x.sec));
+    const pk = series.findIndex((x) => x.sec === kmax);
     columns(parts, k2.x + PAD, y + 66, k2.w - 2 * PAD, 92,
-      k.daily.map((x, i) => ({ value: x.sec / 3600, text: x.sec ? `${(x.sec / 3600).toFixed(1)}h` : '–', label: String(Number(x.date.slice(8))), color: i === pk && kmax > 0 ? C.blue : C.bar, strong: i === pk && kmax > 0 })),
+      series.map((x, i) => ({ value: x.sec / 3600, text: x.sec ? `${(x.sec / 3600).toFixed(1)}h` : '–', label: `${Number(x.start.slice(8))}.${Number(x.start.slice(5, 7))}.`, color: i === pk && kmax > 0 ? C.blue : C.bar, strong: i === pk && kmax > 0 })),
       { labelSize: 10.5, valueSize: 10 });
     y += HK + G;
 
