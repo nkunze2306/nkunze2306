@@ -297,8 +297,8 @@ async function fetchWaka(now) {
     return { start: st, sec: byWeek[st] || 0 };
   });
   return {
-    allTimeSec: Math.max(apiAllTime, tracked), apiAllTimeSec: apiAllTime, trackedSince: hist.apiSince || dates[0], trackedDays: dates.length,
-    weekAvgSec: Math.max(apiAllTime, tracked) / Math.max(1, (Date.parse(today + 'T00:00:00Z') - Date.parse((hist.apiSince || dates[0]) + 'T00:00:00Z')) / (7 * 864e5)),
+    allTimeSec: (apiAllTime || tracked), apiAllTimeSec: apiAllTime, trackedSince: hist.apiSince || dates[0], trackedDays: dates.length,
+    weekAvgSec: (apiAllTime || tracked) / Math.max(1, (Date.parse(today + 'T00:00:00Z') - Date.parse((hist.apiSince || dates[0]) + 'T00:00:00Z')) / (7 * 864e5)),
     history: totals, weeks, weeksTracked: Object.keys(byWeek).length,
     last7Sec: daily.slice(7).reduce((s, x) => s + x.sec, 0),
     avgSec: active.length ? tracked / active.length : 0, best,
