@@ -261,6 +261,9 @@ async function fetchWaka(now) {
     try {
       const a = await wakaGet('users/current/all_time_since_today');
       apiAllTime = Math.max(apiAllTime, Math.round(a.data.total_seconds || 0));
+      console.log('WakaTime all-time:', JSON.stringify({ total_seconds: a.data.total_seconds, text: a.data.text, is_up_to_date: a.data.is_up_to_date, percent_calculated: a.data.percent_calculated, range: a.data.range }));
+      const since = a.data.range?.start_date || a.data.range?.start; // echter Start der WakaTime-Aufzeichnung
+      if (since) hist.apiSince = String(since).slice(0, 10);
     } catch (e) { console.warn(`WakaTime all-time: ${e.message}`); }
     hist.apiAllTime = apiAllTime;
     hist.updated = now.toISOString();
@@ -283,7 +286,7 @@ async function fetchWaka(now) {
     return { date: dt, sec: hist.days[dt]?.total || 0 };
   });
   return {
-    allTimeSec: Math.max(apiAllTime, tracked), trackedSince: dates[0], trackedDays: dates.length,
+    allTimeSec: Math.max(apiAllTime, tracked), trackedSince: hist.apiSince || dates[0], trackedDays: dates.length,
     last7Sec: daily.slice(7).reduce((s, x) => s + x.sec, 0),
     avgSec: active.length ? tracked / active.length : 0, best,
     daily, languages: sum('languages'), editors: sum('editors'),
