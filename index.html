@@ -23,6 +23,11 @@
   .avatar { width: 48px; height: 48px; border-radius: 50%; border: 1.5px solid var(--green); box-shadow: 0 0 14px #34f5a055; background: #0f1f18; object-fit: cover; }
   .who b { display: block; font-size: 19px; }
   .who span { font-size: 12px; color: var(--dim); }
+  .btns { display: flex; gap: 8px; flex-wrap: wrap; margin: 0 0 14px; }
+  .btn { font-size: 12.5px; padding: 8px 16px; border-radius: 999px; border: 1px solid #2c2c2c; background: #151515; color: #ddd; transition: border-color .15s, color .15s, transform .15s; }
+  .btn:hover { border-color: var(--green); color: #fff; transform: translateY(-1px); }
+  .btn.primary { background: var(--green); border-color: var(--green); color: #04120b; font-weight: 700; }
+  .btn.primary:hover { color: #04120b; filter: brightness(1.08); }
   .pills { margin-left: auto; display: flex; gap: 8px; flex-wrap: wrap; }
   .pill { background: #151515; border: 1px solid #2c2c2c; border-radius: 999px; padding: 7px 14px; font-size: 12px; color: #9a9a9a; }
   .pill b { color: #fff; }
@@ -239,6 +244,7 @@ function render(d) {
     <div class="who"><b>${esc(d.name)}</b><a href="https://github.com/${esc(d.login)}"><span>@${esc(d.login)} · joined ${d.joined}</span></a></div>
     <div class="pills">${[['followers', d.followers], ['following', d.following], ['orgs', d.orgs], ['gists', d.gists], ['starred', d.starred]].map(([l, n]) => `<span class="pill"><b>${fmt(n)}</b> ${l}</span>`).join('')}</div>
   </header>
+  <nav class="btns"><a class="btn primary" href="https://github.com/${esc(d.login)}">View on GitHub</a><a class="btn" href="https://github.com/${esc(d.login)}?tab=repositories">Repositories</a><a class="btn" href="https://github.com/${esc(d.login)}/${esc(d.login)}">Source code</a></nav>
   <div class="grid">
     ${card('c4', 'Commits · all-time', 'green', '', `<div class="hero" id="hero" data-n="${d.commitsAll}">0</div><div class="sub">${fmt(d.commitsYear)} in the last 12 months</div><div class="split"><span>Total contributions</span><b>${fmt(d.totalContribAll)}</b></div>`, 'Every commit you authored on any branch of any repo (private, org, forks), de-duplicated. Contributions = commits + PRs + issues + reviews')}
     ${card('c8 heatcard', `${fmt(d.contribYear)} contributions in the last year`, 'purple',
