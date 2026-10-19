@@ -1,3 +1,8 @@
+## Hey, I'm Nicolas Kunze 👋
+
+I'm currently studying **Media Informatics and Interactive Entertainment** at **HSMW** (University of Applied Sciences Mittweida) in Saxony, Germany.
+I'm an **app dev**, **game dev** and mainly a **frontend dev**.
+
 <a href="https://nkunze2306.github.io/nkunze2306/">
   <img src="stats.svg" alt="GitHub all-time stats" width="100%">
 </a>
