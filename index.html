@@ -212,6 +212,8 @@ function render(d) {
        <div class="note">AI-assisted = commits with an AI co-author trailer (Claude, Copilot, …)</div>
        <div class="split"><span>Processed (added + removed)</span><b>${short(add + d.del)} lines</b></div><div class="split" style="margin-top:8px;border:0;padding-top:0" data-tip="Lines that were rewritten in place: min(added, removed) per commit"><span>Refactored (rewritten in place)</span><b>${short(d.changed || 0)} lines</b></div>${d.linesAllRepos ? `<div class="split" style="margin-top:8px;border:0;padding-top:0"><span>Total in all ${d.linesAllRepos.repos} repos</span><b>${short(d.linesAllRepos.total)} lines</b></div>` : ''}`, 'All lines added and removed in your commits on every branch, no cap')}
 
+    ${wakaHtml}
+
     ${card('c4', 'Pull requests', 'blue', '', `<div class="row"><span class="big">${fmt(d.pr.total)}</span><span class="sub">${fmt(d.pr.merged)} merged · ${pct(d.pr.merged, d.pr.total)}%</span></div><div class="track"><div class="fill" style="--w:${pct(d.pr.merged, d.pr.total)}%"></div></div>`)}
     ${card('c4', 'Issues', 'pink', '', `<div class="row"><span class="big">${fmt(d.issues.total)}</span><span class="sub">${fmt(d.issues.closed)} closed · ${pct(d.issues.closed, d.issues.total)}%</span></div><div class="track"><div class="fill" style="--w:${pct(d.issues.closed, d.issues.total)}%"></div></div>`)}
     ${card('c2', 'Reviews', 'purple', '', `<div class="big">${fmt(d.reviews)}</div>`)}
@@ -220,8 +222,6 @@ function render(d) {
     ${card('c3', 'Forks', 'purple', '', `<div class="big">${fmt(d.forks)}</div><div class="sub" style="margin-top:6px">${fmt(d.forksReceived)} on your repos</div>`, 'Repositories you forked (left) and forks others made of your repos')}
     ${card('c3', 'Watchers', 'blue', '', `<div class="big">${fmt(d.watchers)}</div>`, 'People watching your own repositories')}
     ${card('c6', 'Repositories', 'green', '', `<div class="row"><span class="big">${fmt(d.reposOwn)}</span><span class="sub">own</span><span class="big" style="margin-left:18px">${fmt(d.reposContrib)}</span><span class="sub">contributed to</span></div>`)}
-
-    ${wakaHtml}
 
     ${card('c6', 'Languages · by code', 'yellow', langs[0] ? `Top: ${esc(langs[0].name)}` : '', `<div class="seg">${seg}</div><div class="legend2">${legend}</div>`)}
 

@@ -503,34 +503,6 @@ function render(d) {
   y += H4 + G;
 
 
-  // PR / Issues / Reviews / Stars
-  const r2 = rowX([29, 29, 21, 21]);
-  const H2 = 108;
-  const pct = (p, t) => (t ? Math.round((p / t) * 100) : 0);
-  const stat = (r, title, color, value, sub, ratio) => {
-    parts.push(card(r.x, y, r.w, H2, title, color));
-    parts.push(line(r.x + PAD, y + 72, [[num(value), { size: 32, weight: 700, fill: C.text }], sub ? [sub, { size: 12, dx: 9 }] : ['', {}]]));
-    if (ratio !== undefined) parts.push(bar(r.x + PAD, y + 88, r.w - 2 * PAD, 7, ratio, color));
-  };
-  stat(r2[0], 'Pull requests', C.blue, d.pr.total, `${num(d.pr.merged)} merged · ${pct(d.pr.merged, d.pr.total)}%`, d.pr.total ? d.pr.merged / d.pr.total : 0);
-  stat(r2[1], 'Issues', C.pink, d.issues.total, `${num(d.issues.closed)} closed · ${pct(d.issues.closed, d.issues.total)}%`, d.issues.total ? d.issues.closed / d.issues.total : 0);
-  stat(r2[2], 'Reviews', C.purple, d.reviews);
-  stat(r2[3], 'Stars', C.yellow, d.stars);
-  y += H2 + G;
-
-  // Forks / Watchers / Repos
-  const r3 = rowX([26, 26, 48]);
-  const H3 = 108;
-  parts.push(card(r3[0].x, y, r3[0].w, H3, 'Forks', C.purple));
-  parts.push(line(r3[0].x + PAD, y + 72, [[num(d.forks), { size: 32, weight: 700, fill: C.text }]]));
-  parts.push(text(r3[0].x + PAD, y + 95, `${num(d.forksReceived)} on your repos`, { size: 11.5, fill: C.dim }));
-  parts.push(card(r3[1].x, y, r3[1].w, H3, 'Watchers', C.blue));
-  parts.push(line(r3[1].x + PAD, y + 72, [[num(d.watchers), { size: 32, weight: 700, fill: C.text }]]));
-  parts.push(card(r3[2].x, y, r3[2].w, H3, 'Repositories', C.green));
-  parts.push(line(r3[2].x + PAD, y + 72, [[num(d.reposOwn), { size: 32, weight: 700, fill: C.text }], [' own', { size: 12, dx: 6 }],
-    [num(d.reposContrib), { size: 32, weight: 700, fill: C.text, dx: 26 }], [' contributed to', { size: 12, dx: 6 }]]));
-  y += H3 + G;
-
   // WakaTime
   if (d.waka) {
     const k = d.waka;
@@ -566,6 +538,34 @@ function render(d) {
     list(k4, 'Time by editor', C.purple, k.editors.slice(0, 4));
     y += HL + G;
   }
+
+  // PR / Issues / Reviews / Stars
+  const r2 = rowX([29, 29, 21, 21]);
+  const H2 = 108;
+  const pct = (p, t) => (t ? Math.round((p / t) * 100) : 0);
+  const stat = (r, title, color, value, sub, ratio) => {
+    parts.push(card(r.x, y, r.w, H2, title, color));
+    parts.push(line(r.x + PAD, y + 72, [[num(value), { size: 32, weight: 700, fill: C.text }], sub ? [sub, { size: 12, dx: 9 }] : ['', {}]]));
+    if (ratio !== undefined) parts.push(bar(r.x + PAD, y + 88, r.w - 2 * PAD, 7, ratio, color));
+  };
+  stat(r2[0], 'Pull requests', C.blue, d.pr.total, `${num(d.pr.merged)} merged · ${pct(d.pr.merged, d.pr.total)}%`, d.pr.total ? d.pr.merged / d.pr.total : 0);
+  stat(r2[1], 'Issues', C.pink, d.issues.total, `${num(d.issues.closed)} closed · ${pct(d.issues.closed, d.issues.total)}%`, d.issues.total ? d.issues.closed / d.issues.total : 0);
+  stat(r2[2], 'Reviews', C.purple, d.reviews);
+  stat(r2[3], 'Stars', C.yellow, d.stars);
+  y += H2 + G;
+
+  // Forks / Watchers / Repos
+  const r3 = rowX([26, 26, 48]);
+  const H3 = 108;
+  parts.push(card(r3[0].x, y, r3[0].w, H3, 'Forks', C.purple));
+  parts.push(line(r3[0].x + PAD, y + 72, [[num(d.forks), { size: 32, weight: 700, fill: C.text }]]));
+  parts.push(text(r3[0].x + PAD, y + 95, `${num(d.forksReceived)} on your repos`, { size: 11.5, fill: C.dim }));
+  parts.push(card(r3[1].x, y, r3[1].w, H3, 'Watchers', C.blue));
+  parts.push(line(r3[1].x + PAD, y + 72, [[num(d.watchers), { size: 32, weight: 700, fill: C.text }]]));
+  parts.push(card(r3[2].x, y, r3[2].w, H3, 'Repositories', C.green));
+  parts.push(line(r3[2].x + PAD, y + 72, [[num(d.reposOwn), { size: 32, weight: 700, fill: C.text }], [' own', { size: 12, dx: 6 }],
+    [num(d.reposContrib), { size: 32, weight: 700, fill: C.text, dx: 26 }], [' contributed to', { size: 12, dx: 6 }]]));
+  y += H3 + G;
 
   // Languages + Top repos
   const [l1, l2] = rowX([50, 50]);
