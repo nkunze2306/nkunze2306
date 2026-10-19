@@ -33,23 +33,24 @@
   .t .dot { width: 22px; height: 22px; border-radius: 50%; border: 1px solid color-mix(in srgb, var(--c) 55%, transparent); background: color-mix(in srgb, var(--c) 12%, transparent); display: grid; place-items: center; flex: none; }
   .t .dot::after { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--c); }
   .t .r { margin-left: auto; font-weight: 400; letter-spacing: 0; text-transform: none; font-size: 11px; text-align: right; }
-  .big { font-size: 26px; font-weight: 700; line-height: 1.1; }
+  .hero2 { font-size: 40px; font-weight: 800; line-height: 1; margin-right: 18px; }
+  .big { font-size: 28px; font-weight: 700; line-height: 1.1; }
   .sub { font-size: 12px; color: var(--mute); }
   .row { display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap; }
-  .hero { font-size: clamp(48px, 9vw, 68px); font-weight: 800; line-height: 1; text-shadow: 0 0 22px #ffffff66; margin: 10px 0 8px; font-variant-numeric: tabular-nums; }
+  .hero { font-size: clamp(48px, 9vw, 68px); font-weight: 800; line-height: 1; margin: 10px 0 8px; font-variant-numeric: tabular-nums; }
   .split { display: flex; justify-content: space-between; align-items: baseline; border-top: 1px solid var(--line); margin-top: 16px; padding-top: 12px; font-size: 12px; color: var(--mute); }
   .split b { color: #fff; font-size: 19px; }
-  .grow { color: var(--green); text-shadow: 0 0 14px #34f5a088; } .shrink { color: var(--pink); text-shadow: 0 0 14px #ff5c9a88; }
+  .grow { color: var(--green); } .shrink { color: var(--pink); }
 
   .track { height: 7px; border-radius: 4px; background: var(--track); margin-top: 12px; overflow: hidden; }
-  .fill { height: 100%; width: 0; border-radius: 4px; background: var(--c); box-shadow: 0 0 10px color-mix(in srgb, var(--c) 70%, transparent); transition: width 1.1s cubic-bezier(.2, .8, .2, 1); }
+  .fill { height: 100%; width: 0; border-radius: 4px; background: var(--c); transition: width 1.1s cubic-bezier(.2, .8, .2, 1); }
   .in .fill { width: var(--w); }
 
   .heat { display: grid; grid-template-columns: repeat(53, minmax(0, 1fr)); gap: 3px; }
   .heat i { aspect-ratio: 1; border-radius: 2px; background: #1d211f; transition: transform .1s; }
   .heat i:hover { transform: scale(1.5); position: relative; z-index: 2; }
   .l1 { background: #0e4f35 !important; } .l2 { background: #12804f !important; } .l3 { background: #1fb870 !important; }
-  .l4 { background: var(--green) !important; box-shadow: 0 0 7px #34f5a0aa; }
+  .l4 { background: var(--green) !important; }
   .months { display: grid; grid-template-columns: repeat(53, minmax(0, 1fr)); gap: 3px; margin-top: 6px; font-size: 10px; color: var(--dim); }
   .months span { white-space: nowrap; }
   .legend { display: flex; align-items: center; gap: 3px; font-size: 10px; color: var(--mute); } .legend i { width: 9px; height: 9px; border-radius: 2px; display: block; background: #1d211f; } .legend span { margin: 0 4px; }
@@ -63,14 +64,18 @@
   .legend2 b { color: #fff; font-weight: 600; } .legend2 em { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 7px; font-style: normal; }
   .note { font-size: 10.5px; color: var(--dim); margin-top: 14px; }
 
-  .cols { display: flex; align-items: flex-end; gap: 6px; height: 120px; }
+  .cols { display: flex; align-items: flex-end; gap: 6px; height: 120px; margin-top: 22px; }
+  .v { font-size: 11.5px; color: var(--mute); text-align: center; line-height: 16px; font-variant-numeric: tabular-nums; font-weight: 600; }
+  .cols.thin .v { font-size: 9px; font-weight: 500; }
+  .months span { display: flex; flex-direction: column; gap: 1px; } .months small { font-size: 9.5px; color: var(--text); font-weight: 600; }
+  .peakv { color: var(--text); }
   .cols .col { flex: 1; height: 100%; display: flex; flex-direction: column; justify-content: flex-end; align-items: stretch; gap: 1.5px; min-width: 0; }
   .cols .col > i { display: block; border-radius: 3px; height: 0; transition: height 1s cubic-bezier(.2, .8, .2, 1); }
   .in .cols .col > i { height: var(--h); }
   .cols .col:hover { filter: brightness(1.25); }
   .axis { display: flex; gap: 6px; margin-top: 7px; font-size: 10px; color: var(--dim); } .axis span { flex: 1; text-align: center; }
   .cols.thin { gap: 3px; } .axis.thin { gap: 3px; }
-  .peak { background: var(--c) !important; box-shadow: 0 0 12px color-mix(in srgb, var(--c) 70%, transparent); }
+  .peak { background: var(--c) !important; }
   .gray { background: var(--bar); }
   .mini { display: flex; gap: 10px; align-items: center; font-size: 11px; color: var(--mute); } .mini i { width: 8px; height: 8px; border-radius: 2px; display: inline-block; margin-right: 5px; }
 
@@ -83,6 +88,7 @@
   #err { text-align: center; color: var(--mute); padding: 80px 0; }
 
   @media (max-width: 760px) {
+    .cols.thin .v { display: none; } .hero { font-size: 52px; }
     .c2 { grid-column: span 6; } .c3, .c4, .c5, .c6, .c7, .c8 { grid-column: span 12; }
     .c4.half { grid-column: span 6; }
     .pills { margin-left: 0; } .repo { grid-template-columns: 100px 1fr 40px; }
@@ -96,11 +102,12 @@
 <script>
 const COL = { green: '#34f5a0', purple: '#b794ff', blue: '#38bdf8', pink: '#ff5c9a', yellow: '#fbbf24' };
 const fmt = (n) => Math.round(n).toLocaleString('de-DE');
-const short = (n) => (n >= 1000 ? Math.round(n / 1000) + 'k' : String(Math.round(n)));
+const short = (n) => (n >= 1e6 ? (n / 1e6).toFixed(2).replace(/\.?0+$/, '') + 'M' : n >= 1000 ? Math.round(n / 1000) + 'k' : String(Math.round(n)));
+const vivid = (hex) => { const n = parseInt(hex.slice(1), 16); return 0.299 * (n >> 16) + 0.587 * ((n >> 8) & 255) + 0.114 * (n & 255) < 90 ? '#8b949e' : hex; };
 const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]);
 const pct = (a, b) => (b ? Math.round((a / b) * 100) : 0);
-const card = (cls, title, color, right, body) =>
-  `<section class="card ${cls}" style="--c:${COL[color]}"><div class="t"><span class="dot"></span>${esc(title)}${right ? `<span class="r">${right}</span>` : ''}</div>${body}</section>`;
+const card = (cls, title, color, right, body, hint = '') =>
+  `<section class="card ${cls}" style="--c:${COL[color]}"${hint ? ` data-tip="${esc(hint)}"` : ''}><div class="t"><span class="dot"></span>${esc(title)}${right ? `<span class="r">${right}</span>` : ''}</div>${body}</section>`;
 const tip = (s) => `data-tip="${esc(s)}"`;
 
 function streaks(weeks) {
@@ -120,6 +127,8 @@ function render(d) {
   // heatmap
   const max = Math.max(1, ...d.weeks.flat().map((x) => x.count));
   let cells = '', months = '', lastM = -1;
+  const monthSum = {};
+  d.weeks.flat().forEach((x) => { monthSum[x.date.slice(0, 7)] = (monthSum[x.date.slice(0, 7)] || 0) + x.count; });
   d.weeks.forEach((w, wi) => {
     w.forEach((day) => {
       const dow = new Date(day.date + 'T00:00:00Z').getUTCDay();
@@ -129,13 +138,13 @@ function render(d) {
     });
     const m = new Date(w[0].date + 'T00:00:00Z').getUTCMonth();
     if (m !== lastM) {
-      if (lastM !== -1) months += `<span style="grid-column:${wi + 1}">${new Date(Date.UTC(2000, m, 1)).toLocaleString('en', { month: 'short' })}</span>`;
+      if (lastM !== -1) months += `<span style="grid-column:${wi + 1} / span 4">${new Date(Date.UTC(2000, m, 1)).toLocaleString('en', { month: 'short' })}<small>${fmt(monthSum[w[0].date.slice(0, 7)] || 0)}</small></span>`;
       lastM = m;
     }
   });
 
   // languages
-  const langs = d.languages.slice(0, 6), lt = langs.reduce((s, l) => s + l.size, 0) || 1;
+  const langs = d.languages.slice(0, 6).map((l) => ({ ...l, color: vivid(l.color) })), lt = langs.reduce((s, l) => s + l.size, 0) || 1;
   const seg = langs.map((l, i) => `<i style="flex:${l.size};background:${l.color};transition-delay:${i * 60}ms" ${tip(`${l.name} · ${Math.round((l.size / lt) * 100)}%`)}></i>`).join('');
   const legend = langs.map((l) => `<span><em style="background:${l.color}"></em><b>${esc(l.name)}</b> ${Math.round((l.size / lt) * 100)}%</span>`).join('');
 
@@ -143,7 +152,7 @@ function render(d) {
   const mmax = Math.max(1, ...d.monthly.map((m) => m.human + m.ai));
   const monthly = d.monthly.map((m) => {
     const t = `${m.name || m.label}: ${m.human} human · ${m.ai} AI`;
-    return `<div class="col" ${tip(t)}><i style="--h:${(m.ai / mmax) * 100}%;background:var(--purple)"></i><i style="--h:${(m.human / mmax) * 100}%;background:var(--green)"></i></div>`;
+    return `<div class="col" ${tip(t)}><b class="v peakv">${m.human + m.ai}</b><i style="--h:${(m.ai / mmax) * 100}%;background:var(--purple)"></i><i style="--h:${(m.human / mmax) * 100}%;background:var(--green)"></i></div>`;
   }).join('');
 
   // top repos
@@ -153,10 +162,10 @@ function render(d) {
   // weekday / hour
   const DAYS = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
   const wmax = Math.max(1, ...d.weekday), wpeak = d.weekday.indexOf(Math.max(...d.weekday));
-  const wd = d.weekday.map((v, i) => `<div class="col" ${tip(`${DAYS[i]}: ${fmt(v)} commits`)}><i class="${i === wpeak ? 'peak' : 'gray'}" style="--h:${Math.max(6, (v / wmax) * 100)}%"></i></div>`).join('');
+  const wd = d.weekday.map((v, i) => `<div class="col" ${tip(`${DAYS[i]}: ${fmt(v)} commits`)}><b class="v${i === wpeak ? ' peakv' : ''}">${fmt(v)}</b><i class="${i === wpeak ? 'peak' : 'gray'}" style="--h:${Math.max(6, (v / wmax) * 100)}%"></i></div>`).join('');
   const hmax = Math.max(1, ...d.hours), hpeak = d.hours.indexOf(Math.max(...d.hours));
   const mood = hpeak >= 21 || hpeak < 5 ? 'night owl' : hpeak < 10 ? 'early bird' : 'daytime';
-  const hh = d.hours.map((v, i) => `<div class="col" ${tip(`${String(i).padStart(2, '0')}:00 · ${fmt(v)} commits`)}><i class="${i === hpeak ? 'peak' : 'gray'}" style="--h:${Math.max(6, (v / hmax) * 100)}%"></i></div>`).join('');
+  const hh = d.hours.map((v, i) => `<div class="col" ${tip(`${String(i).padStart(2, '0')}:00 · ${fmt(v)} commits`)}><b class="v${i === hpeak ? ' peakv' : ''}">${fmt(v)}</b><i class="${i === hpeak ? 'peak' : 'gray'}" style="--h:${Math.max(6, (v / hmax) * 100)}%"></i></div>`).join('');
   const hAxis = Array.from({ length: 24 }, (_, i) => `<span>${[0, 6, 12, 18, 23].includes(i) ? String(i).padStart(2, '0') : ''}</span>`).join('');
 
   const upd = new Date(d.updated).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
@@ -169,7 +178,7 @@ function render(d) {
     <div class="pills">${[['followers', d.followers], ['following', d.following], ['orgs', d.orgs], ['gists', d.gists], ['starred', d.starred]].map(([l, n]) => `<span class="pill"><b>${fmt(n)}</b> ${l}</span>`).join('')}</div>
   </header>
   <div class="grid">
-    ${card('c4', 'Commits · all-time', 'green', '', `<div class="hero" id="hero" data-n="${d.commitsAll}">0</div><div class="sub">${fmt(d.commitsYear)} in the last 12 months</div><div class="split"><span>Total contributions</span><b>${fmt(d.totalContribAll)}</b></div>`)}
+    ${card('c4', 'Commits · all-time', 'green', '', `<div class="hero" id="hero" data-n="${d.commitsAll}">0</div><div class="sub">${fmt(d.commitsYear)} in the last 12 months</div><div class="split"><span>Total contributions</span><b>${fmt(d.totalContribAll)}</b></div>`, 'Every commit you authored on any branch of any repo (private, org, forks), de-duplicated. Contributions = commits + PRs + issues + reviews')}
     ${card('c8', `${fmt(d.contribYear)} contributions in the last year`, 'purple',
       `<span class="legend">Less<span></span><i></i><i class="l1"></i><i class="l2"></i><i class="l3"></i><i class="l4"></i><span></span>More</span>`,
       `<div class="heat">${cells}</div><div class="months">${months}</div>
@@ -180,20 +189,22 @@ function render(d) {
     ${card('c2', 'Reviews', 'purple', '', `<div class="big">${fmt(d.reviews)}</div>`)}
     ${card('c2', 'Stars', 'yellow', '', `<div class="big">${fmt(d.stars)}</div>`)}
 
-    ${card('c2', 'Forks', 'purple', '', `<div class="big">${fmt(d.forks)}</div>`)}
-    ${card('c2', 'Watchers', 'blue', '', `<div class="big">${fmt(d.watchers)}</div>`)}
-    ${card('c4', 'Repositories', 'green', '', `<div class="row"><span class="big">${fmt(d.reposOwn)}</span><span class="sub">own</span><span class="big" style="margin-left:14px">${fmt(d.reposContrib)}</span><span class="sub">contributed to</span></div>`)}
-    ${card('c4', 'Lines changed', 'pink', `net ${net >= 0 ? '+' : '−'}${short(Math.abs(net))}`, `<div class="row"><span class="big grow">+${short(add)}</span><span class="big shrink">−${short(d.del)}</span></div>`)}
+    ${card('c3', 'Forks', 'purple', '', `<div class="big">${fmt(d.forks)}</div><div class="sub" style="margin-top:6px">${fmt(d.forksReceived)} on your repos</div>`, 'Repositories you forked (left) and forks others made of your repos')}
+    ${card('c3', 'Watchers', 'blue', '', `<div class="big">${fmt(d.watchers)}</div>`, 'People watching your own repositories')}
+    ${card('c6', 'Repositories', 'green', '', `<div class="row"><span class="big">${fmt(d.reposOwn)}</span><span class="sub">own</span><span class="big" style="margin-left:18px">${fmt(d.reposContrib)}</span><span class="sub">contributed to</span></div>`)}
 
-    ${card('c6', 'Lines added · Human vs AI', 'yellow', `${short(add)} total`,
-      `<div class="seg"><i style="flex:${d.addHuman || 1};background:var(--green)" ${tip(`Human: ${fmt(d.addHuman)} lines`)}></i><i style="flex:${d.addAI || 0.001};background:var(--purple);${d.addAI ? '' : 'display:none'}" ${tip(`AI-assisted: ${fmt(d.addAI)} lines`)}></i></div>
-       <div class="legend2"><span><em style="background:var(--green)"></em><b>Human</b> ${short(d.addHuman)} · ${Math.round(hr * 100)}%</span><span><em style="background:var(--purple)"></em><b>AI-assisted</b> ${short(d.addAI)} · ${Math.round((1 - hr) * 100)}%</span></div>
-       <div class="note">AI-assisted = commits with an AI co-author trailer (Claude, Copilot, …)</div>`)}
+    ${card('c12', 'Lines of code · all-time', 'pink', `net ${net >= 0 ? '+' : '−'}${short(Math.abs(net))}`,
+      `<div class="row" style="margin-bottom:14px"><span class="hero2 grow">+${short(add)}</span><span class="hero2 shrink">−${short(d.del)}</span><span class="sub">added / removed</span></div>
+       <div class="seg"><i style="flex:${d.addHuman || 1};background:var(--green)" ${tip(`Human: ${fmt(d.addHuman)} lines`)}></i><i style="flex:${d.addAI || 0.001};background:var(--purple);${d.addAI ? '' : 'display:none'}" ${tip(`AI-assisted: ${fmt(d.addAI)} lines`)}></i></div>
+       <div class="legend2"><span><em style="background:var(--green)"></em><b>Human</b> ${fmt(d.addHuman)} lines · ${Math.round(hr * 100)}%</span><span><em style="background:var(--purple)"></em><b>AI-assisted</b> ${fmt(d.addAI)} lines · ${Math.round((1 - hr) * 100)}%</span></div>
+       <div class="note">AI-assisted = commits with an AI co-author trailer (Claude, Copilot, …)</div>`, 'All lines added and removed in your commits on every branch, no cap')}
+
     ${card('c6', 'Languages', 'yellow', langs[0] ? `Top: ${esc(langs[0].name)}` : '', `<div class="seg">${seg}</div><div class="legend2">${legend}</div>`)}
 
-    ${card('c6', 'Commits per month', 'green', `<span class="mini"><span><i style="background:var(--green)"></i>Human</span><span><i style="background:var(--purple)"></i>AI</span></span>`,
-      `<div class="cols">${monthly}</div><div class="axis">${d.monthly.map((m) => `<span>${esc(m.label)}</span>`).join('')}</div>`)}
     ${card('c6', 'Top repos by commits', 'blue', '', repos)}
+
+    ${card('c12', 'Commits per month', 'green', `<span class="mini"><span><i style="background:var(--green)"></i>Human</span><span><i style="background:var(--purple)"></i>AI</span></span>`,
+      `<div class="cols">${monthly}</div><div class="axis">${d.monthly.map((m) => `<span>${esc(m.label)}</span>`).join('')}</div>`)}
 
     ${card('c4', 'By weekday', 'yellow', `Peak: ${DAYS[wpeak].slice(0, 3)}`, `<div class="cols" style="--c:var(--green)">${wd}</div><div class="axis">${'MTWTFSS'.split('').map((x) => `<span>${x}</span>`).join('')}</div>`)}
     ${card('c8', 'By hour of day', 'purple', `Peak ${String(hpeak).padStart(2, '0')}:00 · ${mood}`, `<div class="cols thin">${hh}</div><div class="axis thin">${hAxis}</div>`)}
