@@ -653,8 +653,8 @@ function render(d) {
   y += R3 + G;
 
   if (k) {
-    const [k3, k4, k5] = rowX([34, 33, 33]);
-    const HL = 40 + Math.max(k.languages.slice(0, 5).length, k.editors.slice(0, 4).length, (k.machines || []).slice(0, 4).length) * 34 + 18;
+    const [k3, k4] = rowX([50, 50]);
+    const HL = 40 + Math.max(k.languages.slice(0, 5).length, k.editors.slice(0, 4).length) * 34 + 18;
     const list = (r, title, color, items) => {
       parts.push(card(r.x, y, r.w, HL, title, color));
       const tot = items.reduce((s, x) => s + x.sec, 0) || 1, mx = Math.max(1, ...items.map((x) => x.sec));
@@ -666,8 +666,7 @@ function render(d) {
       });
     };
     list(k3, 'Time by language', C.yellow, k.languages.slice(0, 5));
-    list(k4, 'Time by editor', C.purple, k.editors.slice(0, 4));
-    list(k5, 'Time by device', C.green, (k.machines || []).slice(0, 4));
+    list(k4, 'Time by editor', C.purple, k.editors.slice(0, 4));
     y += HL + G;
   }
 
