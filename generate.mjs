@@ -253,7 +253,8 @@ async function fetchData() {
 // Die kostenlose Version liefert nur wenige Tage. Deshalb werden die Tageswerte bei jedem Lauf in wakatime.json
 // gespeichert und über die Zeit aufsummiert.
 async function wakaGet(path) {
-  const res = await fetch('https://wakatime.com/api/v1/' + path, { headers: { Authorization: 'Basic ' + Buffer.from(WAKA_KEY).toString('base64') } });
+  // api_key-Parameter: funktioniert mit API-Key und mit OAuth-Token (ab 1.11.2026 sind API-Keys nur noch für Plugins erlaubt)
+  const res = await fetch('https://wakatime.com/api/v1/' + path + (path.includes('?') ? '&' : '?') + 'api_key=' + encodeURIComponent(WAKA_KEY));
   const json = await res.json().catch(() => ({}));
   if (!res.ok) throw new Error(`${res.status} ${JSON.stringify(json).slice(0, 160)}`);
   return json;
@@ -268,13 +269,13 @@ async function fetchWaka(now) {
   const today = new Intl.DateTimeFormat('en-CA', { timeZone: TZ }).format(now);
 
   if (WAKA_KEY) {
-    for (const back of Object.keys(hist.days).length >= 30 ? [13, 6, 2] : [200, 90, 30, 13, 6, 2]) { // so viele Tage, wie der Account hergibt
+    for (const back of Object.keys(hist.days).length >= 30 && Object.values(hist.days).every((x) => x.machines) ? [13, 6, 2] : [200, 90, 30, 13, 6, 2]) { // so viele Tage, wie der Account hergibt
       try {
         const r = await wakaGet(`users/current/summaries?start=${addDays(today, -back)}&end=${today}&timezone=${encodeURIComponent(TZ)}`);
         for (const day of r.data) {
           hist.days[day.range.date] = {
             total: Math.round(day.grand_total.total_seconds),
-            languages: toMap(day.languages), editors: toMap(day.editors), categories: toMap(day.categories),
+            languages: toMap(day.languages), editors: toMap(day.editors), categories: toMap(day.categories), machines: toMap(day.machines),
           };
         }
         console.log(`WakaTime summaries: ${r.data.length} Tage geholt`);
@@ -322,7 +323,7 @@ async function fetchWaka(now) {
     history: totals, weeks, weeksTracked: Object.keys(byWeek).length,
     last7Sec: daily.slice(7).reduce((s, x) => s + x.sec, 0),
     avgSec: active.length ? tracked / active.length : 0, best,
-    daily, languages: sum('languages'), editors: sum('editors'),
+    daily, languages: sum('languages'), editors: sum('editors'), machines: sum('machines'),
   };
 }
 
@@ -423,6 +424,7 @@ function demoData() {
       best: { date: '2026-10-12', sec: 6 * 3600 + 2 * 60 },
       daily: [2.1, 3.4, 0, 4.8, 5.2, 1.1, 0, 3.9, 4.4, 2.8, 6.0, 3.3, 0.6, 4.1].map((h, i) => ({ date: new Date(Date.UTC(2026, 9, 6 + i)).toISOString().slice(0, 10), sec: h * 3600 })),
       languages: [['TypeScript', 160], ['C#', 110], ['Python', 70], ['HTML', 40], ['CSS', 20]].map(([name, h]) => ({ name, sec: h * 3600 })),
+      machines: [['Desktop', 260], ['Laptop', 120], ['Work PC', 32]].map(([name, h]) => ({ name, sec: h * 3600 })),
       editors: [['VS Code', 300], ['Unity', 90], ['JetBrains Rider', 22]].map(([name, h]) => ({ name, sec: h * 3600 })),
     },
   };
@@ -651,20 +653,21 @@ function render(d) {
   y += R3 + G;
 
   if (k) {
-    const [k3, k4] = rowX([50, 50]);
-    const HL = 40 + Math.max(k.languages.slice(0, 5).length, k.editors.slice(0, 4).length) * 26 + 22;
+    const [k3, k4, k5] = rowX([34, 33, 33]);
+    const HL = 40 + Math.max(k.languages.slice(0, 5).length, k.editors.slice(0, 4).length, (k.machines || []).slice(0, 4).length) * 34 + 18;
     const list = (r, title, color, items) => {
       parts.push(card(r.x, y, r.w, HL, title, color));
       const tot = items.reduce((s, x) => s + x.sec, 0) || 1, mx = Math.max(1, ...items.map((x) => x.sec));
       items.forEach((it, i) => {
-        const ry = y + 66 + i * 26;
-        parts.push(text(r.x + PAD, ry + 4, it.name.length > 15 ? it.name.slice(0, 14) + '…' : it.name, { size: 12.5, fill: '#e6e6e6' }));
-        parts.push(bar(r.x + 142, ry - 3, r.w - 142 - PAD - 92, 8, it.sec / mx, color));
+        const ry = y + 66 + i * 34;
+        parts.push(text(r.x + PAD, ry + 4, it.name.length > 22 ? it.name.slice(0, 21) + '…' : it.name, { size: 12.5, fill: '#e6e6e6' }));
+        parts.push(bar(r.x + PAD, ry + 9, r.w - 2 * PAD, 6, it.sec / mx, color));
         parts.push(text(r.x + r.w - PAD, ry + 4, `${dur(it.sec)} · ${Math.round((it.sec / tot) * 100)}%`, { size: 11.5, anchor: 'end', fill: C.text, weight: 600 }));
       });
     };
     list(k3, 'Time by language', C.yellow, k.languages.slice(0, 5));
     list(k4, 'Time by editor', C.purple, k.editors.slice(0, 4));
+    list(k5, 'Time by device', C.green, (k.machines || []).slice(0, 4));
     y += HL + G;
   }
 
