@@ -42,6 +42,7 @@ async function fetchData() {
       id login name createdAt
       organizations{totalCount} gists{totalCount} starredRepositories{totalCount}
       pullRequests{totalCount} mergedPRs: pullRequests(states:MERGED){totalCount}
+      issueComments{totalCount} commitComments{totalCount} gistComments{totalCount} repositoryDiscussionComments{totalCount}
       issues{totalCount} closedIssues: issues(states:CLOSED){totalCount}
       ownRepos: repositories(ownerAffiliations:OWNER){totalCount}
       forkedRepos: repositories(ownerAffiliations:OWNER,isFork:true){totalCount}
@@ -219,6 +220,7 @@ async function fetchData() {
     pr: { total: u.pullRequests.totalCount, merged: u.mergedPRs.totalCount },
     issues: { total: u.issues.totalCount, closed: u.closedIssues.totalCount },
     reviews,
+    comments: u.issueComments.totalCount + u.commitComments.totalCount + u.gistComments.totalCount + u.repositoryDiscussionComments.totalCount,
     stars: owned.reduce((s, r) => s + r.stargazerCount, 0),
     forks: u.forkedRepos.totalCount,
     forksReceived: owned.reduce((s, r) => s + r.forkCount, 0),
@@ -379,7 +381,7 @@ function demoData() {
       if (wk.length) out.push(wk);
       return [String(y), out];
     })),
-    pr: { total: 143, merged: 121 }, issues: { total: 62, closed: 55 }, reviews: 89, stars: 318,
+    pr: { total: 143, merged: 121 }, issues: { total: 62, closed: 55 }, reviews: 89, comments: 214, stars: 318,
     forks: 41, forksReceived: 12, watchers: 22, reposOwn: 27, reposContrib: 14,
     addHuman: 136000, addAI: 48000, del: 61000, changed: 38000, linesAllRepos: { total: 2410000, repos: 18 },
     languages: [
@@ -554,12 +556,15 @@ function render(d) {
   const mixTotal = mix.reduce((s, m) => s + m[1], 0) || 1;
   parts.push(card(m1.x, y, m1.w, R2, 'Contributions', C.green));
   mix.forEach(([l, v, c], i) => {
-    const ry = y + 64 + i * 37;
+    const ry = y + 62 + i * 33;
     parts.push(`<circle cx="${m1.x + PAD + 4}" cy="${ry - 4}" r="4.5" fill="${c}"/>`);
     parts.push(text(m1.x + PAD + 15, ry, l, { size: 12.5, fill: '#e6e6e6' }));
     parts.push(text(m1.x + m1.w - PAD, ry, `${num(v)} · ${Math.round((v / mixTotal) * 100)}%`, { size: 12.5, fill: C.text, weight: 700, anchor: 'end' }));
     parts.push(bar(m1.x + PAD, ry + 9, m1.w - 2 * PAD, 6, v / mixTotal, c));
   });
+  parts.push(`<line x1="${m1.x + PAD}" y1="${y + 185}" x2="${m1.x + m1.w - PAD}" y2="${y + 185}" stroke="#262626"/>`);
+  parts.push(text(m1.x + PAD, y + 204, 'Comments written', { size: 12.5, fill: '#e6e6e6' }));
+  parts.push(text(m1.x + m1.w - PAD, y + 204, num(d.comments || 0), { size: 12.5, fill: C.text, weight: 700, anchor: 'end' }));
 
   parts.push(card(b.x, y, b.w, R2, `${num(d.contribYear)} contributions in the last year`, C.purple));
   const lv = ['#1f2523', '#0e4f35', '#12804f', '#1fb870', C.green];
