@@ -290,7 +290,7 @@ function render(d) {
 
     ${wk[0]}
 
-    ${card('c3', 'Contributions', 'green', `${fmt(mixTotal)} total`, mixHtml + `<div class="split" style="margin-top:14px" data-tip="Comments on issues, pull requests, commits and discussions. Not part of the contribution total"><span>Comments written</span><b>${fmt(d.comments || 0)}</b></div>`, 'Commits + pull requests + issues + code reviews')}
+    ${card('c3', 'Contributions', 'green', `${fmt(mixTotal)} total`, mixHtml + `<div class="split" style="margin-top:14px" data-tip="Comments you wrote on issues, pull requests (incl. code review lines), commits, discussions and gists, across all your repos. Not part of the contribution total"><span>Comments written</span><b>${fmt(d.comments || 0)}</b></div>`, 'Commits + pull requests + issues + code reviews')}
     ${card('c9 heatcard', `${fmt(d.contribYear)} contributions in the last year`, 'purple',
       `<span class="legend">Less<span></span><i></i><i class="l1"></i><i class="l2"></i><i class="l3"></i><i class="l4"></i><span></span>More</span>`,
       `${yearBtns}<div id="heatBox">${hb.html}</div>`)}

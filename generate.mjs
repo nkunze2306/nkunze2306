@@ -194,6 +194,20 @@ async function fetchData() {
   const topRepos = [...repoCount].sort((a, b) => b[1] - a[1]).slice(0, 5)
     .map(([full, count]) => ({ name: privateOf.get(full) ? `private repo ${++n}` : full.split('/')[1], count }));
 
+  // Kommentare aller Repos (Issues/PRs, Code-Review-Zeilen, Commits), die ich selbst geschrieben habe
+  let commentsRepo = 0;
+  for (const r of repos) {
+    for (const kind of ['issues/comments', 'pulls/comments', 'comments']) {
+      for (let page = 1; page <= 50; page++) {
+        const res = await fetch(`https://api.github.com/repos/${r.nameWithOwner}/${kind}?per_page=100&page=${page}`, { headers: { Authorization: `bearer ${TOKEN}` } });
+        if (res.status !== 200) { if (res.status !== 404 && res.status !== 403) console.warn(`Kommentare übersprungen: ${r.nameWithOwner}/${kind} (${res.status})`); break; }
+        const list = await res.json();
+        commentsRepo += list.filter((c) => c.user?.login?.toLowerCase() === LOGIN.toLowerCase()).length;
+        if (list.length < 100) break;
+      }
+    }
+  }
+
   // Gesamtzeilen aller Repos: Summe (Additions + Deletions) der Code-Frequency über alle Autoren
   let linesTotal = 0, linesRepos = 0;
   for (const r of repos.filter((x) => !x.isFork)) {
@@ -220,7 +234,7 @@ async function fetchData() {
     pr: { total: u.pullRequests.totalCount, merged: u.mergedPRs.totalCount },
     issues: { total: u.issues.totalCount, closed: u.closedIssues.totalCount },
     reviews,
-    comments: u.issueComments.totalCount + u.commitComments.totalCount + u.gistComments.totalCount + u.repositoryDiscussionComments.totalCount,
+    comments: Math.max(commentsRepo, 0) + u.gistComments.totalCount + u.repositoryDiscussionComments.totalCount,
     stars: owned.reduce((s, r) => s + r.stargazerCount, 0),
     forks: u.forkedRepos.totalCount,
     forksReceived: owned.reduce((s, r) => s + r.forkCount, 0),
