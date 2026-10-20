@@ -17,11 +17,11 @@
 <circle cx="28" cy="101" r="11" fill="#34f5a0" fill-opacity="0.13" stroke="#34f5a0" stroke-opacity="0.55"/>
 <circle cx="28" cy="101" r="3.2" fill="#34f5a0"/>
 <text x="47" y="105" font-size="11" fill="#9a9a9a" font-weight="700" text-anchor="start" letter-spacing="1.1">COMMITS</text>
-<text x="23" y="177" font-size="48" fill="#ffffff" font-weight="800" text-anchor="start">338</text>
-<text x="23" y="201" font-size="12" fill="#9a9a9a" font-weight="400" text-anchor="start">285 in last 12 mo.</text>
+<text x="23" y="177" font-size="48" fill="#ffffff" font-weight="800" text-anchor="start">340</text>
+<text x="23" y="201" font-size="12" fill="#9a9a9a" font-weight="400" text-anchor="start">287 in last 12 mo.</text>
 <line x1="23" x2="159.44" y1="225" y2="225" stroke="#262626"/>
 <text x="23" y="253" font-size="9.5" fill="#6a6a6a" font-weight="700" text-anchor="start" letter-spacing="1">TOTAL CONTRIBUTIONS</text>
-<text x="23" y="283" font-size="26" fill="#ffffff" font-weight="700" text-anchor="start">601</text>
+<text x="23" y="283" font-size="26" fill="#ffffff" font-weight="700" text-anchor="start">603</text>
 <rect x="193.44" y="75" width="277.6" height="232" rx="16" fill="#121212" stroke="#262626"/>
 <circle cx="220.44" cy="101" r="11" fill="#ff5c9a" fill-opacity="0.13" stroke="#ff5c9a" stroke-opacity="0.55"/>
 <circle cx="220.44" cy="101" r="3.2" fill="#ff5c9a"/>
@@ -40,47 +40,47 @@
 <text x="293.3066666666667" y="263" font-size="9" fill="#6a6a6a" font-weight="700" text-anchor="start" letter-spacing="0.8">REFACTORED</text>
 <text x="293.3066666666667" y="287" font-size="17" fill="#ffffff" font-weight="700" text-anchor="start">14k</text>
 <text x="371.17333333333335" y="263" font-size="9" fill="#6a6a6a" font-weight="700" text-anchor="start" letter-spacing="0.8">ALL REPOS</text>
-<text x="371.17333333333335" y="287" font-size="17" fill="#ffffff" font-weight="700" text-anchor="start">723k</text>
+<text x="371.17333333333335" y="287" font-size="17" fill="#ffffff" font-weight="700" text-anchor="start">721k</text>
 <rect x="483.04" y="75" width="235.96" height="232" rx="16" fill="#121212" stroke="#262626"/>
 <circle cx="510.04" cy="101" r="11" fill="#38bdf8" fill-opacity="0.13" stroke="#38bdf8" stroke-opacity="0.55"/>
 <circle cx="510.04" cy="101" r="3.2" fill="#38bdf8"/>
 <text x="529.04" y="105" font-size="11" fill="#9a9a9a" font-weight="700" text-anchor="start" letter-spacing="1.1">CODING TIME · ALL-TIME</text>
-<text x="505.04" y="163" font-size="32" fill="#ffffff" font-weight="800" text-anchor="start">111h 01m</text>
+<text x="505.04" y="163" font-size="32" fill="#ffffff" font-weight="800" text-anchor="start">111h 31m</text>
 <text x="505.04" y="185" font-size="11.5" fill="#6a6a6a" font-weight="400" text-anchor="start">tracked since 30 Apr 2026</text>
 <line x1="505.04" x2="697" y1="205" y2="205" stroke="#262626"/>
 <text x="505.04" y="231" font-size="12" fill="#9a9a9a" font-weight="400" text-anchor="start">Last 7 days</text>
-<text x="697" y="231" font-size="13" fill="#ffffff" font-weight="700" text-anchor="end">12h 29m</text>
+<text x="697" y="231" font-size="13" fill="#ffffff" font-weight="700" text-anchor="end">12h 59m</text>
 <text x="505.04" y="255" font-size="12" fill="#9a9a9a" font-weight="400" text-anchor="start">Daily average</text>
 <text x="697" y="255" font-size="13" fill="#ffffff" font-weight="700" text-anchor="end">1h 40m</text>
 <text x="505.04" y="279" font-size="12" fill="#9a9a9a" font-weight="400" text-anchor="start">Weekly average</text>
-<text x="697" y="279" font-size="13" fill="#ffffff" font-weight="700" text-anchor="end">4h 30m</text>
+<text x="697" y="279" font-size="13" fill="#ffffff" font-weight="700" text-anchor="end">4h 31m</text>
 <rect x="1" y="319" width="211.8" height="214" rx="16" fill="#121212" stroke="#262626"/>
 <circle cx="28" cy="345" r="11" fill="#34f5a0" fill-opacity="0.13" stroke="#34f5a0" stroke-opacity="0.55"/>
 <circle cx="28" cy="345" r="3.2" fill="#34f5a0"/>
 <text x="47" y="349" font-size="11" fill="#9a9a9a" font-weight="700" text-anchor="start" letter-spacing="1.1">CONTRIBUTIONS</text>
 <circle cx="27" cy="377" r="4.5" fill="#34f5a0"/>
 <text x="38" y="381" font-size="12.5" fill="#e6e6e6" font-weight="400" text-anchor="start">Commits</text>
-<text x="190.8" y="381" font-size="12.5" fill="#ffffff" font-weight="700" text-anchor="end">338 · 56%</text>
-<rect x="23" y="390" width="167.8" height="6" rx="3" fill="#2a2a2a"/><rect x="23" y="390" width="94.37004991680533" height="6" rx="3" fill="#34f5a0"/>
+<text x="190.8" y="381" font-size="12.5" fill="#ffffff" font-weight="700" text-anchor="end">340 · 56%</text>
+<rect x="23" y="390" width="167.8" height="6" rx="3" fill="#2a2a2a"/><rect x="23" y="390" width="94.61359867330017" height="6" rx="3" fill="#34f5a0"/>
 <circle cx="27" cy="410" r="4.5" fill="#38bdf8"/>
 <text x="38" y="414" font-size="12.5" fill="#e6e6e6" font-weight="400" text-anchor="start">Pull requests</text>
 <text x="190.8" y="414" font-size="12.5" fill="#ffffff" font-weight="700" text-anchor="end">80 · 13%</text>
-<rect x="23" y="423" width="167.8" height="6" rx="3" fill="#2a2a2a"/><rect x="23" y="423" width="22.336106489184694" height="6" rx="3" fill="#38bdf8"/>
+<rect x="23" y="423" width="167.8" height="6" rx="3" fill="#2a2a2a"/><rect x="23" y="423" width="22.2620232172471" height="6" rx="3" fill="#38bdf8"/>
 <circle cx="27" cy="443" r="4.5" fill="#ff5c9a"/>
 <text x="38" y="447" font-size="12.5" fill="#e6e6e6" font-weight="400" text-anchor="start">Issues</text>
 <text x="190.8" y="447" font-size="12.5" fill="#ffffff" font-weight="700" text-anchor="end">139 · 23%</text>
-<rect x="23" y="456" width="167.8" height="6" rx="3" fill="#2a2a2a"/><rect x="23" y="456" width="38.8089850249584" height="6" rx="3" fill="#ff5c9a"/>
+<rect x="23" y="456" width="167.8" height="6" rx="3" fill="#2a2a2a"/><rect x="23" y="456" width="38.68026533996684" height="6" rx="3" fill="#ff5c9a"/>
 <circle cx="27" cy="476" r="4.5" fill="#b794ff"/>
 <text x="38" y="480" font-size="12.5" fill="#e6e6e6" font-weight="400" text-anchor="start">Code review</text>
 <text x="190.8" y="480" font-size="12.5" fill="#ffffff" font-weight="700" text-anchor="end">44 · 7%</text>
-<rect x="23" y="489" width="167.8" height="6" rx="3" fill="#2a2a2a"/><rect x="23" y="489" width="12.284858569051583" height="6" rx="3" fill="#b794ff"/>
+<rect x="23" y="489" width="167.8" height="6" rx="3" fill="#2a2a2a"/><rect x="23" y="489" width="12.244112769485906" height="6" rx="3" fill="#b794ff"/>
 <line x1="23" y1="504" x2="190.8" y2="504" stroke="#262626"/>
 <text x="23" y="523" font-size="12.5" fill="#e6e6e6" font-weight="400" text-anchor="start">Comments written</text>
 <text x="190.8" y="523" font-size="12.5" fill="#ffffff" font-weight="700" text-anchor="end">125</text>
 <rect x="224.8" y="319" width="494.2" height="214" rx="16" fill="#121212" stroke="#262626"/>
 <circle cx="251.8" cy="345" r="11" fill="#b794ff" fill-opacity="0.13" stroke="#b794ff" stroke-opacity="0.55"/>
 <circle cx="251.8" cy="345" r="3.2" fill="#b794ff"/>
-<text x="270.8" y="349" font-size="11" fill="#9a9a9a" font-weight="700" text-anchor="start" letter-spacing="1.1">289 CONTRIBUTIONS IN THE LAST YEAR</text>
+<text x="270.8" y="349" font-size="11" fill="#9a9a9a" font-weight="700" text-anchor="start" letter-spacing="1.1">291 CONTRIBUTIONS IN THE LAST YEAR</text>
 <text x="600" y="349" font-size="10.5" fill="#9a9a9a" font-weight="400" text-anchor="end">Less</text>
 <rect x="608" y="340" width="9" height="9" rx="2" fill="#1f2523"/>
 <rect x="619" y="340" width="9" height="9" rx="2" fill="#0e4f35"/>
@@ -454,8 +454,8 @@
 <rect x="680.0" y="420.0" width="6.5" height="6.5" rx="1.8" fill="#1f2523"/>
 <rect x="688.5" y="369.0" width="6.5" height="6.5" rx="1.8" fill="#1f2523"/>
 <rect x="688.5" y="377.5" width="6.5" height="6.5" rx="1.8" fill="#34f5a0"/>
-<rect x="688.5" y="386.0" width="6.5" height="6.5" rx="1.8" fill="#0e4f35"/>
-<text x="263.8" y="442.4603773584906" font-size="10" fill="#9a9a9a" font-weight="400" text-anchor="start">Nov</text><text x="263.8" y="455.4603773584906" font-size="9.5" fill="#ffffff" font-weight="600" text-anchor="start">63</text><text x="306.3" y="442.4603773584906" font-size="10" fill="#9a9a9a" font-weight="400" text-anchor="start">Dec</text><text x="306.3" y="455.4603773584906" font-size="9.5" fill="#ffffff" font-weight="600" text-anchor="start">70</text><text x="340.2" y="442.4603773584906" font-size="10" fill="#9a9a9a" font-weight="400" text-anchor="start">Jan</text><text x="340.2" y="455.4603773584906" font-size="9.5" fill="#ffffff" font-weight="600" text-anchor="start">0</text><text x="374.2" y="442.4603773584906" font-size="10" fill="#9a9a9a" font-weight="400" text-anchor="start">Feb</text><text x="374.2" y="455.4603773584906" font-size="9.5" fill="#ffffff" font-weight="600" text-anchor="start">9</text><text x="408.2" y="442.4603773584906" font-size="10" fill="#9a9a9a" font-weight="400" text-anchor="start">Mar</text><text x="408.2" y="455.4603773584906" font-size="9.5" fill="#ffffff" font-weight="600" text-anchor="start">21</text><text x="450.7" y="442.4603773584906" font-size="10" fill="#9a9a9a" font-weight="400" text-anchor="start">Apr</text><text x="450.7" y="455.4603773584906" font-size="9.5" fill="#ffffff" font-weight="600" text-anchor="start">8</text><text x="484.6" y="442.4603773584906" font-size="10" fill="#9a9a9a" font-weight="400" text-anchor="start">May</text><text x="484.6" y="455.4603773584906" font-size="9.5" fill="#ffffff" font-weight="600" text-anchor="start">12</text><text x="527.1" y="442.4603773584906" font-size="10" fill="#9a9a9a" font-weight="400" text-anchor="start">Jun</text><text x="527.1" y="455.4603773584906" font-size="9.5" fill="#ffffff" font-weight="600" text-anchor="start">6</text><text x="561.1" y="442.4603773584906" font-size="10" fill="#9a9a9a" font-weight="400" text-anchor="start">Jul</text><text x="561.1" y="455.4603773584906" font-size="9.5" fill="#ffffff" font-weight="600" text-anchor="start">6</text><text x="595.1" y="442.4603773584906" font-size="10" fill="#9a9a9a" font-weight="400" text-anchor="start">Aug</text><text x="595.1" y="455.4603773584906" font-size="9.5" fill="#ffffff" font-weight="600" text-anchor="start">10</text><text x="637.5" y="442.4603773584906" font-size="10" fill="#9a9a9a" font-weight="400" text-anchor="start">Sep</text><text x="637.5" y="455.4603773584906" font-size="9.5" fill="#ffffff" font-weight="600" text-anchor="start">4</text><text x="671.5" y="442.4603773584906" font-size="10" fill="#9a9a9a" font-weight="400" text-anchor="start">Oct</text><text x="671.5" y="455.4603773584906" font-size="9.5" fill="#ffffff" font-weight="600" text-anchor="start">60</text>
+<rect x="688.5" y="386.0" width="6.5" height="6.5" rx="1.8" fill="#12804f"/>
+<text x="263.8" y="442.4603773584906" font-size="10" fill="#9a9a9a" font-weight="400" text-anchor="start">Nov</text><text x="263.8" y="455.4603773584906" font-size="9.5" fill="#ffffff" font-weight="600" text-anchor="start">63</text><text x="306.3" y="442.4603773584906" font-size="10" fill="#9a9a9a" font-weight="400" text-anchor="start">Dec</text><text x="306.3" y="455.4603773584906" font-size="9.5" fill="#ffffff" font-weight="600" text-anchor="start">70</text><text x="340.2" y="442.4603773584906" font-size="10" fill="#9a9a9a" font-weight="400" text-anchor="start">Jan</text><text x="340.2" y="455.4603773584906" font-size="9.5" fill="#ffffff" font-weight="600" text-anchor="start">0</text><text x="374.2" y="442.4603773584906" font-size="10" fill="#9a9a9a" font-weight="400" text-anchor="start">Feb</text><text x="374.2" y="455.4603773584906" font-size="9.5" fill="#ffffff" font-weight="600" text-anchor="start">9</text><text x="408.2" y="442.4603773584906" font-size="10" fill="#9a9a9a" font-weight="400" text-anchor="start">Mar</text><text x="408.2" y="455.4603773584906" font-size="9.5" fill="#ffffff" font-weight="600" text-anchor="start">21</text><text x="450.7" y="442.4603773584906" font-size="10" fill="#9a9a9a" font-weight="400" text-anchor="start">Apr</text><text x="450.7" y="455.4603773584906" font-size="9.5" fill="#ffffff" font-weight="600" text-anchor="start">8</text><text x="484.6" y="442.4603773584906" font-size="10" fill="#9a9a9a" font-weight="400" text-anchor="start">May</text><text x="484.6" y="455.4603773584906" font-size="9.5" fill="#ffffff" font-weight="600" text-anchor="start">12</text><text x="527.1" y="442.4603773584906" font-size="10" fill="#9a9a9a" font-weight="400" text-anchor="start">Jun</text><text x="527.1" y="455.4603773584906" font-size="9.5" fill="#ffffff" font-weight="600" text-anchor="start">6</text><text x="561.1" y="442.4603773584906" font-size="10" fill="#9a9a9a" font-weight="400" text-anchor="start">Jul</text><text x="561.1" y="455.4603773584906" font-size="9.5" fill="#ffffff" font-weight="600" text-anchor="start">6</text><text x="595.1" y="442.4603773584906" font-size="10" fill="#9a9a9a" font-weight="400" text-anchor="start">Aug</text><text x="595.1" y="455.4603773584906" font-size="9.5" fill="#ffffff" font-weight="600" text-anchor="start">10</text><text x="637.5" y="442.4603773584906" font-size="10" fill="#9a9a9a" font-weight="400" text-anchor="start">Sep</text><text x="637.5" y="455.4603773584906" font-size="9.5" fill="#ffffff" font-weight="600" text-anchor="start">4</text><text x="671.5" y="442.4603773584906" font-size="10" fill="#9a9a9a" font-weight="400" text-anchor="start">Oct</text><text x="671.5" y="455.4603773584906" font-size="9.5" fill="#ffffff" font-weight="600" text-anchor="start">62</text>
 <line x1="246.8" x2="697" y1="469" y2="469" stroke="#262626"/>
 <text x="246.8" y="499" text-anchor="start"><tspan font-size="22" font-weight="700" fill="#fbbf24">2</tspan><tspan font-size="12" font-weight="400" fill="#9a9a9a"> days</tspan></text>
 <text x="246.8" y="517" font-size="9.5" fill="#6a6a6a" font-weight="700" text-anchor="start" letter-spacing="1">CURRENT STREAK</text>
@@ -471,10 +471,10 @@
 <text x="47" y="575" font-size="11" fill="#9a9a9a" font-weight="700" text-anchor="start" letter-spacing="1.1">ACTIVITY OVERVIEW</text>
 <line x1="142.2" y1="617" x2="142.2" y2="745" stroke="#34f5a0" stroke-opacity="0.75" stroke-width="1.6"/>
 <line x1="78.19999999999999" y1="681" x2="206.2" y2="681" stroke="#34f5a0" stroke-opacity="0.75" stroke-width="1.6"/>
-<polygon points="142.2,673.4 166.1,681.0 142.2,694.7 84.2,681.0" fill="#34f5a0" fill-opacity="0.28" stroke="#34f5a0" stroke-width="1.6" stroke-linejoin="round"/>
-<circle cx="142.2" cy="673.4" r="3.8" fill="#34f5a0" stroke="#ffffff" stroke-width="1.6"/>
-<circle cx="166.1" cy="681.0" r="3.8" fill="#34f5a0" stroke="#ffffff" stroke-width="1.6"/>
-<circle cx="142.2" cy="694.7" r="3.8" fill="#34f5a0" stroke="#ffffff" stroke-width="1.6"/>
+<polygon points="142.2,673.5 165.9,681.0 142.2,694.6 84.2,681.0" fill="#34f5a0" fill-opacity="0.28" stroke="#34f5a0" stroke-width="1.6" stroke-linejoin="round"/>
+<circle cx="142.2" cy="673.5" r="3.8" fill="#34f5a0" stroke="#ffffff" stroke-width="1.6"/>
+<circle cx="165.9" cy="681.0" r="3.8" fill="#34f5a0" stroke="#ffffff" stroke-width="1.6"/>
+<circle cx="142.2" cy="694.6" r="3.8" fill="#34f5a0" stroke="#ffffff" stroke-width="1.6"/>
 <circle cx="84.2" cy="681.0" r="3.8" fill="#34f5a0" stroke="#ffffff" stroke-width="1.6"/>
 <text x="142.2" y="591" font-size="13" fill="#ffffff" font-weight="700" text-anchor="middle">7%</text>
 <text x="142.2" y="606" font-size="12" fill="#9a9a9a" font-weight="400" text-anchor="middle">Code review</text>
@@ -527,8 +527,8 @@
 <rect x="645.8" y="623.0" width="21.1" height="118.0" rx="3" fill="#38bdf8"/>
 <text x="656.3" y="617.0" font-size="10" fill="#ffffff" font-weight="700" text-anchor="middle">5.8h</text>
 <text x="656.3" y="757" font-size="10.5" fill="#6a6a6a" font-weight="400" text-anchor="middle">19</text>
-<rect x="672.9" y="717.0" width="21.1" height="24.0" rx="3" fill="#2f3340"/>
-<text x="683.4" y="711.0" font-size="10" fill="#9a9a9a" font-weight="400" text-anchor="middle">1.2h</text>
+<rect x="672.9" y="706.9" width="21.1" height="34.1" rx="3" fill="#2f3340"/>
+<text x="683.4" y="700.9" font-size="10" fill="#9a9a9a" font-weight="400" text-anchor="middle">1.7h</text>
 <text x="683.4" y="757" font-size="10.5" fill="#6a6a6a" font-weight="400" text-anchor="middle">20</text>
 <rect x="1" y="793" width="353" height="192" rx="16" fill="#121212" stroke="#262626"/>
 <circle cx="28" cy="819" r="11" fill="#fbbf24" fill-opacity="0.13" stroke="#fbbf24" stroke-opacity="0.55"/>
@@ -536,10 +536,10 @@
 <text x="47" y="823" font-size="11" fill="#9a9a9a" font-weight="700" text-anchor="start" letter-spacing="1.1">TIME BY LANGUAGE</text>
 <text x="23" y="863" font-size="12.5" fill="#e6e6e6" font-weight="400" text-anchor="start">Dart</text>
 <rect x="143" y="856" width="97" height="8" rx="4" fill="#2a2a2a"/><rect x="143" y="856" width="97" height="8" rx="4" fill="#fbbf24"/>
-<text x="332" y="863" font-size="11.5" fill="#ffffff" font-weight="600" text-anchor="end">73h 44m · 68%</text>
+<text x="332" y="863" font-size="11.5" fill="#ffffff" font-weight="600" text-anchor="end">73h 44m · 67%</text>
 <text x="23" y="889" font-size="12.5" fill="#e6e6e6" font-weight="400" text-anchor="start">C#</text>
-<rect x="143" y="882" width="97" height="8" rx="4" fill="#2a2a2a"/><rect x="143" y="882" width="33.98091266612422" height="8" rx="4" fill="#fbbf24"/>
-<text x="332" y="889" font-size="11.5" fill="#ffffff" font-weight="600" text-anchor="end">25h 50m · 24%</text>
+<rect x="143" y="882" width="97" height="8" rx="4" fill="#2a2a2a"/><rect x="143" y="882" width="34.662745230991774" height="8" rx="4" fill="#fbbf24"/>
+<text x="332" y="889" font-size="11.5" fill="#ffffff" font-weight="600" text-anchor="end">26h 21m · 24%</text>
 <text x="23" y="915" font-size="12.5" fill="#e6e6e6" font-weight="400" text-anchor="start">HTML</text>
 <rect x="143" y="908" width="97" height="8" rx="4" fill="#2a2a2a"/><rect x="143" y="908" width="8" height="8" rx="4" fill="#fbbf24"/>
 <text x="332" y="915" font-size="11.5" fill="#ffffff" font-weight="600" text-anchor="end">3h 51m · 4%</text>
@@ -555,13 +555,13 @@
 <text x="412" y="823" font-size="11" fill="#9a9a9a" font-weight="700" text-anchor="start" letter-spacing="1.1">TIME BY EDITOR</text>
 <text x="388" y="863" font-size="12.5" fill="#e6e6e6" font-weight="400" text-anchor="start">Claude Code</text>
 <rect x="508" y="856" width="97" height="8" rx="4" fill="#2a2a2a"/><rect x="508" y="856" width="97" height="8" rx="4" fill="#b794ff"/>
-<text x="697" y="863" font-size="11.5" fill="#ffffff" font-weight="600" text-anchor="end">54h 24m · 47%</text>
+<text x="697" y="863" font-size="11.5" fill="#ffffff" font-weight="600" text-anchor="end">54h 41m · 47%</text>
 <text x="388" y="889" font-size="12.5" fill="#e6e6e6" font-weight="400" text-anchor="start">Android Studio</text>
-<rect x="508" y="882" width="97" height="8" rx="4" fill="#2a2a2a"/><rect x="508" y="882" width="82.89729307492802" height="8" rx="4" fill="#b794ff"/>
+<rect x="508" y="882" width="97" height="8" rx="4" fill="#2a2a2a"/><rect x="508" y="882" width="82.47537461268857" height="8" rx="4" fill="#b794ff"/>
 <text x="697" y="889" font-size="11.5" fill="#ffffff" font-weight="600" text-anchor="end">46h 30m · 40%</text>
 <text x="388" y="915" font-size="12.5" fill="#e6e6e6" font-weight="400" text-anchor="start">Rider</text>
-<rect x="508" y="908" width="97" height="8" rx="4" fill="#2a2a2a"/><rect x="508" y="908" width="27.308549635468786" height="8" rx="4" fill="#b794ff"/>
-<text x="697" y="915" font-size="11.5" fill="#ffffff" font-weight="600" text-anchor="end">15h 19m · 13%</text>
+<rect x="508" y="908" width="97" height="8" rx="4" fill="#2a2a2a"/><rect x="508" y="908" width="27.551902270533855" height="8" rx="4" fill="#b794ff"/>
+<text x="697" y="915" font-size="11.5" fill="#ffffff" font-weight="600" text-anchor="end">15h 32m · 13%</text>
 <text x="388" y="941" font-size="12.5" fill="#e6e6e6" font-weight="400" text-anchor="start">Unknown Editor</text>
 <rect x="508" y="934" width="97" height="8" rx="4" fill="#2a2a2a"/><rect x="508" y="934" width="8" height="8" rx="4" fill="#b794ff"/>
 <text x="697" y="941" font-size="11.5" fill="#ffffff" font-weight="600" text-anchor="end">5m · 0%</text>
@@ -705,8 +705,8 @@
 <rect x="506" y="1636" width="151" height="8" rx="4" fill="#2a2a2a"/><rect x="506" y="1636" width="30.200000000000003" height="8" rx="4" fill="#38bdf8"/>
 <text x="697" y="1643" font-size="12" fill="#ffffff" font-weight="600" text-anchor="end">31</text>
 <text x="388" y="1667" font-size="12.5" fill="#e6e6e6" font-weight="400" text-anchor="start">private repo 4</text>
-<rect x="506" y="1660" width="151" height="8" rx="4" fill="#2a2a2a"/><rect x="506" y="1660" width="20.458064516129035" height="8" rx="4" fill="#38bdf8"/>
-<text x="697" y="1667" font-size="12" fill="#ffffff" font-weight="600" text-anchor="end">21</text>
+<rect x="506" y="1660" width="151" height="8" rx="4" fill="#2a2a2a"/><rect x="506" y="1660" width="21.43225806451613" height="8" rx="4" fill="#38bdf8"/>
+<text x="697" y="1667" font-size="12" fill="#ffffff" font-weight="600" text-anchor="end">22</text>
 <rect x="1" y="1703" width="718" height="206" rx="16" fill="#121212" stroke="#262626"/>
 <circle cx="28" cy="1729" r="11" fill="#34f5a0" fill-opacity="0.13" stroke="#34f5a0" stroke-opacity="0.55"/>
 <circle cx="28" cy="1729" r="3.2" fill="#34f5a0"/>
@@ -748,9 +748,9 @@
 <rect x="593.1" y="1859.6" width="39.3" height="4.5" rx="3" fill="#b794ff"/>
 <text x="612.7" y="1852.557142857143" font-size="11.5" fill="#ffffff" font-weight="700" text-anchor="middle">4</text>
 <text x="612.7" y="1885" font-size="11" fill="#6a6a6a" font-weight="400" text-anchor="middle">Sep</text>
-<rect x="649.3" y="1826.9" width="39.3" height="40.1" rx="3" fill="#34f5a0"/>
-<rect x="649.3" y="1776.4" width="39.3" height="49.0" rx="3" fill="#b794ff"/>
-<text x="668.9" y="1769.357142857143" font-size="11.5" fill="#ffffff" font-weight="700" text-anchor="middle">60</text>
+<rect x="649.3" y="1823.9" width="39.3" height="43.1" rx="3" fill="#34f5a0"/>
+<rect x="649.3" y="1773.4" width="39.3" height="49.0" rx="3" fill="#b794ff"/>
+<text x="668.9" y="1766.3857142857141" font-size="11.5" fill="#ffffff" font-weight="700" text-anchor="middle">62</text>
 <text x="668.9" y="1885" font-size="11" fill="#6a6a6a" font-weight="400" text-anchor="middle">Oct</text>
 <rect x="1" y="1921" width="268.28" height="186" rx="16" fill="#121212" stroke="#262626"/>
 <circle cx="28" cy="1947" r="11" fill="#fbbf24" fill-opacity="0.13" stroke="#fbbf24" stroke-opacity="0.55"/>
@@ -759,8 +759,8 @@
 <rect x="26.5" y="1987.0" width="25.0" height="84.0" rx="3" fill="#34f5a0"/>
 <text x="39.0" y="1981.0" font-size="10.5" fill="#ffffff" font-weight="700" text-anchor="middle">63</text>
 <text x="39.0" y="2087" font-size="10.5" fill="#6a6a6a" font-weight="400" text-anchor="middle">Mon</text>
-<rect x="58.6" y="1999.0" width="25.0" height="72.0" rx="3" fill="#2f3340"/>
-<text x="71.1" y="1993.0" font-size="10.5" fill="#9a9a9a" font-weight="400" text-anchor="middle">54</text>
+<rect x="58.6" y="1996.3" width="25.0" height="74.7" rx="3" fill="#2f3340"/>
+<text x="71.1" y="1990.3" font-size="10.5" fill="#9a9a9a" font-weight="400" text-anchor="middle">56</text>
 <text x="71.1" y="2087" font-size="10.5" fill="#6a6a6a" font-weight="400" text-anchor="middle">Tue</text>
 <rect x="90.6" y="1992.3" width="25.0" height="78.7" rx="3" fill="#2f3340"/>
 <text x="103.1" y="1986.3" font-size="10.5" fill="#9a9a9a" font-weight="400" text-anchor="middle">59</text>
@@ -812,8 +812,8 @@
 <text x="508.3" y="2087" font-size="10.5" fill="#6a6a6a" font-weight="400" text-anchor="middle">12</text>
 <rect x="518.2" y="1989.3" width="13.1" height="81.7" rx="3" fill="#2f3340"/>
 <text x="524.7" y="1983.3" font-size="8.5" fill="#9a9a9a" font-weight="400" text-anchor="middle">36</text>
-<rect x="534.6" y="1991.5" width="13.1" height="79.5" rx="3" fill="#2f3340"/>
-<text x="541.2" y="1985.5" font-size="8.5" fill="#9a9a9a" font-weight="400" text-anchor="middle">35</text>
+<rect x="534.6" y="1987.0" width="13.1" height="84.0" rx="3" fill="#2f3340"/>
+<text x="541.2" y="1981.0" font-size="8.5" fill="#9a9a9a" font-weight="400" text-anchor="middle">37</text>
 <rect x="551.0" y="2030.1" width="13.1" height="40.9" rx="3" fill="#2f3340"/>
 <text x="557.6" y="2024.1" font-size="8.5" fill="#9a9a9a" font-weight="400" text-anchor="middle">18</text>
 <rect x="567.4" y="2005.2" width="13.1" height="65.8" rx="3" fill="#2f3340"/>
