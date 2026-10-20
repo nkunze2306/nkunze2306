@@ -269,13 +269,13 @@ async function fetchWaka(now) {
   const today = new Intl.DateTimeFormat('en-CA', { timeZone: TZ }).format(now);
 
   if (WAKA_KEY) {
-    for (const back of Object.keys(hist.days).length >= 30 && Object.values(hist.days).every((x) => x.machines) ? [13, 6, 2] : [200, 90, 30, 13, 6, 2]) { // so viele Tage, wie der Account hergibt
+    for (const back of Object.keys(hist.days).length >= 30 ? [13, 6, 2] : [200, 90, 30, 13, 6, 2]) { // so viele Tage, wie der Account hergibt
       try {
         const r = await wakaGet(`users/current/summaries?start=${addDays(today, -back)}&end=${today}&timezone=${encodeURIComponent(TZ)}`);
         for (const day of r.data) {
           hist.days[day.range.date] = {
             total: Math.round(day.grand_total.total_seconds),
-            languages: toMap(day.languages), editors: toMap(day.editors), categories: toMap(day.categories), machines: toMap(day.machines),
+            languages: toMap(day.languages), editors: toMap(day.editors), categories: toMap(day.categories),
           };
         }
         console.log(`WakaTime summaries: ${r.data.length} Tage geholt`);
@@ -323,7 +323,7 @@ async function fetchWaka(now) {
     history: totals, weeks, weeksTracked: Object.keys(byWeek).length,
     last7Sec: daily.slice(7).reduce((s, x) => s + x.sec, 0),
     avgSec: active.length ? tracked / active.length : 0, best,
-    daily, languages: sum('languages'), editors: sum('editors'), machines: sum('machines'),
+    daily, languages: sum('languages'), editors: sum('editors'),
   };
 }
 
