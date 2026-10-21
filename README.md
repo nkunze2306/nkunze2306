@@ -4,7 +4,7 @@ I'm currently studying **Media Informatics and Interactive Entertainment** at **
 I'm a **frontend dev** with a focus on **mobile apps** and **interactive experiences**.
 
 <a href="https://nkunze2306.github.io/nkunze2306/">
-  <img src="stats.svg?v=1792553050" alt="GitHub all-time stats" width="100%">
+  <img src="stats.svg?v=1792556600" alt="GitHub all-time stats" width="100%">
 </a>
 
 <p align="center">
