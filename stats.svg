@@ -21,7 +21,7 @@
 <text x="23" y="201" font-size="12" fill="#9a9a9a" font-weight="400" text-anchor="start">294 in last 12 mo.</text>
 <line x1="23" x2="159.44" y1="225" y2="225" stroke="#262626"/>
 <text x="23" y="253" font-size="9.5" fill="#6a6a6a" font-weight="700" text-anchor="start" letter-spacing="1">TOTAL CONTRIBUTIONS</text>
-<text x="23" y="283" font-size="26" fill="#ffffff" font-weight="700" text-anchor="start">578</text>
+<text x="23" y="283" font-size="26" fill="#ffffff" font-weight="700" text-anchor="start">619</text>
 <rect x="193.44" y="75" width="277.6" height="232" rx="16" fill="#121212" stroke="#262626"/>
 <circle cx="220.44" cy="101" r="11" fill="#ff5c9a" fill-opacity="0.13" stroke="#ff5c9a" stroke-opacity="0.55"/>
 <circle cx="220.44" cy="101" r="3.2" fill="#ff5c9a"/>
@@ -40,7 +40,7 @@
 <text x="293.3066666666667" y="263" font-size="9" fill="#6a6a6a" font-weight="700" text-anchor="start" letter-spacing="0.8">REFACTORED</text>
 <text x="293.3066666666667" y="287" font-size="17" fill="#ffffff" font-weight="700" text-anchor="start">15k</text>
 <text x="371.17333333333335" y="263" font-size="9" fill="#6a6a6a" font-weight="700" text-anchor="start" letter-spacing="0.8">ALL REPOS</text>
-<text x="371.17333333333335" y="287" font-size="17" fill="#ffffff" font-weight="700" text-anchor="start">723k</text>
+<text x="371.17333333333335" y="287" font-size="17" fill="#ffffff" font-weight="700" text-anchor="start">721k</text>
 <rect x="483.04" y="75" width="235.96" height="232" rx="16" fill="#121212" stroke="#262626"/>
 <circle cx="510.04" cy="101" r="11" fill="#38bdf8" fill-opacity="0.13" stroke="#38bdf8" stroke-opacity="0.55"/>
 <circle cx="510.04" cy="101" r="3.2" fill="#38bdf8"/>
@@ -60,20 +60,20 @@
 <text x="47" y="349" font-size="11" fill="#9a9a9a" font-weight="700" text-anchor="start" letter-spacing="1.1">CONTRIBUTIONS</text>
 <circle cx="27" cy="377" r="4.5" fill="#34f5a0"/>
 <text x="38" y="381" font-size="12.5" fill="#e6e6e6" font-weight="400" text-anchor="start">Commits</text>
-<text x="190.8" y="381" font-size="12.5" fill="#ffffff" font-weight="700" text-anchor="end">355 · 61%</text>
-<rect x="23" y="390" width="167.8" height="6" rx="3" fill="#2a2a2a"/><rect x="23" y="390" width="103.06055363321799" height="6" rx="3" fill="#34f5a0"/>
+<text x="190.8" y="381" font-size="12.5" fill="#ffffff" font-weight="700" text-anchor="end">355 · 57%</text>
+<rect x="23" y="390" width="167.8" height="6" rx="3" fill="#2a2a2a"/><rect x="23" y="390" width="96.23424878836835" height="6" rx="3" fill="#34f5a0"/>
 <circle cx="27" cy="410" r="4.5" fill="#38bdf8"/>
 <text x="38" y="414" font-size="12.5" fill="#e6e6e6" font-weight="400" text-anchor="start">Pull requests</text>
-<text x="190.8" y="414" font-size="12.5" fill="#ffffff" font-weight="700" text-anchor="end">81 · 14%</text>
-<rect x="23" y="423" width="167.8" height="6" rx="3" fill="#2a2a2a"/><rect x="23" y="423" width="23.515224913494812" height="6" rx="3" fill="#38bdf8"/>
+<text x="190.8" y="414" font-size="12.5" fill="#ffffff" font-weight="700" text-anchor="end">81 · 13%</text>
+<rect x="23" y="423" width="167.8" height="6" rx="3" fill="#2a2a2a"/><rect x="23" y="423" width="21.957673667205174" height="6" rx="3" fill="#38bdf8"/>
 <circle cx="27" cy="443" r="4.5" fill="#ff5c9a"/>
 <text x="38" y="447" font-size="12.5" fill="#e6e6e6" font-weight="400" text-anchor="start">Issues</text>
-<text x="190.8" y="447" font-size="12.5" fill="#ffffff" font-weight="700" text-anchor="end">139 · 24%</text>
-<rect x="23" y="456" width="167.8" height="6" rx="3" fill="#2a2a2a"/><rect x="23" y="456" width="40.353287197231836" height="6" rx="3" fill="#ff5c9a"/>
+<text x="190.8" y="447" font-size="12.5" fill="#ffffff" font-weight="700" text-anchor="end">139 · 22%</text>
+<rect x="23" y="456" width="167.8" height="6" rx="3" fill="#2a2a2a"/><rect x="23" y="456" width="37.68045234248788" height="6" rx="3" fill="#ff5c9a"/>
 <circle cx="27" cy="476" r="4.5" fill="#b794ff"/>
 <text x="38" y="480" font-size="12.5" fill="#e6e6e6" font-weight="400" text-anchor="start">Code review</text>
-<text x="190.8" y="480" font-size="12.5" fill="#ffffff" font-weight="700" text-anchor="end">3 · 1%</text>
-<rect x="23" y="489" width="167.8" height="6" rx="3" fill="#2a2a2a"/><rect x="23" y="489" width="6" height="6" rx="3" fill="#b794ff"/>
+<text x="190.8" y="480" font-size="12.5" fill="#ffffff" font-weight="700" text-anchor="end">44 · 7%</text>
+<rect x="23" y="489" width="167.8" height="6" rx="3" fill="#2a2a2a"/><rect x="23" y="489" width="11.927625201938612" height="6" rx="3" fill="#b794ff"/>
 <line x1="23" y1="504" x2="190.8" y2="504" stroke="#262626"/>
 <text x="23" y="523" font-size="12.5" fill="#e6e6e6" font-weight="400" text-anchor="start">Comments written</text>
 <text x="190.8" y="523" font-size="12.5" fill="#ffffff" font-weight="700" text-anchor="end">125</text>
@@ -473,18 +473,18 @@
 <text x="47" y="575" font-size="11" fill="#9a9a9a" font-weight="700" text-anchor="start" letter-spacing="1.1">ACTIVITY OVERVIEW</text>
 <line x1="142.2" y1="617" x2="142.2" y2="745" stroke="#34f5a0" stroke-opacity="0.75" stroke-width="1.6"/>
 <line x1="78.19999999999999" y1="681" x2="206.2" y2="681" stroke="#34f5a0" stroke-opacity="0.75" stroke-width="1.6"/>
-<polygon points="142.2,680.5 164.9,681.0 142.2,694.2 84.2,681.0" fill="#34f5a0" fill-opacity="0.28" stroke="#34f5a0" stroke-width="1.6" stroke-linejoin="round"/>
-<circle cx="142.2" cy="680.5" r="3.8" fill="#34f5a0" stroke="#ffffff" stroke-width="1.6"/>
+<polygon points="142.2,673.8 164.9,681.0 142.2,694.2 84.2,681.0" fill="#34f5a0" fill-opacity="0.28" stroke="#34f5a0" stroke-width="1.6" stroke-linejoin="round"/>
+<circle cx="142.2" cy="673.8" r="3.8" fill="#34f5a0" stroke="#ffffff" stroke-width="1.6"/>
 <circle cx="164.9" cy="681.0" r="3.8" fill="#34f5a0" stroke="#ffffff" stroke-width="1.6"/>
 <circle cx="142.2" cy="694.2" r="3.8" fill="#34f5a0" stroke="#ffffff" stroke-width="1.6"/>
 <circle cx="84.2" cy="681.0" r="3.8" fill="#34f5a0" stroke="#ffffff" stroke-width="1.6"/>
-<text x="142.2" y="591" font-size="13" fill="#ffffff" font-weight="700" text-anchor="middle">1%</text>
+<text x="142.2" y="591" font-size="13" fill="#ffffff" font-weight="700" text-anchor="middle">7%</text>
 <text x="142.2" y="606" font-size="12" fill="#9a9a9a" font-weight="400" text-anchor="middle">Code review</text>
-<text x="216.2" y="679" font-size="13" fill="#ffffff" font-weight="700" text-anchor="start">24%</text>
+<text x="216.2" y="679" font-size="13" fill="#ffffff" font-weight="700" text-anchor="start">22%</text>
 <text x="216.2" y="694" font-size="12" fill="#9a9a9a" font-weight="400" text-anchor="start">Issues</text>
-<text x="142.2" y="761" font-size="13" fill="#ffffff" font-weight="700" text-anchor="middle">14%</text>
+<text x="142.2" y="761" font-size="13" fill="#ffffff" font-weight="700" text-anchor="middle">13%</text>
 <text x="142.2" y="776" font-size="12" fill="#9a9a9a" font-weight="400" text-anchor="middle">Pull requests</text>
-<text x="68.19999999999999" y="679" font-size="13" fill="#ffffff" font-weight="700" text-anchor="end">61%</text>
+<text x="68.19999999999999" y="679" font-size="13" fill="#ffffff" font-weight="700" text-anchor="end">57%</text>
 <text x="68.19999999999999" y="694" font-size="12" fill="#9a9a9a" font-weight="400" text-anchor="end">Commits</text>
 <rect x="295.4" y="545" width="423.6" height="236" rx="16" fill="#121212" stroke="#262626"/>
 <circle cx="322.4" cy="571" r="11" fill="#38bdf8" fill-opacity="0.13" stroke="#38bdf8" stroke-opacity="0.55"/>
@@ -646,7 +646,7 @@
 <circle cx="447.56" cy="1323" r="11" fill="#b794ff" fill-opacity="0.13" stroke="#b794ff" stroke-opacity="0.55"/>
 <circle cx="447.56" cy="1323" r="3.2" fill="#b794ff"/>
 <text x="466.56" y="1327" font-size="11" fill="#9a9a9a" font-weight="700" text-anchor="start" letter-spacing="1.1">REVIEWS</text>
-<text x="442.56" y="1369" text-anchor="start"><tspan font-size="32" font-weight="700" fill="#ffffff">3</tspan><tspan font-size="12" font-weight="400" fill="#9a9a9a"></tspan></text>
+<text x="442.56" y="1369" text-anchor="start"><tspan font-size="32" font-weight="700" fill="#ffffff">44</tspan><tspan font-size="12" font-weight="400" fill="#9a9a9a"></tspan></text>
 <rect x="575.78" y="1297" width="143.22" height="108" rx="16" fill="#121212" stroke="#262626"/>
 <circle cx="602.78" cy="1323" r="11" fill="#fbbf24" fill-opacity="0.13" stroke="#fbbf24" stroke-opacity="0.55"/>
 <circle cx="602.78" cy="1323" r="3.2" fill="#fbbf24"/>
