@@ -666,7 +666,7 @@ function render(d) {
       });
     };
     list(k3, 'Time by language', C.yellow, k.languages.slice(0, 5));
-    list(k4, 'Time by editor', C.purple, k.editors.slice(0, 4));
+    list(k4, 'Time by editor', C.purple, k.editors.slice(0, 4));
     y += HL + G;
   }
 
@@ -675,7 +675,7 @@ function render(d) {
     const t = d.tokens;
     const [t1, t2] = rowX([32, 68]);
     const HT = 252;
-    parts.push(card(t1.x, y, t1.w, HT, 'Claude tokens · all-time', C.purple));
+    parts.push(card(t1.x, y, t1.w, HT, 'Tokens · all-time', C.purple));
     parts.push(text(t1.x + PAD, y + 92, tokShort(t.total), { size: 40, fill: C.text, weight: 800 }));
     parts.push(text(t1.x + PAD, y + 114, `since ${new Date(t.since + 'T00:00:00Z').toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric', timeZone: 'UTC' })} · ${num(t.messages)} replies`, { size: 11.5, fill: C.dim }));
     parts.push(`<line x1="${t1.x + PAD}" x2="${t1.x + t1.w - PAD}" y1="${y + 130}" y2="${y + 130}" stroke="${C.line}"/>`);
