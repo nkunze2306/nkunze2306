@@ -1,0 +1,601 @@
+{
+ "updated": "2026-10-23T17:01:39.229Z",
+ "login": "nkunze2306",
+ "unlocked": 20,
+ "total": 34,
+ "metrics": {
+  "followers": 2,
+  "issuesClosed": 1,
+  "prsMerged": 71,
+  "ownRepos": 3,
+  "stars": 0,
+  "forks": 0,
+  "maxRepoStars": 0,
+  "foreignRepos": 9,
+  "commits": 366,
+  "nightCommits": 13,
+  "earlyCommits": 0,
+  "weekendCommits": 59,
+  "aiCommits": 43,
+  "linesAdded": 82810,
+  "linesDeleted": 19425,
+  "handLines": 74712,
+  "unicornCommits": 0,
+  "christmasCommits": 0,
+  "newYearCommits": 0,
+  "languages": 15,
+  "topLanguageLines": 42815,
+  "maxCommitsPerDay": 33,
+  "activeDays": 126,
+  "longestStreak": 5,
+  "reviews": 44,
+  "foreignMergedPRs": 59,
+  "monsterPRs": 7,
+  "cleanSweeps": 7,
+  "quickdraws": 52,
+  "wakaHours": 123.465,
+  "marathonHours": 2.9491666666666667,
+  "consistentDays": 5
+ },
+ "achievements": [
+  {
+   "id": "committer",
+   "name": "Committer",
+   "group": "consistency",
+   "legendary": false,
+   "value": 366,
+   "tiers": [
+    10,
+    100,
+    500,
+    1000,
+    5000,
+    10000
+   ],
+   "level": 2,
+   "next": 500,
+   "maxed": false,
+   "progress": 0.732
+  },
+  {
+   "id": "streak-keeper",
+   "name": "Streak Keeper",
+   "group": "consistency",
+   "legendary": false,
+   "value": 5,
+   "tiers": [
+    3,
+    7,
+    14,
+    30,
+    60,
+    100,
+    365
+   ],
+   "level": 1,
+   "next": 7,
+   "maxed": false,
+   "progress": 0.7142857142857143
+  },
+  {
+   "id": "daily-grinder",
+   "name": "Daily Grinder",
+   "group": "consistency",
+   "legendary": false,
+   "value": 126,
+   "tiers": [
+    25,
+    100,
+    250,
+    500
+   ],
+   "level": 2,
+   "next": 250,
+   "maxed": false,
+   "progress": 0.504
+  },
+  {
+   "id": "night-owl",
+   "name": "Night Owl",
+   "group": "consistency",
+   "legendary": false,
+   "value": 13,
+   "tiers": [
+    50,
+    250,
+    1000
+   ],
+   "level": 0,
+   "next": 50,
+   "maxed": false,
+   "progress": 0.26
+  },
+  {
+   "id": "early-bird",
+   "name": "Early Bird",
+   "group": "consistency",
+   "legendary": false,
+   "value": 0,
+   "tiers": [
+    50,
+    250,
+    1000
+   ],
+   "level": 0,
+   "next": 50,
+   "maxed": false,
+   "progress": 0
+  },
+  {
+   "id": "weekend-warrior",
+   "name": "Weekend Warrior",
+   "group": "consistency",
+   "legendary": false,
+   "value": 59,
+   "tiers": [
+    25,
+    100,
+    300
+   ],
+   "level": 1,
+   "next": 100,
+   "maxed": false,
+   "progress": 0.59
+  },
+  {
+   "id": "commit-storm",
+   "name": "Commit Storm",
+   "group": "consistency",
+   "legendary": false,
+   "value": 33,
+   "tiers": [
+    10,
+    25,
+    50
+   ],
+   "level": 2,
+   "next": 50,
+   "maxed": false,
+   "progress": 0.66
+  },
+  {
+   "id": "pull-shark",
+   "name": "Pull Shark",
+   "group": "collaboration",
+   "legendary": false,
+   "value": 71,
+   "tiers": [
+    1,
+    10,
+    50,
+    200,
+    500
+   ],
+   "level": 3,
+   "next": 200,
+   "maxed": false,
+   "progress": 0.355
+  },
+  {
+   "id": "reviewer",
+   "name": "Reviewer",
+   "group": "collaboration",
+   "legendary": false,
+   "value": 44,
+   "tiers": [
+    5,
+    25,
+    100,
+    300
+   ],
+   "level": 2,
+   "next": 100,
+   "maxed": false,
+   "progress": 0.44
+  },
+  {
+   "id": "issue-hunter",
+   "name": "Issue Hunter",
+   "group": "collaboration",
+   "legendary": false,
+   "value": 1,
+   "tiers": [
+    5,
+    25,
+    100,
+    250
+   ],
+   "level": 0,
+   "next": 5,
+   "maxed": false,
+   "progress": 0.2
+  },
+  {
+   "id": "team-player",
+   "name": "Team Player",
+   "group": "collaboration",
+   "legendary": false,
+   "value": 9,
+   "tiers": [
+    1,
+    3,
+    5,
+    10,
+    25
+   ],
+   "level": 3,
+   "next": 10,
+   "maxed": false,
+   "progress": 0.9
+  },
+  {
+   "id": "open-sourcerer",
+   "name": "Open Sourcerer",
+   "group": "collaboration",
+   "legendary": false,
+   "value": 59,
+   "tiers": [
+    1,
+    5,
+    25,
+    100
+   ],
+   "level": 3,
+   "next": 100,
+   "maxed": false,
+   "progress": 0.59
+  },
+  {
+   "id": "quickdraw",
+   "name": "Quickdraw",
+   "group": "collaboration",
+   "legendary": false,
+   "value": 52,
+   "tiers": [
+    1,
+    10,
+    50
+   ],
+   "level": 3,
+   "next": null,
+   "maxed": true,
+   "progress": 1
+  },
+  {
+   "id": "stargazer",
+   "name": "Stargazer",
+   "group": "impact",
+   "legendary": false,
+   "value": 0,
+   "tiers": [
+    1,
+    10,
+    50,
+    250,
+    1000
+   ],
+   "level": 0,
+   "next": 1,
+   "maxed": false,
+   "progress": 0
+  },
+  {
+   "id": "forked",
+   "name": "Forked",
+   "group": "impact",
+   "legendary": false,
+   "value": 0,
+   "tiers": [
+    1,
+    5,
+    25,
+    100
+   ],
+   "level": 0,
+   "next": 1,
+   "maxed": false,
+   "progress": 0
+  },
+  {
+   "id": "follower-club",
+   "name": "Follower Club",
+   "group": "impact",
+   "legendary": false,
+   "value": 2,
+   "tiers": [
+    10,
+    50,
+    250,
+    1000
+   ],
+   "level": 0,
+   "next": 10,
+   "maxed": false,
+   "progress": 0.2
+  },
+  {
+   "id": "line-machine",
+   "name": "Line Machine",
+   "group": "craft",
+   "legendary": false,
+   "value": 82810,
+   "tiers": [
+    1000,
+    10000,
+    50000,
+    100000,
+    500000
+   ],
+   "level": 3,
+   "next": 100000,
+   "maxed": false,
+   "progress": 0.8281
+  },
+  {
+   "id": "refactorer",
+   "name": "Refactorer",
+   "group": "craft",
+   "legendary": false,
+   "value": 19425,
+   "tiers": [
+    1000,
+    5000,
+    10000,
+    50000,
+    100000
+   ],
+   "level": 3,
+   "next": 50000,
+   "maxed": false,
+   "progress": 0.3885
+  },
+  {
+   "id": "polyglot",
+   "name": "Polyglot",
+   "group": "craft",
+   "legendary": false,
+   "value": 15,
+   "tiers": [
+    3,
+    5,
+    8,
+    12,
+    20
+   ],
+   "level": 4,
+   "next": 20,
+   "maxed": false,
+   "progress": 0.75
+  },
+  {
+   "id": "deep-diver",
+   "name": "Deep Diver",
+   "group": "craft",
+   "legendary": false,
+   "value": 42815,
+   "tiers": [
+    10000,
+    50000,
+    100000
+   ],
+   "level": 1,
+   "next": 50000,
+   "maxed": false,
+   "progress": 0.8563
+  },
+  {
+   "id": "repo-builder",
+   "name": "Repo Builder",
+   "group": "craft",
+   "legendary": false,
+   "value": 3,
+   "tiers": [
+    1,
+    5,
+    15,
+    30,
+    50
+   ],
+   "level": 1,
+   "next": 5,
+   "maxed": false,
+   "progress": 0.6
+  },
+  {
+   "id": "hand-crafted",
+   "name": "Hand-Crafted",
+   "group": "craft",
+   "legendary": false,
+   "value": 74712,
+   "tiers": [
+    10000,
+    50000,
+    100000
+   ],
+   "level": 2,
+   "next": 100000,
+   "maxed": false,
+   "progress": 0.74712
+  },
+  {
+   "id": "pair-programmer",
+   "name": "Pair Programmer",
+   "group": "ai-time",
+   "legendary": false,
+   "value": 43,
+   "tiers": [
+    10,
+    50,
+    250,
+    1000
+   ],
+   "level": 1,
+   "next": 50,
+   "maxed": false,
+   "progress": 0.86
+  },
+  {
+   "id": "coding-time",
+   "name": "Coding Time",
+   "group": "ai-time",
+   "legendary": false,
+   "value": 123.465,
+   "tiers": [
+    10,
+    50,
+    100,
+    500,
+    1000,
+    2500
+   ],
+   "level": 3,
+   "next": 500,
+   "maxed": false,
+   "progress": 0.24693
+  },
+  {
+   "id": "marathon",
+   "name": "Marathon",
+   "group": "ai-time",
+   "legendary": false,
+   "value": 2.9491666666666667,
+   "tiers": [
+    4,
+    8,
+    12
+   ],
+   "level": 0,
+   "next": 4,
+   "maxed": false,
+   "progress": 0.7372916666666667
+  },
+  {
+   "id": "consistent",
+   "name": "Consistent",
+   "group": "ai-time",
+   "legendary": false,
+   "value": 5,
+   "tiers": [
+    7,
+    30,
+    100
+   ],
+   "level": 0,
+   "next": 7,
+   "maxed": false,
+   "progress": 0.7142857142857143
+  },
+  {
+   "id": "unicorn",
+   "name": "Unicorn",
+   "group": "fun",
+   "legendary": false,
+   "value": 0,
+   "tiers": [
+    1
+   ],
+   "level": 0,
+   "next": 1,
+   "maxed": false,
+   "progress": 0
+  },
+  {
+   "id": "christmas-coder",
+   "name": "Christmas Coder",
+   "group": "fun",
+   "legendary": false,
+   "value": 0,
+   "tiers": [
+    1
+   ],
+   "level": 0,
+   "next": 1,
+   "maxed": false,
+   "progress": 0
+  },
+  {
+   "id": "new-year",
+   "name": "New Year, New Commit",
+   "group": "fun",
+   "legendary": false,
+   "value": 0,
+   "tiers": [
+    1
+   ],
+   "level": 0,
+   "next": 1,
+   "maxed": false,
+   "progress": 0
+  },
+  {
+   "id": "monster-pr",
+   "name": "Monster PR",
+   "group": "fun",
+   "legendary": false,
+   "value": 7,
+   "tiers": [
+    1
+   ],
+   "level": 1,
+   "next": null,
+   "maxed": true,
+   "progress": 1
+  },
+  {
+   "id": "clean-sweep",
+   "name": "Clean Sweep",
+   "group": "fun",
+   "legendary": false,
+   "value": 7,
+   "tiers": [
+    1
+   ],
+   "level": 1,
+   "next": null,
+   "maxed": true,
+   "progress": 1
+  },
+  {
+   "id": "unbroken",
+   "name": "Unbroken",
+   "group": "legendary",
+   "legendary": true,
+   "value": 5,
+   "tiers": [
+    365
+   ],
+   "level": 0,
+   "next": 365,
+   "maxed": false,
+   "progress": 0.0136986301369863
+  },
+  {
+   "id": "supernova",
+   "name": "Supernova",
+   "group": "legendary",
+   "legendary": true,
+   "value": 0,
+   "tiers": [
+    1000
+   ],
+   "level": 0,
+   "next": 1000,
+   "maxed": false,
+   "progress": 0
+  },
+  {
+   "id": "grandmaster",
+   "name": "Grandmaster",
+   "group": "legendary",
+   "legendary": true,
+   "value": 3,
+   "tiers": [
+    33
+   ],
+   "level": 0,
+   "next": 33,
+   "maxed": false,
+   "progress": 0.09090909090909091
+  }
+ ]
+}
