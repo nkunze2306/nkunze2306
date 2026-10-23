@@ -1,8 +1,8 @@
 {
- "updated": "2026-10-23T18:22:31.074Z",
+ "updated": "2026-10-23T18:39:24.791Z",
  "login": "nkunze2306",
  "unlocked": 43,
- "total": 122,
+ "total": 134,
  "achievementsUnlocked": 20,
  "achievementsTotal": 35,
  "highlights": [
@@ -22,20 +22,20 @@
   "forks": 0,
   "maxRepoStars": 0,
   "foreignRepos": 9,
-  "commits": 388,
+  "commits": 389,
   "nightCommits": 13,
   "earlyCommits": 0,
   "weekendCommits": 59,
   "aiCommits": 64,
-  "linesAdded": 84803,
-  "linesDeleted": 20411,
-  "handLines": 74713,
+  "linesAdded": 84811,
+  "linesDeleted": 20419,
+  "handLines": 74721,
   "unicornCommits": 0,
   "christmasCommits": 0,
   "newYearCommits": 0,
   "languages": 15,
-  "topLanguageLines": 43215,
-  "maxCommitsPerDay": 33,
+  "topLanguageLines": 43219,
+  "maxCommitsPerDay": 34,
   "activeDays": 126,
   "longestStreak": 5,
   "reviews": 44,
@@ -43,7 +43,7 @@
   "monsterPRs": 7,
   "cleanSweeps": 7,
   "quickdraws": 52,
-  "wakaHours": 123.465,
+  "wakaHours": 125.24472222222222,
   "marathonHours": 2.9491666666666667,
   "consistentDays": 5
  },
@@ -79,7 +79,7 @@
    "unit": "commits",
    "format": null,
    "description": "Total commits you authored",
-   "value": 388,
+   "value": 389,
    "tiers": [
     10,
     100,
@@ -91,7 +91,7 @@
    "level": 2,
    "next": 500,
    "maxed": false,
-   "progress": 0.776
+   "progress": 0.778
   },
   {
    "id": "streak-keeper",
@@ -176,7 +176,8 @@
     25,
     100,
     250,
-    500
+    500,
+    1000
    ],
    "level": 2,
    "next": 250,
@@ -299,7 +300,8 @@
    "tiers": [
     25,
     100,
-    300
+    300,
+    500
    ],
    "level": 1,
    "next": 100,
@@ -337,7 +339,7 @@
    "unit": "commits in a day",
    "format": null,
    "description": "Most commits on a single day",
-   "value": 33,
+   "value": 34,
    "tiers": [
     10,
     25,
@@ -346,7 +348,7 @@
    "level": 2,
    "next": 50,
    "maxed": false,
-   "progress": 0.66
+   "progress": 0.68
   },
   {
    "id": "pull-shark",
@@ -763,7 +765,7 @@
    "unit": "lines",
    "format": null,
    "description": "Lines of code you added",
-   "value": 84803,
+   "value": 84811,
    "tiers": [
     1000,
     10000,
@@ -777,7 +779,7 @@
    "level": 3,
    "next": 100000,
    "maxed": false,
-   "progress": 0.84803
+   "progress": 0.84811
   },
   {
    "id": "refactorer",
@@ -809,18 +811,20 @@
    "unit": "lines",
    "format": null,
    "description": "Lines of code you deleted",
-   "value": 20411,
+   "value": 20419,
    "tiers": [
     1000,
     5000,
     10000,
     50000,
-    100000
+    100000,
+    500000,
+    1000000
    ],
    "level": 3,
    "next": 50000,
    "maxed": false,
-   "progress": 0.40822
+   "progress": 0.40838
   },
   {
    "id": "polyglot",
@@ -897,16 +901,17 @@
    "unit": "lines",
    "format": null,
    "description": "Estimated lines in your biggest language",
-   "value": 43215,
+   "value": 43219,
    "tiers": [
     10000,
     50000,
-    100000
+    100000,
+    250000
    ],
    "level": 1,
    "next": 50000,
    "maxed": false,
-   "progress": 0.8643
+   "progress": 0.86438
   },
   {
    "id": "repo-builder",
@@ -985,16 +990,19 @@
    "unit": "lines",
    "format": null,
    "description": "Lines you wrote yourself, without AI co-author",
-   "value": 74713,
+   "value": 74721,
    "tiers": [
     10000,
     50000,
-    100000
+    100000,
+    250000,
+    500000,
+    1000000
    ],
    "level": 2,
    "next": 100000,
    "maxed": false,
-   "progress": 0.74713
+   "progress": 0.74721
   },
   {
    "id": "pair-programmer",
@@ -1071,19 +1079,20 @@
    "unit": "tracked",
    "format": "hours",
    "description": "Coding time tracked by WakaTime",
-   "value": 123.465,
+   "value": 125.24472222222222,
    "tiers": [
     10,
     50,
     100,
     500,
     1000,
-    2500
+    2500,
+    5000
    ],
    "level": 3,
    "next": 500,
    "maxed": false,
-   "progress": 0.24693
+   "progress": 0.25048944444444443
   },
   {
    "id": "marathon",
@@ -1120,7 +1129,9 @@
    "tiers": [
     4,
     8,
-    12
+    12,
+    24,
+    48
    ],
    "level": 0,
    "next": 4,
@@ -1162,7 +1173,8 @@
    "tiers": [
     7,
     30,
-    100
+    100,
+    365
    ],
    "level": 0,
    "next": 7,
