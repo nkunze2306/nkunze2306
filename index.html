@@ -76,6 +76,7 @@
   .peakv { color: var(--text); }
   .tall { grid-row: span 2; }
   .achhead { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+  .achby { margin-left: 4px; font-size: 11px; font-weight: 400; letter-spacing: 0; text-transform: none; color: #6a6a6a; }
   .achcnt { color: var(--mute); font-size: 13px; } .achcnt b { color: #fff; }
   .achgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 6px; margin-top: 12px; }
   .ac { display: flex; align-items: center; gap: 14px; padding: 14px 16px; border: 1px solid #262626; border-radius: 14px; background: #141414; }
@@ -417,7 +418,7 @@ function loadAchievements() {
       let body;
       if (!all) body = '<div class="achgrid">' + closest.map(achCard).join('') + '</div>';
       else body = Object.entries(j.groups || {}).map(([g, n]) => { const items = list.filter((a) => a.group === g); return items.length ? '<div class="achgroup">' + esc(n) + '</div><div class="achgrid">' + items.map(achCard).join('') + '</div>' : ''; }).join('');
-      box.innerHTML = '<div class="t achhead"><span style="display:flex;align-items:center;gap:10px"><span class="dot"></span>Achievements · ' + (all ? 'all' : 'closest to next level') + '</span><span class="achcnt"><b>' + j.unlocked + '</b> / ' + j.total + ' unlocked</span></div>' + body +
+      box.innerHTML = '<div class="t achhead"><span style="display:flex;align-items:center;gap:10px"><span class="dot"></span>Achievements · ' + (all ? 'all' : 'closest to next level') + '<small class="achby">GitHub Achievements by niounze</small></span><span class="achcnt"><b>' + j.unlocked + '</b> / ' + j.total + ' unlocked</span></div>' + body +
         '<div class="achmore"><button class="btn" id="achToggle">' + (all ? 'Show closest only' : 'Show all ' + j.total) + '</button></div>';
       document.getElementById('achToggle').onclick = () => { all = !all; draw(); };
     };
