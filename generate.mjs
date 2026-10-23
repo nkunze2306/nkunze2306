@@ -461,6 +461,27 @@ const bar = (x, y, w, h, ratio, color) =>
   `<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="${h / 2}" fill="${C.track}"/>` +
   (ratio > 0 ? `<rect x="${x}" y="${y}" width="${Math.max(h, w * Math.min(ratio, 1))}" height="${h}" rx="${h / 2}" fill="${color}"/>` : '');
 
+function readAchievements() {
+  const f = process.env.STATS_ACH || 'achievements.json';
+  try { return existsSync(f) ? JSON.parse(readFileSync(f, 'utf8')) : null; } catch { return null; }
+}
+
+function achTile(a, x, y, w, h) {
+  const c = a.color || C.blue, r = 17, cx = x + 12 + r, cy = y + h / 2, circ = 2 * Math.PI * r;
+  const fv = (v) => (a.format === 'hours' ? `${Math.round(v)}h` : short(v));
+  const sub0 = a.maxed ? `${fv(a.value)} ${a.unit} · max` : `${fv(a.value)} / ${fv(a.next)} ${a.unit}`;
+  const sub = sub0.length > 21 ? sub0.replace(` ${a.unit}`, '') : sub0;
+  const badge = a.legendary ? (a.maxed ? 'UNLOCKED' : 'LEGENDARY') : `${a.level} / ${a.tiers.length}`;
+  const bw = badge.length * 6.2 + 14, ox = cx + r + 10, ow = x + w - 14 - ox, lock = a.level === 0 && !a.legendary;
+  return `<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="13" fill="#161616" stroke="${a.legendary ? c + '55' : '#262626'}"/>
+<circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="#2a2a2a" stroke-width="5"/>${a.progress > 0 || a.maxed ? `<circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="${c}" stroke-width="5" stroke-linecap="round" stroke-dasharray="${(circ * (a.maxed ? 1 : a.progress)).toFixed(1)} ${circ.toFixed(1)}" transform="rotate(-90 ${cx} ${cy})"/>` : ''}
+${text(cx, cy + 6, a.legendary ? (a.maxed ? '★' : '☆') : String(a.level), { size: 18, fill: lock ? '#555' : C.text, weight: 700, anchor: 'middle' })}
+${text(ox, y + 22, (a.legendary ? '★ ' : '') + a.name, { size: 12.5, fill: lock ? '#9a9a9a' : C.text, weight: 700 })}
+<rect x="${x + w - 14 - bw}" y="${y + 9}" width="${bw}" height="17" rx="8.5" fill="${c}" fill-opacity="0.11" stroke="${c}" stroke-opacity="0.5"/>${text(x + w - 14 - bw / 2, y + 21, badge, { size: 9.5, fill: c, weight: 700, anchor: 'middle' })}
+${bar(ox, y + 31, ow, 5, a.maxed ? 1 : a.progress, c)}
+${text(ox, y + 51, sub, { size: 10.5 })}${text(x + w - 14, y + 51, `${a.maxed ? 100 : Math.floor(a.progress * 100)}%`, { size: 10.5, anchor: 'end' })}`;
+}
+
 function rowX(weights) {
   const total = weights.reduce((a, b) => a + b, 0);
   const avail = CW - G * (weights.length - 1);
@@ -564,6 +585,17 @@ function render(d) {
     });
   }
   y += R1 + G;
+
+  // ===== Achievements (aus achievements.json, erzeugt von github-achievements-by-niounze) =====
+  const ach = readAchievements();
+  if (ach) {
+    const closest = ach.achievements.filter((a) => !a.maxed).sort((a, b) => b.progress - a.progress || b.level - a.level).slice(0, 6);
+    const TG = 6, TH = 62, rowsA = Math.ceil(closest.length / 3), RA = 52 + rowsA * TH + (rowsA - 1) * TG + 16;
+    const tw = (CW - 2 * 16 - 2 * TG) / 3;
+    parts.push(card(M, y, CW, RA, 'Achievements · closest to next level', C.blue, `${ach.unlocked} / ${ach.total} unlocked`));
+    closest.forEach((a, i) => parts.push(achTile(a, M + 16 + (i % 3) * (tw + TG), y + 46 + Math.floor(i / 3) * (TH + TG), tw, TH)));
+    y += RA + G;
+  }
 
   // ===== Zeile 2: Aufteilung der Contributions | Heatmap =====
   const [m1, b] = rowX([30, 70]);

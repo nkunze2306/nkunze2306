@@ -77,14 +77,14 @@
   .tall { grid-row: span 2; }
   .achhead { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
   .achcnt { color: var(--mute); font-size: 13px; } .achcnt b { color: #fff; }
-  .achgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 10px; margin-top: 14px; }
-  .ac { display: flex; align-items: center; gap: 12px; padding: 10px 12px; border: 1px solid #262626; border-radius: 14px; background: #141414; }
+  .achgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 6px; margin-top: 12px; }
+  .ac { display: flex; align-items: center; gap: 14px; padding: 14px 16px; border: 1px solid #262626; border-radius: 14px; background: #141414; }
   .ac.leg { border-color: #ffd34e55; }
   .ac svg { flex: none; } .ac .ab { flex: 1; min-width: 0; }
-  .ac .an { display: flex; justify-content: space-between; align-items: center; gap: 8px; font-weight: 700; font-size: 13.5px; }
-  .ac .an i { font-style: normal; font-size: 10.5px; padding: 1px 8px; border-radius: 999px; border: 1px solid; white-space: nowrap; }
-  .ac .bar { height: 5px; border-radius: 3px; background: #242424; margin: 7px 0 5px; overflow: hidden; } .ac .bar > div { height: 100%; border-radius: 3px; }
-  .ac .as { display: flex; justify-content: space-between; font-size: 11.5px; color: var(--mute); }
+  .ac .an { display: flex; justify-content: space-between; align-items: center; gap: 8px; font-weight: 700; font-size: 15px; }
+  .ac .an i { font-style: normal; font-size: 11.5px; padding: 2px 9px; border-radius: 999px; border: 1px solid; white-space: nowrap; }
+  .ac .bar { height: 6px; border-radius: 3px; background: #242424; margin: 7px 0 5px; overflow: hidden; } .ac .bar > div { height: 100%; border-radius: 3px; }
+  .ac .as { display: flex; justify-content: space-between; font-size: 12.5px; color: var(--mute); }
   .ac.lock .an span { color: #9a9a9a; }
   .achmore { margin-top: 12px; text-align: center; }
   .achgroup { margin: 16px 0 0; font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: #777; font-weight: 700; }
@@ -292,7 +292,6 @@ function render(d) {
   </header>
   <nav class="btns"><a class="btn primary" href="https://github.com/${esc(d.login)}">View on GitHub</a><a class="btn" href="https://github.com/${esc(d.login)}?tab=repositories">Repositories</a><a class="btn" href="https://github.com/${esc(d.login)}/${esc(d.login)}">Source code</a></nav>
   <div class="grid">
-    <section class="card c12" id="achCard" style="--c:var(--blue);display:none"></section>
     ${card('c3', 'Commits · all-time', 'green', '', `<div class="hero" id="hero" data-n="${d.commitsAll}">0</div><div class="sub">${fmt(d.commitsYear)} in the last 12 months</div><div class="split"><span>Total contributions</span><b>${fmt(d.totalContribAll)}</b></div>`, 'Every commit you authored on any branch of any repo (private, org, forks), de-duplicated. Contributions = commits + PRs + issues + reviews')}
     ${card('c5', 'Lines of code · all-time', 'pink', `net ${net >= 0 ? '+' : '−'}${short(Math.abs(net))}`,
       `<div class="row" style="margin-bottom:14px"><span class="hero2 grow">+${short(add)}</span><span class="hero2 shrink">−${short(d.del)}</span><span class="sub">added / removed</span></div>
@@ -303,6 +302,7 @@ function render(d) {
 
 
     ${wk[0]}
+    <section class="card c12" id="achCard" style="--c:var(--blue);display:none"></section>
 
     ${card('c3', 'Contributions', 'green', `${fmt(mixTotal)} total`, mixHtml + `<div class="split" style="margin-top:14px" data-tip="Comments you wrote on issues, pull requests (incl. code review lines), commits, discussions and gists, across all your repos. Not part of the contribution total"><span>Comments written</span><b>${fmt(d.comments || 0)}</b></div>`, 'Commits + pull requests + issues + code reviews')}
     ${card('c9 heatcard', `${fmt(d.contribYear)} contributions in the last year`, 'purple',
@@ -400,7 +400,7 @@ function achCard(a) {
   const badge = a.legendary ? (a.maxed ? 'UNLOCKED' : 'LEGENDARY') : a.level + ' / ' + a.tiers.length;
   const ring = circ * (a.maxed ? 1 : a.progress);
   return '<div class="ac' + (a.legendary ? ' leg' : '') + (lock ? ' lock' : '') + '" data-tip="' + esc(a.description + ' · ' + sub) + '">' +
-    '<svg width="46" height="46" viewBox="0 0 46 46"><circle cx="23" cy="23" r="' + r + '" fill="none" stroke="#242424" stroke-width="4.5"/>' +
+    '<svg width="58" height="58" viewBox="0 0 46 46"><circle cx="23" cy="23" r="' + r + '" fill="none" stroke="#242424" stroke-width="4.5"/>' +
     '<circle cx="23" cy="23" r="' + r + '" fill="none" stroke="' + c + '" stroke-width="4.5" stroke-linecap="round" stroke-dasharray="' + ring.toFixed(1) + ' ' + circ.toFixed(1) + '" transform="rotate(-90 23 23)"/>' +
     '<text x="23" y="28.5" text-anchor="middle" font-size="16" font-weight="700" fill="' + (lock ? '#555' : '#fff') + '">' + (a.legendary ? (a.maxed ? '★' : '☆') : a.level) + '</text></svg>' +
     '<div class="ab"><div class="an"><span>' + (a.legendary ? '★ ' : '') + esc(a.name) + '</span><i style="color:' + c + ';border-color:' + c + '88;background:' + c + '1c">' + badge + '</i></div>' +

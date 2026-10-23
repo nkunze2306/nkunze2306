@@ -27,6 +27,11 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 20
+      - name: Achievements
+        uses: nkunze2306/github-achievements-by-niounze@v1
+        with:
+          token: ${{ secrets.STATS_TOKEN || secrets.GITHUB_TOKEN }}
+          wakatime-key: ${{ secrets.WAKATIME_API_KEY }}
       - name: Generate stats.svg
         env:
           # PAT mit Repo-Lesezugriff (inkl. privater Repos); Fallback: Standard-Token (nur oeffentlich)
@@ -34,11 +39,6 @@ jobs:
           STATS_LOGIN: ${{ github.repository_owner }}
           WAKATIME_API_KEY: ${{ secrets.WAKATIME_API_KEY }}
         run: node generate.mjs
-      - name: Achievements
-        uses: nkunze2306/github-achievements-by-niounze@v1
-        with:
-          token: ${{ secrets.STATS_TOKEN || secrets.GITHUB_TOKEN }}
-          wakatime-key: ${{ secrets.WAKATIME_API_KEY }}
       - name: Bump image version in README when the card changed
         # GitHub cached Bilder im README über einen Proxy. Eine neue URL erzwingt das Neuladen.
         run: |

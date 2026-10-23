@@ -3,11 +3,7 @@
 I'm currently studying **Media Informatics and Interactive Entertainment** at **HSMW** (University of Applied Sciences Mittweida) in Saxony, Germany.
 I'm a **frontend dev** with a focus on **mobile apps** and **interactive experiences**.
 
-<a href="https://nkunze2306.github.io/nkunze2306/">
-  <img src="achievements.svg?v=1792775410" alt="GitHub achievements" width="100%">
-</a>
-
-<a href="https://nkunze2306.github.io/nkunze2306/">
+a href="https://nkunze2306.github.io/nkunze2306/">
   <img src="stats.svg?v=1792775410" alt="GitHub all-time stats" width="100%">
 </a>
 
