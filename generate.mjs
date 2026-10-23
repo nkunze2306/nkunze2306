@@ -502,21 +502,25 @@ function introBlock(y0) {
 // die Flügel und fliegen weiter. Schleife 72 s, deterministisch (gleicher Aufbau bei jedem Lauf). STATS_BUTTERFLIES=0 schaltet sie ab.
 function butterfliesLayer(w) {
   if (process.env.STATS_BUTTERFLIES === '0' || !CARD_TOPS.length) return '';
-  const P = 4, T = 72, COUNT = 5, STOPS = 5;
-  const pattern = ['ww.....ww', 'www.b.www', '.wwwbwww.', 'www.b.www', 'ww.....ww'];
+  const P = 2.5, T = 72, COUNT = 5, STOPS = 5; // HQ: 16 px breite Sprites (Draufsicht 16x12, Seitenansicht 16x11)
+  const halfTop = ['......k.', '.oo...kb', 'owwoo.wb', 'owvwwwwb', 'owwvwwwb', '.owwwwwb', '..oowwwb', '..owwwwb', '..owvwwb', '...owwob', '....ooob', '.......b'];
+  const top = halfTop.map((r) => r + [...r].reverse().join(''));
+  const side = ['..ooo.........kk', '.owwwo.......k..', '.owvvwo.....k...', 'owwvvwwo...k....', 'owwvvwwwo..bb...', 'owwwvwwwwo.bbb..', '.owwwwwwwwbbbbe.', '..owwwwwwbbbbbb.', '...ooowwobbbbbb.', '....bbbbbbbbb...', '....l..l..l..l..'];
   const colors = ['#ff9f43', '#38bdf8', '#ff5c9a', '#b794ff', '#fbbf24'];
+  const shade = (hex, k) => '#' + [1, 3, 5].map((i) => Math.round(parseInt(hex.slice(i, i + 2), 16) * k).toString(16).padStart(2, '0')).join('');
   let seed = 7;
   const rnd = () => { seed = (seed + 0x6d2b79f5) | 0; let t = Math.imul(seed ^ (seed >>> 15), 1 | seed); t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t; return ((t ^ (t >>> 14)) >>> 0) / 4294967296; };
   const topY = Math.min(...CARD_TOPS.map((c) => c.y));
-  const spots = CARD_TOPS.filter((c) => c.w > 120 && c.y > topY + 1);
-  const spot = () => { const c = spots[Math.floor(rnd() * spots.length)]; return [c.x + 24 + rnd() * (c.w - 48), c.y - pattern.length * P]; };
+  const spots = CARD_TOPS.filter((c) => c.w > 120 && c.y > topY + 1); // nicht auf die oberste Reihe (unter den Pills)
+  const H = top.length * P; // Landehöhe: Füße stehen auf der Kartenkante
+  const spot = () => { const c = spots[Math.floor(rnd() * spots.length)]; return [c.x + 24 + rnd() * (c.w - 48), c.y - H]; };
   const f2 = (n) => n.toFixed(2);
   let out = '';
-  for (let b = 0; b < COUNT; b++) {
+  for (let bi = 0; bi < COUNT; bi++) {
     const stops = Array.from({ length: STOPS }, spot);
     const stays = Array.from({ length: STOPS }, () => 3 + rnd() * 4);
-    const fly = (T - stays.reduce((a, c) => a + c, 0)) / STOPS;
-    const pos = [], seg = []; // pos: [t, x, y]; seg: [t, flying]
+    const fly = (T - stays.reduce((x, y) => x + y, 0)) / STOPS;
+    const pos = [], seg = []; // pos: [t, x, y]; seg: [t, fliegt]
     let t = 0;
     for (let i = 0; i < STOPS; i++) {
       const [x0, y0] = stops[i], [x1, y1] = stops[(i + 1) % STOPS];
@@ -533,24 +537,23 @@ function butterfliesLayer(w) {
       }
       t += fly;
     }
-    const c = colors[b % colors.length];
-    const wings = (cls) => pattern.map((row, y) => [...row].map((ch, x) => (ch === '.' ? '' : `<rect x="${(x - 4) * P}" y="${y * P}" width="${P}" height="${P}" fill="${ch === 'b' ? '#d8cfbf' : c}"/>`)).join('')).join('');
+    const c = colors[bi % colors.length];
+    const col = { w: c, o: shade(c, 0.5), v: '#ffffff', b: '#d8cfbf', k: '#d8cfbf', e: '#ffffff', l: '#d8cfbf' };
+    const px = (rows, x, y, ch, dy = 0) => `<rect x="${f2((x - 8) * P)}" y="${f2((y + dy) * P)}" width="${f2(P + 0.03)}" height="${f2(P + 0.03)}" fill="${col[ch]}"${ch === 'v' ? ' fill-opacity="0.65"' : ''}/>`;
+    const draw = (rows, dy = 0, only = null) => rows.map((row, y) => [...row].map((ch, x) => (ch === '.' || (only && !only(ch)) ? '' : px(rows, x, y, ch, dy))).join('')).join('');
     const kt = (arr) => arr.map((p) => f2(p[0] / T)).join(';');
-    const sidePat = ['.wvvw....kk', '.wvvww..k..', '..wvwwb.k..', '...bbbbbbbe', '....l.l.l..'];
-    const sideCol = { w: c, v: '#ffffff', b: '#d8cfbf', k: '#d8cfbf', e: '#ffffff', l: '#d8cfbf' };
-    const rect = (x, y, ch) => `<rect x="${(x - 5) * P}" y="${y * P}" width="${P}" height="${P}" fill="${sideCol[ch]}"${ch === 'v' ? ' fill-opacity="0.6"' : ''}/>`;
-    const sideSprite = (flip) => {
-      let wing = '', rest = '';
-      sidePat.forEach((row, y) => [...row].forEach((ch, x) => { if (ch === '.') return; (ch === 'w' || ch === 'v' ? (wing += rect(x, y, ch)) : (rest += rect(x, y, ch))); }));
-      const px = (3 - 5) * P + P / 2, py = 3 * P;
-      const fan = `<animateTransform attributeName="transform" type="rotate" values="0 ${px} ${py};0 ${px} ${py};-14 ${px} ${py};0 ${px} ${py}" keyTimes="0;0.7;0.85;1" dur="${(3 + rnd() * 2).toFixed(1)}s" repeatCount="indefinite"/>`;
-      return `<g${flip ? ' transform="scale(-1 1)"' : ''}><g>${fan}${wing}</g>${rest}</g>`;
-    };
-    const sides = stops.map((_, i) => `<g opacity="0"><animate attributeName="opacity" calcMode="discrete" keyTimes="${kt(seg)}" values="${seg.map((s, j) => (j === 2 * i ? 1 : 0)).join(';')}" dur="${T}s" repeatCount="indefinite"/>${sideSprite(rnd() < 0.5)}</g>`).join('');
     const vis = (flying) => `<animate attributeName="opacity" calcMode="discrete" keyTimes="${kt(seg)}" values="${seg.map((s) => (s[1] === flying ? 1 : 0)).join(';')}" dur="${T}s" repeatCount="indefinite"/>`;
     const flap = (dur, lo) => `<animateTransform attributeName="transform" type="scale" values="1 1;${lo} 1;1 1" dur="${dur}s" repeatCount="indefinite"/>`;
+    const dy = top.length - side.length; // beide Ansichten enden unten auf derselben Höhe
+    const sideSprite = (flip) => {
+      const wingPx = (ch) => ch === 'w' || ch === 'v' || ch === 'o';
+      const pvx = (7 - 8) * P + P / 2, pvy = (8 + dy) * P;
+      const fan = `<animateTransform attributeName="transform" type="rotate" values="0 ${f2(pvx)} ${f2(pvy)};0 ${f2(pvx)} ${f2(pvy)};-14 ${f2(pvx)} ${f2(pvy)};0 ${f2(pvx)} ${f2(pvy)}" keyTimes="0;0.7;0.85;1" dur="${(3 + rnd() * 2).toFixed(1)}s" repeatCount="indefinite"/>`;
+      return `<g${flip ? ' transform="scale(-1 1)"' : ''}><g>${fan}${draw(side, dy, wingPx)}</g>${draw(side, dy, (ch) => !wingPx(ch))}</g>`;
+    };
+    const sides = stops.map((_, i) => `<g opacity="0"><animate attributeName="opacity" calcMode="discrete" keyTimes="${kt(seg)}" values="${seg.map((s, j) => (j === 2 * i ? 1 : 0)).join(';')}" dur="${T}s" repeatCount="indefinite"/>${sideSprite(rnd() < 0.5)}</g>`).join('');
     out += `<g shape-rendering="crispEdges"><g><animateTransform attributeName="transform" type="translate" calcMode="linear" keyTimes="${kt(pos)}" values="${pos.map((p) => `${f2(p[1])} ${f2(p[2])}`).join(';')}" dur="${T}s" repeatCount="indefinite"/>` +
-      `<g opacity="1">${vis(1)}<g>${flap(0.16, 0.2)}${wings()}</g></g>${sides}</g></g>`;
+      `<g opacity="1">${vis(1)}<g>${flap(0.16, 0.2)}${draw(top)}</g></g>${sides}</g></g>`;
   }
   return `<g pointer-events="none">${out}</g>`;
 }
