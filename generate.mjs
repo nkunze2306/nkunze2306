@@ -467,13 +467,13 @@ function readAchievements() {
 }
 
 function achTile(a, x, y, w, h) {
-  const c = a.color || C.blue, r = 17, cx = x + 12 + r, cy = y + h / 2, circ = 2 * Math.PI * r;
+  const c = a.maxed ? '#ffd34e' : a.color || C.blue, r = 17, cx = x + 12 + r, cy = y + h / 2, circ = 2 * Math.PI * r;
   const fv = (v) => (a.format === 'hours' ? `${Math.round(v)}h` : short(v));
   const sub0 = a.maxed ? `${fv(a.value)} ${a.unit} · max` : `${fv(a.value)} / ${fv(a.next)} ${a.unit}`;
   const sub = sub0.length > 21 ? sub0.replace(` ${a.unit}`, '') : sub0;
   const badge = a.legendary ? (a.maxed ? 'UNLOCKED' : 'LEGENDARY') : `${a.level} / ${a.tiers.length}`;
   const bw = badge.length * 6.2 + 14, ox = cx + r + 10, ow = x + w - 14 - ox, lock = a.level === 0 && !a.legendary;
-  return `<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="13" fill="#161616" stroke="${a.legendary ? c + '55' : '#262626'}"/>
+  return `<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="13" fill="#161616" stroke="${a.legendary || a.maxed ? c + '55' : '#262626'}"/>
 <circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="#2a2a2a" stroke-width="5"/>${a.progress > 0 || a.maxed ? `<circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="${c}" stroke-width="5" stroke-linecap="round" stroke-dasharray="${(circ * (a.maxed ? 1 : a.progress)).toFixed(1)} ${circ.toFixed(1)}" transform="rotate(-90 ${cx} ${cy})"/>` : ''}
 ${text(cx, cy + 6, a.legendary ? (a.maxed ? '★' : '☆') : String(a.level), { size: 18, fill: lock ? '#555' : C.text, weight: 700, anchor: 'middle' })}
 ${text(ox, y + 22, (a.legendary ? '★ ' : '') + a.name, { size: 12.5, fill: lock ? '#9a9a9a' : C.text, weight: 700 })}
