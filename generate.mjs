@@ -521,7 +521,9 @@ function butterfliesLayer(w, h) {
   for (let bi = 0; bi < COUNT; bi++) {
     lastCard = null;
     const stops = Array.from({ length: STOPS }, spot);
-    const stays = Array.from({ length: STOPS }, () => 3 + rnd() * 4);
+    let stays = Array.from({ length: STOPS }, () => 0.6 + rnd() * rnd() * 14); // 0,6–14 s, viele kurze Stopps, wenige lange
+    const sum = stays.reduce((x, y) => x + y, 0);
+    if (sum > 46) stays = stays.map((s) => (s * 46) / sum); // genug Zeit zum Fliegen lassen
     const fly = (T - stays.reduce((x, y) => x + y, 0)) / STOPS;
     const pos = [], seg = []; // pos: [t, x, y]; seg: [t, fliegt]
     let t = 0;
