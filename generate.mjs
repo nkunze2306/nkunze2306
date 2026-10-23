@@ -450,8 +450,10 @@ const line = (x, y, spans, anchor = 'start') =>
   `<text x="${x}" y="${y}" text-anchor="${anchor}">${spans.map(([s, o = {}]) =>
     `<tspan font-size="${o.size || 12}" font-weight="${o.weight || 400}" fill="${o.fill || C.mute}"${o.dx ? ` dx="${o.dx}"` : ''}>${esc(s)}</tspan>`).join('')}</text>`;
 
+const CARD_TOPS = []; // Oberkanten aller Karten, dort landen die Schmetterlinge
 function card(x, y, w, h, title, color, right = '') {
-  return `<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="16" fill="${C.card}" fill-opacity="0.86" stroke="${C.line}"/>
+  CARD_TOPS.push({ x, y, w });
+  return `<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="16" fill="${C.card}" stroke="${C.line}"/>
 <circle cx="${x + PAD + 5}" cy="${y + 26}" r="11" fill="${color}" fill-opacity="0.13" stroke="${color}" stroke-opacity="0.55"/>
 <circle cx="${x + PAD + 5}" cy="${y + 26}" r="3.2" fill="${color}"/>
 ${text(x + PAD + 24, y + 30, title.toUpperCase(), { size: 11, weight: 700, ls: 1.1 })}${right ? text(x + w - PAD, y + 30, right, { size: 12, anchor: 'end' }) : ''}`;
@@ -463,8 +465,8 @@ const bar = (x, y, w, h, ratio, color) =>
 
 // Pixel-Art-Hintergrund (assets/background.svg), über die ganze Höhe wiederholt; jede zweite Kachel gespiegelt, damit keine Naht sichtbar ist
 function backgroundSvg(w, h) {
-  const f = process.env.STATS_BG || 'assets/background.svg';
-  if (!existsSync(f)) return '';
+  const f = process.env.STATS_BG; // nur auf Wunsch, z. B. STATS_BG=assets/background.svg
+  if (!f || !existsSync(f)) return '';
   const src = readFileSync(f, 'utf8');
   const vb = (src.match(/viewBox="0 0 (\d+) (\d+)"/) || []).slice(1).map(Number);
   const inner = src.replace(/^[\s\S]*?<svg[^>]*>/, '').replace(/<\/svg>\s*$/, '').replace(/<title>[\s\S]*?<\/title>/, '');
@@ -490,10 +492,55 @@ const INTRO = {
 function introBlock(y0) {
   const x = M + PAD, h = 28 + 34 + INTRO.lines.length * 22 + 14;
   const spans = (s) => s.split('**').map((t, i) => (i % 2 ? `<tspan fill="${C.text}" font-weight="700">${esc(t)}</tspan>` : `<tspan>${esc(t)}</tspan>`)).join('');
-  let svg = `<rect x="${M}" y="${y0}" width="${CW}" height="${h}" rx="16" fill="#0b0b0b" fill-opacity="0.72" stroke="${C.line}"/>`;
+  let svg = `<rect x="${M}" y="${y0}" width="${CW}" height="${h}" rx="16" fill="#0f0f0f" stroke="${C.line}"/>`;
   svg += text(x, y0 + 46, INTRO.title, { size: 26, fill: C.text, weight: 800 });
   INTRO.lines.forEach((l, i) => { svg += `<text x="${x}" y="${y0 + 76 + i * 22}" font-size="13.5" fill="#c8c8c8">${spans(l)}</text>`; });
   return { svg, h };
+}
+
+// Fünf Pixel-Schmetterlinge (reines SVG/SMIL, ohne Script): fliegen mit Flügelschlag und Wackeln, landen auf Kartenkanten, klappen langsam
+// die Flügel und fliegen weiter. Schleife 72 s, deterministisch (gleicher Aufbau bei jedem Lauf). STATS_BUTTERFLIES=0 schaltet sie ab.
+function butterfliesLayer(w) {
+  if (process.env.STATS_BUTTERFLIES === '0' || !CARD_TOPS.length) return '';
+  const P = 4, T = 72, COUNT = 5, STOPS = 5;
+  const pattern = ['ww.....ww', 'www.b.www', '.wwwbwww.', 'www.b.www', 'ww.....ww'];
+  const colors = ['#ff9f43', '#38bdf8', '#ff5c9a', '#b794ff', '#fbbf24'];
+  let seed = 7;
+  const rnd = () => { seed = (seed + 0x6d2b79f5) | 0; let t = Math.imul(seed ^ (seed >>> 15), 1 | seed); t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t; return ((t ^ (t >>> 14)) >>> 0) / 4294967296; };
+  const spots = CARD_TOPS.filter((c) => c.w > 120);
+  const spot = () => { const c = spots[Math.floor(rnd() * spots.length)]; return [c.x + 24 + rnd() * (c.w - 48), c.y - pattern.length * P]; };
+  const f2 = (n) => n.toFixed(2);
+  let out = '';
+  for (let b = 0; b < COUNT; b++) {
+    const stops = Array.from({ length: STOPS }, spot);
+    const stays = Array.from({ length: STOPS }, () => 3 + rnd() * 4);
+    const fly = (T - stays.reduce((a, c) => a + c, 0)) / STOPS;
+    const pos = [], seg = []; // pos: [t, x, y]; seg: [t, flying]
+    let t = 0;
+    for (let i = 0; i < STOPS; i++) {
+      const [x0, y0] = stops[i], [x1, y1] = stops[(i + 1) % STOPS];
+      pos.push([t, x0, y0]); seg.push([t, 0]);
+      t += stays[i];
+      pos.push([t, x0, y0]); seg.push([t, 1]);
+      const m = Math.max(4, Math.round(fly / 0.9));
+      const phase = rnd() * 6.28;
+      for (let k = 1; k <= m; k++) {
+        const u = k / m, e = u * u * (3 - 2 * u), env = Math.sin(Math.PI * u);
+        const wob = k === m ? 0 : env * (14 * Math.sin(phase + k * 1.7) + 8 * (rnd() - 0.5));
+        const lift = k === m ? 0 : -env * (26 + 14 * Math.sin(phase * 2 + k));
+        pos.push([t + (fly * k) / m, x0 + (x1 - x0) * e + wob, y0 + (y1 - y0) * e + lift]);
+      }
+      t += fly;
+    }
+    const c = colors[b % colors.length];
+    const wings = (cls) => pattern.map((row, y) => [...row].map((ch, x) => (ch === '.' ? '' : `<rect x="${(x - 4) * P}" y="${y * P}" width="${P}" height="${P}" fill="${ch === 'b' ? '#1b1b1b' : c}"/>`)).join('')).join('');
+    const kt = (arr) => arr.map((p) => f2(p[0] / T)).join(';');
+    const vis = (flying) => `<animate attributeName="opacity" calcMode="discrete" keyTimes="${kt(seg)}" values="${seg.map((s) => (s[1] === flying ? 1 : 0)).join(';')}" dur="${T}s" repeatCount="indefinite"/>`;
+    const flap = (dur, lo) => `<animateTransform attributeName="transform" type="scale" values="1 1;${lo} 1;1 1" dur="${dur}s" repeatCount="indefinite"/>`;
+    out += `<g shape-rendering="crispEdges"><g><animateTransform attributeName="transform" type="translate" calcMode="linear" keyTimes="${kt(pos)}" values="${pos.map((p) => `${f2(p[1])} ${f2(p[2])}`).join(';')}" dur="${T}s" repeatCount="indefinite"/>` +
+      `<g opacity="1">${vis(1)}<g>${flap(0.16, 0.2)}${wings()}</g></g><g opacity="0">${vis(0)}<g>${flap(1.8, 0.35)}${wings()}</g></g></g></g>`;
+  }
+  return `<g pointer-events="none">${out}</g>`;
 }
 
 function readAchievements() {
@@ -879,6 +926,7 @@ function render(d) {
   return `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" font-family="'Segoe UI', -apple-system, 'Helvetica Neue', Arial, sans-serif">
 ${backgroundSvg(W, H)}
 ${parts.join('\n')}
+${butterfliesLayer(W)}
 </svg>
 `;
 }
