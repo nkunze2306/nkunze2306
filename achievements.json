@@ -1,5 +1,5 @@
 {
- "updated": "2026-10-23T17:58:16.673Z",
+ "updated": "2026-10-23T18:10:16.603Z",
  "login": "nkunze2306",
  "unlocked": 43,
  "total": 122,
@@ -22,19 +22,19 @@
   "forks": 0,
   "maxRepoStars": 0,
   "foreignRepos": 9,
-  "commits": 382,
+  "commits": 384,
   "nightCommits": 13,
   "earlyCommits": 0,
   "weekendCommits": 59,
-  "aiCommits": 58,
-  "linesAdded": 83963,
-  "linesDeleted": 20361,
+  "aiCommits": 60,
+  "linesAdded": 84783,
+  "linesDeleted": 20399,
   "handLines": 74713,
   "unicornCommits": 0,
   "christmasCommits": 0,
   "newYearCommits": 0,
   "languages": 15,
-  "topLanguageLines": 42954,
+  "topLanguageLines": 43333,
   "maxCommitsPerDay": 33,
   "activeDays": 126,
   "longestStreak": 5,
@@ -54,11 +54,32 @@
    "group": "consistency",
    "legendary": false,
    "color": "#34f5a0",
+   "icon": {
+    "rows": [
+     "............",
+     "............",
+     "............",
+     "....rrrr....",
+     "...rwwwwr...",
+     "ggrrwwwwrrgg",
+     "ggrrwwwwrrgg",
+     "...rwwwwr...",
+     "....rrrr....",
+     "............",
+     "............",
+     "............"
+    ],
+    "palette": {
+     "r": "#ff5c5c",
+     "w": "#f6efe6",
+     "g": "#9aa0a6"
+    }
+   },
    "weight": 10,
    "unit": "commits",
    "format": null,
    "description": "Total commits you authored",
-   "value": 382,
+   "value": 384,
    "tiers": [
     10,
     100,
@@ -70,14 +91,35 @@
    "level": 2,
    "next": 500,
    "maxed": false,
-   "progress": 0.764
+   "progress": 0.768
   },
   {
    "id": "streak-keeper",
    "name": "Streak Keeper",
    "group": "consistency",
    "legendary": false,
-   "color": "#ff9f43",
+   "color": "#34f5a0",
+   "icon": {
+    "rows": [
+     ".....r......",
+     "....rr......",
+     "....rro..r..",
+     "...rrooo.rr.",
+     "..rrooooorr.",
+     "..roooyyoor.",
+     ".rrooyyyyoor",
+     ".rooyyyyyyor",
+     ".rooyyyyyyor",
+     "..rooyyyyor.",
+     "...rroooorr.",
+     "....rrrrr..."
+    ],
+    "palette": {
+     "r": "#e8402a",
+     "o": "#ff8c1a",
+     "y": "#ffd34e"
+    }
+   },
    "weight": 7,
    "unit": "days",
    "format": null,
@@ -103,6 +145,28 @@
    "group": "consistency",
    "legendary": false,
    "color": "#34f5a0",
+   "icon": {
+    "rows": [
+     "............",
+     ".rrrrrrrrrr.",
+     ".rrrrrrrrrr.",
+     ".wwwwwwwwww.",
+     ".wwwwwwwwgw.",
+     ".wwwwwwwgww.",
+     ".wwgwwwgwww.",
+     ".wwwgwgwwww.",
+     ".wwwwgwwwww.",
+     ".wwwwwwwwww.",
+     ".dddddddddd.",
+     "............"
+    ],
+    "palette": {
+     "r": "#e8503a",
+     "w": "#f4f4f4",
+     "g": "#2fbf71",
+     "d": "#b9b9b9"
+    }
+   },
    "weight": 6,
    "unit": "active days",
    "format": null,
@@ -124,7 +188,27 @@
    "name": "Night Owl",
    "group": "consistency",
    "legendary": false,
-   "color": "#b794ff",
+   "color": "#34f5a0",
+   "icon": {
+    "rows": [
+     "....yyyy....",
+     "..yyyyy....w",
+     ".yyyy.......",
+     ".yyy........",
+     "yyyy........",
+     "yyyy........",
+     "yyyyy.......",
+     ".yyyyyy....w",
+     ".yyyyyyyyyy.",
+     "..yyyyyyyy..",
+     "....yyyy....",
+     "............"
+    ],
+    "palette": {
+     "y": "#ffd34e",
+     "w": "#ffffff"
+    }
+   },
    "weight": 2,
    "unit": "night commits",
    "format": null,
@@ -145,7 +229,27 @@
    "name": "Early Bird",
    "group": "consistency",
    "legendary": false,
-   "color": "#ffcf4d",
+   "color": "#34f5a0",
+   "icon": {
+    "rows": [
+     "............",
+     ".....y......",
+     ".y...y...y..",
+     "..y..y..y...",
+     "....yyyy....",
+     "...yyyyyy...",
+     "..yyyyyyyy..",
+     "bbbbbbbbbbbb",
+     "............",
+     "..bbbbbbbb..",
+     "............",
+     "............"
+    ],
+    "palette": {
+     "y": "#ffd34e",
+     "b": "#6ea8ff"
+    }
+   },
    "weight": 2,
    "unit": "early commits",
    "format": null,
@@ -166,7 +270,27 @@
    "name": "Weekend Warrior",
    "group": "consistency",
    "legendary": false,
-   "color": "#ff5c9a",
+   "color": "#34f5a0",
+   "icon": {
+    "rows": [
+     ".g........g.",
+     "..g......g..",
+     "...g....g...",
+     "....g..g....",
+     ".....gg.....",
+     ".....gg.....",
+     "....g..g....",
+     "...g....g...",
+     "..bg....gb..",
+     ".bb......bb.",
+     "b..........b",
+     "............"
+    ],
+    "palette": {
+     "g": "#c9ced6",
+     "b": "#9a6a3a"
+    }
+   },
    "weight": 3,
    "unit": "weekend commits",
    "format": null,
@@ -187,7 +311,28 @@
    "name": "Commit Storm",
    "group": "consistency",
    "legendary": false,
-   "color": "#ff9f43",
+   "color": "#34f5a0",
+   "icon": {
+    "rows": [
+     "............",
+     "....gggg....",
+     "..gggggggg..",
+     ".gggggggggg.",
+     "gggggggggggg",
+     ".dddddddddd.",
+     ".....yy.....",
+     "....yy......",
+     "...yyyy.....",
+     ".....yy.....",
+     "....y.......",
+     "............"
+    ],
+    "palette": {
+     "g": "#8e99a8",
+     "d": "#5f6b7a",
+     "y": "#ffd34e"
+    }
+   },
    "weight": 3,
    "unit": "commits in a day",
    "format": null,
@@ -209,6 +354,26 @@
    "group": "collaboration",
    "legendary": false,
    "color": "#38bdf8",
+   "icon": {
+    "rows": [
+     "............",
+     "............",
+     "....g.......",
+     "....gg......",
+     "...gggg.....",
+     "..gggggg....",
+     ".gggggggg...",
+     "bbbbbbbbbbbb",
+     "............",
+     ".bbbbbbbbbb.",
+     "............",
+     "............"
+    ],
+    "palette": {
+     "g": "#7a8fb0",
+     "b": "#4aa3ff"
+    }
+   },
    "weight": 10,
    "unit": "merged PRs",
    "format": null,
@@ -231,7 +396,29 @@
    "name": "Reviewer",
    "group": "collaboration",
    "legendary": false,
-   "color": "#b794ff",
+   "color": "#38bdf8",
+   "icon": {
+    "rows": [
+     "............",
+     "...kkkkkk...",
+     "..kccccccck.",
+     ".kcwwcccccck",
+     ".kcwcccccck.",
+     ".kcccccccck.",
+     ".kcccccccck.",
+     "..kccccccckb",
+     "...kkkkkkbb.",
+     "........bb..",
+     ".......bb...",
+     "......bb...."
+    ],
+    "palette": {
+     "k": "#3a6fb0",
+     "c": "#8fd3ff",
+     "w": "#ffffff",
+     "b": "#b07a3a"
+    }
+   },
    "weight": 8,
    "unit": "reviews",
    "format": null,
@@ -253,7 +440,28 @@
    "name": "Issue Hunter",
    "group": "collaboration",
    "legendary": false,
-   "color": "#ff5c9a",
+   "color": "#38bdf8",
+   "icon": {
+    "rows": [
+     "..d......d..",
+     "...d....d...",
+     "...rrrrrr...",
+     "d.rrcrrcrr.d",
+     ".drrrrrrrrd.",
+     "d.rrrrrrrr.d",
+     ".drrrrrrrrd.",
+     "d.rrrrrrrr.d",
+     "...rrrrrr...",
+     "....rrrr....",
+     "............",
+     "............"
+    ],
+    "palette": {
+     "r": "#e8402a",
+     "d": "#6a3a3a",
+     "c": "#7fe3ff"
+    }
+   },
    "weight": 5,
    "unit": "closed issues",
    "format": null,
@@ -276,6 +484,27 @@
    "group": "collaboration",
    "legendary": false,
    "color": "#38bdf8",
+   "icon": {
+    "rows": [
+     "............",
+     ".sss....sss.",
+     ".sss....sss.",
+     "bbbbb..ooooo",
+     "bbbbb..ooooo",
+     "bbbbb..ooooo",
+     "bbbbb..ooooo",
+     "bbbbb..ooooo",
+     "............",
+     "............",
+     "............",
+     "............"
+    ],
+    "palette": {
+     "s": "#f0c090",
+     "b": "#3b82f6",
+     "o": "#ff8c3a"
+    }
+   },
    "weight": 7,
    "unit": "other repos",
    "format": null,
@@ -298,7 +527,28 @@
    "name": "Open Sourcerer",
    "group": "collaboration",
    "legendary": false,
-   "color": "#34f5a0",
+   "color": "#38bdf8",
+   "icon": {
+    "rows": [
+     ".....p......",
+     ".....pp.....",
+     "....pppp....",
+     "....pyyp....",
+     "...pppppp...",
+     "...pppppp...",
+     "..pppppppp..",
+     ".pppppppppp.",
+     "dddddddddddd",
+     ".dddddddddd.",
+     "............",
+     "............"
+    ],
+    "palette": {
+     "p": "#9b5de5",
+     "d": "#5b3a8a",
+     "y": "#ffd34e"
+    }
+   },
    "weight": 9,
    "unit": "merged PRs",
    "format": null,
@@ -321,6 +571,27 @@
    "group": "collaboration",
    "legendary": false,
    "color": "#ffd34e",
+   "icon": {
+    "rows": [
+     ".....gg.....",
+     ".....gg.....",
+     "...gggggg...",
+     "..gwwwwwwg..",
+     ".gwwwwrwwwg.",
+     ".gwwwwrwwwg.",
+     ".gwwwwrrrwg.",
+     ".gwwwwwwwwg.",
+     "..gwwwwwwg..",
+     "...gggggg...",
+     "............",
+     "............"
+    ],
+    "palette": {
+     "g": "#8a8f98",
+     "w": "#f4f4f4",
+     "r": "#e8402a"
+    }
+   },
    "weight": 4,
    "unit": "quick closes",
    "format": null,
@@ -342,6 +613,25 @@
    "group": "impact",
    "legendary": false,
    "color": "#ffcf4d",
+   "icon": {
+    "rows": [
+     ".....yy.....",
+     ".....yy.....",
+     "....yyyy....",
+     "yyyyyyyyyyyy",
+     ".yyyyyyyyyy.",
+     "..yyyyyyyy..",
+     "...yyyyyy...",
+     "..yyyyyyyy..",
+     "..yyy..yyy..",
+     ".yyy....yyy.",
+     ".yy......yy.",
+     "............"
+    ],
+    "palette": {
+     "y": "#ffd34e"
+    }
+   },
    "weight": 5,
    "unit": "stars",
    "format": null,
@@ -364,7 +654,27 @@
    "name": "Forked",
    "group": "impact",
    "legendary": false,
-   "color": "#38bdf8",
+   "color": "#ffcf4d",
+   "icon": {
+    "rows": [
+     "oo........oo",
+     ".og......go.",
+     "..g......g..",
+     "..gg....gg..",
+     "...gg..gg...",
+     "....gggg....",
+     ".....gg.....",
+     ".....gg.....",
+     ".....gg.....",
+     ".....gg.....",
+     "............",
+     "............"
+    ],
+    "palette": {
+     "g": "#8a8f98",
+     "o": "#ff8c3a"
+    }
+   },
    "weight": 5,
    "unit": "forks",
    "format": null,
@@ -386,7 +696,27 @@
    "name": "Follower Club",
    "group": "impact",
    "legendary": false,
-   "color": "#ff5c9a",
+   "color": "#ffcf4d",
+   "icon": {
+    "rows": [
+     "............",
+     ".pppp..pppp.",
+     "pllppppppppp",
+     "plpppppppppp",
+     "pppppppppppp",
+     ".pppppppppp.",
+     "..pppppppp..",
+     "...pppppp...",
+     "....pppp....",
+     ".....pp.....",
+     "............",
+     "............"
+    ],
+    "palette": {
+     "p": "#ff4d7d",
+     "l": "#ffb3c8"
+    }
+   },
    "weight": 3,
    "unit": "followers",
    "format": null,
@@ -409,11 +739,31 @@
    "group": "craft",
    "legendary": false,
    "color": "#ff5c9a",
+   "icon": {
+    "rows": [
+     "............",
+     "............",
+     "............",
+     "..c....o.c..",
+     ".c....o...c.",
+     "c.....o....c",
+     ".c...o....c.",
+     "..c..o...c..",
+     "............",
+     "............",
+     "............",
+     "............"
+    ],
+    "palette": {
+     "c": "#4fd8ff",
+     "o": "#ff9f43"
+    }
+   },
    "weight": 6,
    "unit": "lines",
    "format": null,
    "description": "Lines of code you added",
-   "value": 83963,
+   "value": 84783,
    "tiers": [
     1000,
     10000,
@@ -427,19 +777,39 @@
    "level": 3,
    "next": 100000,
    "maxed": false,
-   "progress": 0.83963
+   "progress": 0.84783
   },
   {
    "id": "refactorer",
    "name": "Refactorer",
    "group": "craft",
    "legendary": false,
-   "color": "#ff9f43",
+   "color": "#ff5c9a",
+   "icon": {
+    "rows": [
+     "............",
+     "............",
+     "........g...",
+     "........gg..",
+     "gggggggggggg",
+     "........gg..",
+     "........g...",
+     "...b........",
+     "..bb........",
+     "bbbbbbbbbbbb",
+     "..bb........",
+     "...b........"
+    ],
+    "palette": {
+     "g": "#34f5a0",
+     "b": "#38bdf8"
+    }
+   },
    "weight": 5,
    "unit": "lines",
    "format": null,
    "description": "Lines of code you deleted",
-   "value": 20361,
+   "value": 20399,
    "tiers": [
     1000,
     5000,
@@ -450,14 +820,34 @@
    "level": 3,
    "next": 50000,
    "maxed": false,
-   "progress": 0.40722
+   "progress": 0.40798
   },
   {
    "id": "polyglot",
    "name": "Polyglot",
    "group": "craft",
    "legendary": false,
-   "color": "#ffcf4d",
+   "color": "#ff5c9a",
+   "icon": {
+    "rows": [
+     "....bbbb....",
+     "..bbbggbbb..",
+     ".bbbgggbbbb.",
+     ".bbgggbbbbb.",
+     "bbbbggbbbgbb",
+     "bbbbbbbbggbb",
+     "bbbgbbbbggbb",
+     "bbggbbbbbbbb",
+     ".bggbbbbbbb.",
+     ".bbbbbbbbbb.",
+     "..bbbbbbbb..",
+     "....bbbb...."
+    ],
+    "palette": {
+     "b": "#3b82f6",
+     "g": "#38c172"
+    }
+   },
    "weight": 6,
    "unit": "languages",
    "format": null,
@@ -481,12 +871,33 @@
    "name": "Deep Diver",
    "group": "craft",
    "legendary": false,
-   "color": "#38bdf8",
+   "color": "#ff5c9a",
+   "icon": {
+    "rows": [
+     ".....cc.....",
+     ".....cc.....",
+     ".....cc.....",
+     ".....cc.....",
+     "...cccccc...",
+     "....cccc....",
+     ".....cc.....",
+     "............",
+     "bbbbbbbbbbbb",
+     "bbbbbbbbbbbb",
+     "dddddddddddd",
+     "............"
+    ],
+    "palette": {
+     "c": "#7fe3ff",
+     "b": "#3b82f6",
+     "d": "#1d4f9a"
+    }
+   },
    "weight": 6,
    "unit": "lines",
    "format": null,
    "description": "Estimated lines in your biggest language",
-   "value": 42954,
+   "value": 43333,
    "tiers": [
     10000,
     50000,
@@ -495,14 +906,34 @@
    "level": 1,
    "next": 50000,
    "maxed": false,
-   "progress": 0.85908
+   "progress": 0.86666
   },
   {
    "id": "repo-builder",
    "name": "Repo Builder",
    "group": "craft",
    "legendary": false,
-   "color": "#34f5a0",
+   "color": "#ff5c9a",
+   "icon": {
+    "rows": [
+     "............",
+     "............",
+     "rrrrmrrrrmrr",
+     "rrrrmrrrrmrr",
+     "mmmmmmmmmmmm",
+     "rmrrrrmrrrrm",
+     "rmrrrrmrrrrm",
+     "mmmmmmmmmmmm",
+     "rrrrmrrrrmrr",
+     "rrrrmrrrrmrr",
+     "............",
+     "............"
+    ],
+    "palette": {
+     "r": "#d9473a",
+     "m": "#f0c0b0"
+    }
+   },
    "weight": 5,
    "unit": "repos",
    "format": null,
@@ -525,7 +956,31 @@
    "name": "Hand-Crafted",
    "group": "craft",
    "legendary": false,
-   "color": "#34f5a0",
+   "color": "#ff5c9a",
+   "icon": {
+    "rows": [
+     "..........pp",
+     ".........pp.",
+     "........gg..",
+     ".......yo...",
+     "......yo....",
+     ".....yo.....",
+     "....yo......",
+     "...yo.......",
+     "..bd........",
+     ".dd.........",
+     "d...........",
+     "............"
+    ],
+    "palette": {
+     "p": "#ff8fa8",
+     "g": "#c9ced6",
+     "y": "#ffd34e",
+     "o": "#ff9f43",
+     "b": "#f0d9a8",
+     "d": "#444444"
+    }
+   },
    "weight": 5,
    "unit": "lines",
    "format": null,
@@ -547,11 +1002,33 @@
    "group": "ai-time",
    "legendary": false,
    "color": "#b794ff",
+   "icon": {
+    "rows": [
+     ".....r......",
+     ".....d......",
+     "..gggggggg..",
+     ".gggggggggg.",
+     ".ggccgggccgg",
+     ".gggggggggg.",
+     ".ggdddddddg.",
+     ".gggggggggg.",
+     "..gggggggg..",
+     "...gg..gg...",
+     "............",
+     "............"
+    ],
+    "palette": {
+     "g": "#aeb4bd",
+     "c": "#5ee0ff",
+     "d": "#3a3f47",
+     "r": "#ff5c5c"
+    }
+   },
    "weight": 6,
    "unit": "AI commits",
    "format": null,
    "description": "Commits with an AI co-author",
-   "value": 58,
+   "value": 60,
    "tiers": [
     10,
     50,
@@ -561,14 +1038,35 @@
    "level": 2,
    "next": 250,
    "maxed": false,
-   "progress": 0.232
+   "progress": 0.24
   },
   {
    "id": "coding-time",
    "name": "Coding Time",
    "group": "ai-time",
    "legendary": false,
-   "color": "#38bdf8",
+   "color": "#6b8cff",
+   "icon": {
+    "rows": [
+     "oooooooooooo",
+     ".owwwwwwwwo.",
+     "..owwwwwwo..",
+     "...oyyyyo...",
+     "....oyyo....",
+     ".....oo.....",
+     "....oyyo....",
+     "...oyyyyo...",
+     "..oyyyyyyo..",
+     ".oyyyyyyyyo.",
+     "oooooooooooo",
+     "............"
+    ],
+    "palette": {
+     "o": "#c9822a",
+     "w": "#cfe9ff",
+     "y": "#ffd34e"
+    }
+   },
    "weight": 7,
    "unit": "tracked",
    "format": "hours",
@@ -592,7 +1090,28 @@
    "name": "Marathon",
    "group": "ai-time",
    "legendary": false,
-   "color": "#ff9f43",
+   "color": "#6b8cff",
+   "icon": {
+    "rows": [
+     "b...........",
+     "bkwkwkwk....",
+     "bwkwkwkw....",
+     "bkwkwkwk....",
+     "bwkwkwkw....",
+     "b...........",
+     "b...........",
+     "b...........",
+     "b...........",
+     "b...........",
+     "bb..........",
+     "bbb........."
+    ],
+    "palette": {
+     "b": "#8a5a2a",
+     "w": "#f4f4f4",
+     "k": "#151515"
+    }
+   },
    "weight": 3,
    "unit": "session",
    "format": "hours",
@@ -613,7 +1132,28 @@
    "name": "Consistent",
    "group": "ai-time",
    "legendary": false,
-   "color": "#34f5a0",
+   "color": "#6b8cff",
+   "icon": {
+    "rows": [
+     "....rrrr....",
+     "..rrrrrrrr..",
+     ".rrrwwwwrrr.",
+     ".rrwwwwwwrr.",
+     "rrwwwyywwwrr",
+     "rrwwwyywwwrr",
+     ".rrwwwwwwrr.",
+     ".rrrwwwwrrr.",
+     "..rrrrrrrr..",
+     "....rrrr....",
+     "............",
+     "............"
+    ],
+    "palette": {
+     "r": "#e8402a",
+     "w": "#f4f4f4",
+     "y": "#ffd34e"
+    }
+   },
    "weight": 5,
    "unit": "days",
    "format": null,
@@ -634,7 +1174,30 @@
    "name": "Unicorn",
    "group": "fun",
    "legendary": false,
-   "color": "#ff5c9a",
+   "color": "#ff9f43",
+   "icon": {
+    "rows": [
+     "............",
+     "............",
+     "............",
+     "............",
+     "....rrrr....",
+     "..rroooorr..",
+     ".rooyyyyoor.",
+     ".royggggyor.",
+     "royggbbggyor",
+     "roygb..bgyor",
+     "............",
+     "............"
+    ],
+    "palette": {
+     "r": "#ff4d4d",
+     "o": "#ff9f43",
+     "y": "#ffd34e",
+     "g": "#34f5a0",
+     "b": "#38bdf8"
+    }
+   },
    "weight": 1,
    "unit": "commits",
    "format": null,
@@ -653,7 +1216,29 @@
    "name": "Christmas Coder",
    "group": "fun",
    "legendary": false,
-   "color": "#34f5a0",
+   "color": "#ff9f43",
+   "icon": {
+    "rows": [
+     ".....y......",
+     ".....gg.....",
+     "....gggg....",
+     "...gggrgg...",
+     "....gggg....",
+     "...gggggg...",
+     "..ggrgggrg..",
+     ".gggggggggg.",
+     "....bbbb....",
+     ".....bb.....",
+     ".....bb.....",
+     "............"
+    ],
+    "palette": {
+     "g": "#2fbf71",
+     "b": "#8a5a2a",
+     "y": "#ffd34e",
+     "r": "#ff4d4d"
+    }
+   },
    "weight": 1,
    "unit": "commits",
    "format": null,
@@ -672,7 +1257,29 @@
    "name": "New Year, New Commit",
    "group": "fun",
    "legendary": false,
-   "color": "#38bdf8",
+   "color": "#ff9f43",
+   "icon": {
+    "rows": [
+     "y....pp....y",
+     ".y...pp...y.",
+     "..y..pp..y..",
+     "...y.pp.y...",
+     "....yppy....",
+     "cccccwwccccc",
+     "cccccwwccccc",
+     "....yppy....",
+     "...y.pp.y...",
+     "..y..pp..y..",
+     ".y...pp...y.",
+     "y....pp....y"
+    ],
+    "palette": {
+     "w": "#ffffff",
+     "p": "#ff7ab6",
+     "c": "#4fd8ff",
+     "y": "#ffd34e"
+    }
+   },
    "weight": 1,
    "unit": "commits",
    "format": null,
@@ -692,6 +1299,28 @@
    "group": "fun",
    "legendary": false,
    "color": "#ffd34e",
+   "icon": {
+    "rows": [
+     ".g........g.",
+     ".gg......gg.",
+     "..gggggggg..",
+     ".gggggggggg.",
+     ".ggwkggwkgg.",
+     ".gggggggggg.",
+     ".gddddddddg.",
+     ".gdwdwdwdwg.",
+     ".gddddddddg.",
+     "..gggggggg..",
+     "..gg....gg..",
+     "............"
+    ],
+    "palette": {
+     "g": "#34c759",
+     "w": "#ffffff",
+     "k": "#111111",
+     "d": "#1a5c2e"
+    }
+   },
    "weight": 4,
    "unit": "huge PRs",
    "format": null,
@@ -711,6 +1340,28 @@
    "group": "fun",
    "legendary": false,
    "color": "#ffd34e",
+   "icon": {
+    "rows": [
+     "..........b.",
+     ".........b..",
+     "........b...",
+     ".......b....",
+     ".....yyy....",
+     "....yoyoy...",
+     "...yooyyoy..",
+     "..yoyyyyoy..",
+     ".yoyy..yyo..",
+     ".yy......w..",
+     "...........w",
+     "............"
+    ],
+    "palette": {
+     "b": "#b07a3a",
+     "y": "#ffd34e",
+     "o": "#ff9f43",
+     "w": "#f4f4f4"
+    }
+   },
    "weight": 3,
    "unit": "PRs",
    "format": null,
@@ -730,6 +1381,25 @@
    "group": "legendary",
    "legendary": true,
    "color": "#ffd34e",
+   "icon": {
+    "rows": [
+     "............",
+     "............",
+     "............",
+     ".yyyy..yyyy.",
+     "yy..yyyy..yy",
+     "yy..yyyy..yy",
+     ".yyyy..yyyy.",
+     "............",
+     "............",
+     "............",
+     "............",
+     "............"
+    ],
+    "palette": {
+     "y": "#ffd34e"
+    }
+   },
    "weight": 9,
    "unit": "days",
    "format": null,
@@ -749,6 +1419,26 @@
    "group": "legendary",
    "legendary": true,
    "color": "#ffd34e",
+   "icon": {
+    "rows": [
+     "............",
+     ".....yy.....",
+     ".....yy.....",
+     ".....yy.....",
+     "....ywwy....",
+     ".yyywwwwyyy.",
+     ".yyywwwwyyy.",
+     "....ywwy....",
+     ".....yy.....",
+     ".....yy.....",
+     ".....yy.....",
+     "............"
+    ],
+    "palette": {
+     "y": "#ffd34e",
+     "w": "#ffffff"
+    }
+   },
    "weight": 9,
    "unit": "stars",
    "format": null,
@@ -768,6 +1458,26 @@
    "group": "legendary",
    "legendary": true,
    "color": "#ffd34e",
+   "icon": {
+    "rows": [
+     "............",
+     "............",
+     ".....bb.....",
+     "....bbbb....",
+     "....bddb....",
+     "...bbbbbb...",
+     "...bbddbb...",
+     "..bbbbbbbb..",
+     "..bbbddbbb..",
+     ".bbbbbbbbbb.",
+     ".dddddddddd.",
+     "............"
+    ],
+    "palette": {
+     "b": "#d4a373",
+     "d": "#a77a52"
+    }
+   },
    "weight": 8,
    "unit": "languages",
    "format": null,
@@ -787,6 +1497,27 @@
    "group": "legendary",
    "legendary": true,
    "color": "#ffd34e",
+   "icon": {
+    "rows": [
+     "............",
+     "............",
+     ".y...yy...y.",
+     ".yy..yy..yy.",
+     ".yyyyyyyyyy.",
+     ".yyyyyyyyyy.",
+     ".yyrryyrryy.",
+     ".oooooooooo.",
+     "............",
+     "............",
+     "............",
+     "............"
+    ],
+    "palette": {
+     "y": "#ffd34e",
+     "r": "#ff4d4d",
+     "o": "#c9822a"
+    }
+   },
    "weight": 10,
    "unit": "maxed",
    "format": null,
