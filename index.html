@@ -393,37 +393,14 @@ document.addEventListener('mousemove', (e) => {
   tipEl.style.top = e.clientY + 16 + 'px';
 });
 
-// Achievements (achievements.json, erzeugt von github-achievements-by-niounze)
-function achCard(a) {
-  const r = 18, circ = 2 * Math.PI * r, c = a.color || '#38bdf8', lock = a.level === 0 && !a.legendary;
-  const fv = (v) => (a.format === 'hours' ? Math.round(v) + 'h' : short(v));
-  const sub = a.maxed ? fv(a.value) + ' ' + a.unit + ' · max level' : fv(a.value) + ' / ' + fv(a.next) + ' ' + a.unit;
-  const badge = a.legendary ? (a.maxed ? 'UNLOCKED' : 'LEGENDARY') : a.level + ' / ' + a.tiers.length;
-  const ring = circ * (a.maxed ? 1 : a.progress);
-  return '<div class="ac' + (a.legendary ? ' leg' : '') + (lock ? ' lock' : '') + '" data-tip="' + esc(a.description + ' · ' + sub) + '">' +
-    '<svg width="58" height="58" viewBox="0 0 46 46"><circle cx="23" cy="23" r="' + r + '" fill="none" stroke="#242424" stroke-width="4.5"/>' +
-    '<circle cx="23" cy="23" r="' + r + '" fill="none" stroke="' + c + '" stroke-width="4.5" stroke-linecap="round" stroke-dasharray="' + ring.toFixed(1) + ' ' + circ.toFixed(1) + '" transform="rotate(-90 23 23)"/>' +
-    '<text x="23" y="28.5" text-anchor="middle" font-size="16" font-weight="700" fill="' + (lock ? '#555' : '#fff') + '">' + (a.legendary ? (a.maxed ? '★' : '☆') : a.level) + '</text></svg>' +
-    '<div class="ab"><div class="an"><span>' + (a.legendary ? '★ ' : '') + esc(a.name) + '</span><i style="color:' + c + ';border-color:' + c + '88;background:' + c + '1c">' + badge + '</i></div>' +
-    '<div class="bar"><div style="width:' + Math.round((a.maxed ? 1 : a.progress) * 100) + '%;background:' + c + '"></div></div>' +
-    '<div class="as"><span>' + esc(sub) + '</span><span>' + (a.maxed ? '100' : Math.floor(a.progress * 100)) + '%</span></div></div></div>';
-}
+// Achievements: gleiche Oberfläche wie die Seite der Action (achievements-ui.js + achievements.json)
 function loadAchievements() {
   const box = document.getElementById('achCard');
   fetch('achievements.json?' + Date.now(), { cache: 'no-store' }).then((r) => { if (!r.ok) throw 0; return r.json(); }).then((j) => {
-    const list = j.achievements;
-    const closest = list.filter((a) => !a.maxed).sort((a, b) => b.progress - a.progress || b.level - a.level).slice(0, 6);
-    let all = false;
-    const draw = () => {
-      let body;
-      if (!all) body = '<div class="achgrid">' + closest.map(achCard).join('') + '</div>';
-      else body = Object.entries(j.groups || {}).map(([g, n]) => { const items = list.filter((a) => a.group === g); return items.length ? '<div class="achgroup">' + esc(n) + '</div><div class="achgrid">' + items.map(achCard).join('') + '</div>' : ''; }).join('');
-      box.innerHTML = '<div class="t achhead"><span style="display:flex;align-items:center;gap:10px"><span class="dot"></span>Achievements · ' + (all ? 'all' : 'closest to next level') + '<small class="achby">GitHub Achievements by niounze</small></span><span class="achcnt"><b>' + j.unlocked + '</b> / ' + j.total + ' unlocked</span></div>' + body +
-        '<div class="achmore"><button class="btn" id="achToggle">' + (all ? 'Show closest only' : 'Show all ' + j.total) + '</button></div>';
-      document.getElementById('achToggle').onclick = () => { all = !all; draw(); };
-    };
-    draw();
-    box.style.display = '';
+    const sc = document.createElement('script');
+    sc.src = 'achievements-ui.js?' + encodeURIComponent(j.updated);
+    sc.onload = () => { AchUI.mount(box, j); box.style.display = ''; };
+    document.head.appendChild(sc);
   }).catch(() => {});
 }
 

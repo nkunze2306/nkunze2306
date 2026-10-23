@@ -589,11 +589,12 @@ function render(d) {
   // ===== Achievements (aus achievements.json, erzeugt von github-achievements-by-niounze) =====
   const ach = readAchievements();
   if (ach) {
-    const closest = ach.achievements.filter((a) => !a.maxed).sort((a, b) => b.progress - a.progress || b.level - a.level).slice(0, 6);
+    const byId = new Map(ach.achievements.map((a) => [a.id, a]));
+    const closest = (ach.highlights || []).map((id) => byId.get(id)).filter(Boolean).slice(0, 6);
     const TG = 6, TH = 62, rowsA = Math.ceil(closest.length / 3), RA = 52 + rowsA * TH + (rowsA - 1) * TG + 16;
     const tw = (CW - 2 * 16 - 2 * TG) / 3;
-    parts.push(card(M, y, CW, RA, 'Achievements · closest to next level', C.blue, `${ach.unlocked} / ${ach.total} unlocked`));
-    parts.push(text(M + PAD + 24 + 'Achievements · closest to next level'.length * 7.6 + 14, y + 30, 'GitHub Achievements by niounze', { size: 10, fill: C.dim }));
+    parts.push(card(M, y, CW, RA, 'Achievements · highlights', C.blue, `${ach.unlocked} / ${ach.total} unlocked`));
+    parts.push(text(M + PAD + 24 + 'Achievements · highlights'.length * 7.6 + 14, y + 30, 'GitHub Achievements by niounze', { size: 10, fill: C.dim }));
     closest.forEach((a, i) => parts.push(achTile(a, M + 16 + (i % 3) * (tw + TG), y + 46 + Math.floor(i / 3) * (TH + TG), tw, TH)));
     y += RA + G;
   }
