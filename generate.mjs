@@ -451,7 +451,7 @@ const line = (x, y, spans, anchor = 'start') =>
     `<tspan font-size="${o.size || 12}" font-weight="${o.weight || 400}" fill="${o.fill || C.mute}"${o.dx ? ` dx="${o.dx}"` : ''}>${esc(s)}</tspan>`).join('')}</text>`;
 
 function card(x, y, w, h, title, color, right = '') {
-  return `<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="16" fill="${C.card}" stroke="${C.line}"/>
+  return `<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="16" fill="${C.card}" fill-opacity="0.86" stroke="${C.line}"/>
 <circle cx="${x + PAD + 5}" cy="${y + 26}" r="11" fill="${color}" fill-opacity="0.13" stroke="${color}" stroke-opacity="0.55"/>
 <circle cx="${x + PAD + 5}" cy="${y + 26}" r="3.2" fill="${color}"/>
 ${text(x + PAD + 24, y + 30, title.toUpperCase(), { size: 11, weight: 700, ls: 1.1 })}${right ? text(x + w - PAD, y + 30, right, { size: 12, anchor: 'end' }) : ''}`;
@@ -460,6 +460,22 @@ ${text(x + PAD + 24, y + 30, title.toUpperCase(), { size: 11, weight: 700, ls: 1
 const bar = (x, y, w, h, ratio, color) =>
   `<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="${h / 2}" fill="${C.track}"/>` +
   (ratio > 0 ? `<rect x="${x}" y="${y}" width="${Math.max(h, w * Math.min(ratio, 1))}" height="${h}" rx="${h / 2}" fill="${color}"/>` : '');
+
+// Pixel-Art-Hintergrund (assets/background.svg), über die ganze Höhe wiederholt; jede zweite Kachel gespiegelt, damit keine Naht sichtbar ist
+function backgroundSvg(w, h) {
+  const f = process.env.STATS_BG || 'assets/background.svg';
+  if (!existsSync(f)) return '';
+  const src = readFileSync(f, 'utf8');
+  const vb = (src.match(/viewBox="0 0 (\d+) (\d+)"/) || []).slice(1).map(Number);
+  const inner = src.replace(/^[\s\S]*?<svg[^>]*>/, '').replace(/<\/svg>\s*$/, '').replace(/<title>[\s\S]*?<\/title>/, '');
+  if (vb.length !== 2 || !inner) return '';
+  const th = (w * vb[1]) / vb[0];
+  let uses = '';
+  for (let i = 0, y = 0; y < h; i++, y += th) {
+    uses += i % 2 ? `<use href="#bgtile" transform="translate(0 ${(y + th).toFixed(2)}) scale(1 -1)"/>` : `<use href="#bgtile" transform="translate(0 ${y.toFixed(2)})"/>`;
+  }
+  return `<defs><symbol id="bgtile0" viewBox="0 0 ${vb[0]} ${vb[1]}" width="${w}" height="${th.toFixed(2)}" overflow="hidden"><g shape-rendering="crispEdges">${inner}</g></symbol><g id="bgtile"><use href="#bgtile0" width="${w}" height="${th.toFixed(2)}"/></g></defs>${uses}`;
+}
 
 function readAchievements() {
   const f = process.env.STATS_ACH || 'achievements.json';
@@ -841,6 +857,7 @@ function render(d) {
   const H = y + 14;
 
   return `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" font-family="'Segoe UI', -apple-system, 'Helvetica Neue', Arial, sans-serif">
+${backgroundSvg(W, H)}
 ${parts.join('\n')}
 </svg>
 `;
