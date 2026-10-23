@@ -1,5 +1,5 @@
 {
- "updated": "2026-10-23T17:01:39.229Z",
+ "updated": "2026-10-23T17:10:10.114Z",
  "login": "nkunze2306",
  "unlocked": 20,
  "total": 34,
@@ -12,19 +12,19 @@
   "forks": 0,
   "maxRepoStars": 0,
   "foreignRepos": 9,
-  "commits": 366,
+  "commits": 368,
   "nightCommits": 13,
   "earlyCommits": 0,
   "weekendCommits": 59,
-  "aiCommits": 43,
-  "linesAdded": 82810,
-  "linesDeleted": 19425,
+  "aiCommits": 45,
+  "linesAdded": 82887,
+  "linesDeleted": 19446,
   "handLines": 74712,
   "unicornCommits": 0,
   "christmasCommits": 0,
   "newYearCommits": 0,
   "languages": 15,
-  "topLanguageLines": 42815,
+  "topLanguageLines": 42796,
   "maxCommitsPerDay": 33,
   "activeDays": 126,
   "longestStreak": 5,
@@ -43,7 +43,11 @@
    "name": "Committer",
    "group": "consistency",
    "legendary": false,
-   "value": 366,
+   "color": "#34f5a0",
+   "unit": "commits",
+   "format": null,
+   "description": "Total commits you authored",
+   "value": 368,
    "tiers": [
     10,
     100,
@@ -55,13 +59,17 @@
    "level": 2,
    "next": 500,
    "maxed": false,
-   "progress": 0.732
+   "progress": 0.736
   },
   {
    "id": "streak-keeper",
    "name": "Streak Keeper",
    "group": "consistency",
    "legendary": false,
+   "color": "#ff9f43",
+   "unit": "days",
+   "format": null,
+   "description": "Longest streak of consecutive active days",
    "value": 5,
    "tiers": [
     3,
@@ -82,6 +90,10 @@
    "name": "Daily Grinder",
    "group": "consistency",
    "legendary": false,
+   "color": "#34f5a0",
+   "unit": "active days",
+   "format": null,
+   "description": "Days with at least one contribution",
    "value": 126,
    "tiers": [
     25,
@@ -99,6 +111,10 @@
    "name": "Night Owl",
    "group": "consistency",
    "legendary": false,
+   "color": "#b794ff",
+   "unit": "night commits",
+   "format": null,
+   "description": "Commits between 0:00 and 5:00",
    "value": 13,
    "tiers": [
     50,
@@ -115,6 +131,10 @@
    "name": "Early Bird",
    "group": "consistency",
    "legendary": false,
+   "color": "#ffcf4d",
+   "unit": "early commits",
+   "format": null,
+   "description": "Commits between 5:00 and 8:00",
    "value": 0,
    "tiers": [
     50,
@@ -131,6 +151,10 @@
    "name": "Weekend Warrior",
    "group": "consistency",
    "legendary": false,
+   "color": "#ff5c9a",
+   "unit": "weekend commits",
+   "format": null,
+   "description": "Commits on Saturdays and Sundays",
    "value": 59,
    "tiers": [
     25,
@@ -147,6 +171,10 @@
    "name": "Commit Storm",
    "group": "consistency",
    "legendary": false,
+   "color": "#ff9f43",
+   "unit": "commits in a day",
+   "format": null,
+   "description": "Most commits on a single day",
    "value": 33,
    "tiers": [
     10,
@@ -163,6 +191,10 @@
    "name": "Pull Shark",
    "group": "collaboration",
    "legendary": false,
+   "color": "#38bdf8",
+   "unit": "merged PRs",
+   "format": null,
+   "description": "Merged pull requests",
    "value": 71,
    "tiers": [
     1,
@@ -181,6 +213,10 @@
    "name": "Reviewer",
    "group": "collaboration",
    "legendary": false,
+   "color": "#b794ff",
+   "unit": "reviews",
+   "format": null,
+   "description": "Pull requests you reviewed",
    "value": 44,
    "tiers": [
     5,
@@ -198,6 +234,10 @@
    "name": "Issue Hunter",
    "group": "collaboration",
    "legendary": false,
+   "color": "#ff5c9a",
+   "unit": "closed issues",
+   "format": null,
+   "description": "Issues you opened that were closed",
    "value": 1,
    "tiers": [
     5,
@@ -215,6 +255,10 @@
    "name": "Team Player",
    "group": "collaboration",
    "legendary": false,
+   "color": "#38bdf8",
+   "unit": "other repos",
+   "format": null,
+   "description": "Repos of others you contributed to",
    "value": 9,
    "tiers": [
     1,
@@ -233,6 +277,10 @@
    "name": "Open Sourcerer",
    "group": "collaboration",
    "legendary": false,
+   "color": "#34f5a0",
+   "unit": "merged PRs",
+   "format": null,
+   "description": "Merged pull requests in repos you do not own",
    "value": 59,
    "tiers": [
     1,
@@ -250,6 +298,10 @@
    "name": "Quickdraw",
    "group": "collaboration",
    "legendary": false,
+   "color": "#ffcf4d",
+   "unit": "quick closes",
+   "format": null,
+   "description": "Issues or PRs you closed within 5 minutes",
    "value": 52,
    "tiers": [
     1,
@@ -266,6 +318,10 @@
    "name": "Stargazer",
    "group": "impact",
    "legendary": false,
+   "color": "#ffcf4d",
+   "unit": "stars",
+   "format": null,
+   "description": "Stars on your own repos",
    "value": 0,
    "tiers": [
     1,
@@ -284,6 +340,10 @@
    "name": "Forked",
    "group": "impact",
    "legendary": false,
+   "color": "#38bdf8",
+   "unit": "forks",
+   "format": null,
+   "description": "Forks of your own repos",
    "value": 0,
    "tiers": [
     1,
@@ -301,6 +361,10 @@
    "name": "Follower Club",
    "group": "impact",
    "legendary": false,
+   "color": "#ff5c9a",
+   "unit": "followers",
+   "format": null,
+   "description": "People following you",
    "value": 2,
    "tiers": [
     10,
@@ -318,7 +382,11 @@
    "name": "Line Machine",
    "group": "craft",
    "legendary": false,
-   "value": 82810,
+   "color": "#ff5c9a",
+   "unit": "lines",
+   "format": null,
+   "description": "Lines of code you added",
+   "value": 82887,
    "tiers": [
     1000,
     10000,
@@ -329,14 +397,18 @@
    "level": 3,
    "next": 100000,
    "maxed": false,
-   "progress": 0.8281
+   "progress": 0.82887
   },
   {
    "id": "refactorer",
    "name": "Refactorer",
    "group": "craft",
    "legendary": false,
-   "value": 19425,
+   "color": "#ff9f43",
+   "unit": "lines",
+   "format": null,
+   "description": "Lines of code you deleted",
+   "value": 19446,
    "tiers": [
     1000,
     5000,
@@ -347,13 +419,17 @@
    "level": 3,
    "next": 50000,
    "maxed": false,
-   "progress": 0.3885
+   "progress": 0.38892
   },
   {
    "id": "polyglot",
    "name": "Polyglot",
    "group": "craft",
    "legendary": false,
+   "color": "#ffcf4d",
+   "unit": "languages",
+   "format": null,
+   "description": "Different languages across your repos",
    "value": 15,
    "tiers": [
     3,
@@ -372,7 +448,11 @@
    "name": "Deep Diver",
    "group": "craft",
    "legendary": false,
-   "value": 42815,
+   "color": "#38bdf8",
+   "unit": "lines",
+   "format": null,
+   "description": "Estimated lines in your biggest language",
+   "value": 42796,
    "tiers": [
     10000,
     50000,
@@ -381,13 +461,17 @@
    "level": 1,
    "next": 50000,
    "maxed": false,
-   "progress": 0.8563
+   "progress": 0.85592
   },
   {
    "id": "repo-builder",
    "name": "Repo Builder",
    "group": "craft",
    "legendary": false,
+   "color": "#34f5a0",
+   "unit": "repos",
+   "format": null,
+   "description": "Repos you own (without forks)",
    "value": 3,
    "tiers": [
     1,
@@ -406,6 +490,10 @@
    "name": "Hand-Crafted",
    "group": "craft",
    "legendary": false,
+   "color": "#34f5a0",
+   "unit": "lines",
+   "format": null,
+   "description": "Lines you wrote yourself, without AI co-author",
    "value": 74712,
    "tiers": [
     10000,
@@ -422,7 +510,11 @@
    "name": "Pair Programmer",
    "group": "ai-time",
    "legendary": false,
-   "value": 43,
+   "color": "#b794ff",
+   "unit": "AI commits",
+   "format": null,
+   "description": "Commits with an AI co-author",
+   "value": 45,
    "tiers": [
     10,
     50,
@@ -432,13 +524,17 @@
    "level": 1,
    "next": 50,
    "maxed": false,
-   "progress": 0.86
+   "progress": 0.9
   },
   {
    "id": "coding-time",
    "name": "Coding Time",
    "group": "ai-time",
    "legendary": false,
+   "color": "#38bdf8",
+   "unit": "tracked",
+   "format": "hours",
+   "description": "Coding time tracked by WakaTime",
    "value": 123.465,
    "tiers": [
     10,
@@ -458,6 +554,10 @@
    "name": "Marathon",
    "group": "ai-time",
    "legendary": false,
+   "color": "#ff9f43",
+   "unit": "session",
+   "format": "hours",
+   "description": "Longest coding session without a break",
    "value": 2.9491666666666667,
    "tiers": [
     4,
@@ -474,6 +574,10 @@
    "name": "Consistent",
    "group": "ai-time",
    "legendary": false,
+   "color": "#34f5a0",
+   "unit": "days",
+   "format": null,
+   "description": "Days in a row with at least 1 h of coding",
    "value": 5,
    "tiers": [
     7,
@@ -490,6 +594,10 @@
    "name": "Unicorn",
    "group": "fun",
    "legendary": false,
+   "color": "#ff5c9a",
+   "unit": "commits",
+   "format": null,
+   "description": "A commit on February 29th",
    "value": 0,
    "tiers": [
     1
@@ -504,6 +612,10 @@
    "name": "Christmas Coder",
    "group": "fun",
    "legendary": false,
+   "color": "#34f5a0",
+   "unit": "commits",
+   "format": null,
+   "description": "A commit on December 24th or 25th",
    "value": 0,
    "tiers": [
     1
@@ -518,6 +630,10 @@
    "name": "New Year, New Commit",
    "group": "fun",
    "legendary": false,
+   "color": "#38bdf8",
+   "unit": "commits",
+   "format": null,
+   "description": "A commit on January 1st",
    "value": 0,
    "tiers": [
     1
@@ -532,6 +648,10 @@
    "name": "Monster PR",
    "group": "fun",
    "legendary": false,
+   "color": "#ff9f43",
+   "unit": "huge PRs",
+   "format": null,
+   "description": "A merged PR with more than 5,000 changed lines",
    "value": 7,
    "tiers": [
     1
@@ -546,6 +666,10 @@
    "name": "Clean Sweep",
    "group": "fun",
    "legendary": false,
+   "color": "#b794ff",
+   "unit": "PRs",
+   "format": null,
+   "description": "A merged PR that deletes more lines than it adds",
    "value": 7,
    "tiers": [
     1
@@ -560,6 +684,10 @@
    "name": "Unbroken",
    "group": "legendary",
    "legendary": true,
+   "color": "#ffd34e",
+   "unit": "days",
+   "format": null,
+   "description": "A 365 day streak without a break",
    "value": 5,
    "tiers": [
     365
@@ -574,6 +702,10 @@
    "name": "Supernova",
    "group": "legendary",
    "legendary": true,
+   "color": "#ffd34e",
+   "unit": "stars",
+   "format": null,
+   "description": "A single repo with 1,000 stars",
    "value": 0,
    "tiers": [
     1000
@@ -588,6 +720,10 @@
    "name": "Grandmaster",
    "group": "legendary",
    "legendary": true,
+   "color": "#ffd34e",
+   "unit": "maxed",
+   "format": null,
+   "description": "Every other achievement on its highest level",
    "value": 3,
    "tiers": [
     33
@@ -597,5 +733,14 @@
    "maxed": false,
    "progress": 0.09090909090909091
   }
- ]
+ ],
+ "groups": {
+  "consistency": "Consistency",
+  "collaboration": "Collaboration",
+  "impact": "Impact",
+  "craft": "Craft",
+  "ai-time": "AI & Time",
+  "fun": "Fun & Rare",
+  "legendary": "Legendary"
+ }
 }
