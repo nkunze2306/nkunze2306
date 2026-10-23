@@ -34,16 +34,24 @@ jobs:
           STATS_LOGIN: ${{ github.repository_owner }}
           WAKATIME_API_KEY: ${{ secrets.WAKATIME_API_KEY }}
         run: node generate.mjs
+      - name: Achievements
+        uses: nkunze2306/github-achievements-by-niounze@v1
+        with:
+          token: ${{ secrets.STATS_TOKEN || secrets.GITHUB_TOKEN }}
+          wakatime-key: ${{ secrets.WAKATIME_API_KEY }}
       - name: Bump image version in README when the card changed
         # GitHub cached Bilder im README über einen Proxy. Eine neue URL erzwingt das Neuladen.
         run: |
           if ! git diff --quiet -- stats.svg; then
             sed -i -E "s#stats\.svg(\?v=[0-9]+)?#stats.svg?v=$(date +%s)#" README.md
           fi
+          if ! git diff --quiet -- achievements.svg; then
+            sed -i -E "s#achievements\.svg(\?v=[0-9]+)?#achievements.svg?v=$(date +%s)#" README.md
+          fi
       - name: Commit if changed
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add stats.svg stats.json README.md
-          if [ -f wakatime.json ]; then git add wakatime.json; fi
+          git add stats.svg stats.json README.md achievements.svg achievements-all.svg achievements.json
+          for f in wakatime.json .achievements-state.json; do if [ -f $f ]; then git add $f; fi; done
           git diff --cached --quiet || (git commit -m "chore: update stats" && git pull --rebase && git push)

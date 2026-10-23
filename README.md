@@ -7,6 +7,8 @@ I'm a **frontend dev** with a focus on **mobile apps** and **interactive experie
   <img src="stats.svg?v=1792768811" alt="GitHub all-time stats" width="100%">
 </a>
 
+<img src="achievements.svg" alt="GitHub achievements" width="100%">
+
 <p align="center">
   <a href="https://nkunze2306.github.io/nkunze2306/"><img src="https://img.shields.io/badge/LIVE%20DASHBOARD-34f5a0?style=for-the-badge&labelColor=121212" alt="Live dashboard"></a>
   <a href="https://nkunze2306.github.io/nkunze2306/#year=2025"><img src="https://img.shields.io/badge/CONTRIBUTIONS%20BY%20YEAR-b794ff?style=for-the-badge&labelColor=121212" alt="Contributions by year"></a>
