@@ -507,7 +507,8 @@ function butterfliesLayer(w) {
   const colors = ['#ff9f43', '#38bdf8', '#ff5c9a', '#b794ff', '#fbbf24'];
   let seed = 7;
   const rnd = () => { seed = (seed + 0x6d2b79f5) | 0; let t = Math.imul(seed ^ (seed >>> 15), 1 | seed); t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t; return ((t ^ (t >>> 14)) >>> 0) / 4294967296; };
-  const spots = CARD_TOPS.filter((c) => c.w > 120);
+  const topY = Math.min(...CARD_TOPS.map((c) => c.y));
+  const spots = CARD_TOPS.filter((c) => c.w > 120 && c.y > topY + 1);
   const spot = () => { const c = spots[Math.floor(rnd() * spots.length)]; return [c.x + 24 + rnd() * (c.w - 48), c.y - pattern.length * P]; };
   const f2 = (n) => n.toFixed(2);
   let out = '';
@@ -533,12 +534,23 @@ function butterfliesLayer(w) {
       t += fly;
     }
     const c = colors[b % colors.length];
-    const wings = (cls) => pattern.map((row, y) => [...row].map((ch, x) => (ch === '.' ? '' : `<rect x="${(x - 4) * P}" y="${y * P}" width="${P}" height="${P}" fill="${ch === 'b' ? '#1b1b1b' : c}"/>`)).join('')).join('');
+    const wings = (cls) => pattern.map((row, y) => [...row].map((ch, x) => (ch === '.' ? '' : `<rect x="${(x - 4) * P}" y="${y * P}" width="${P}" height="${P}" fill="${ch === 'b' ? '#d8cfbf' : c}"/>`)).join('')).join('');
     const kt = (arr) => arr.map((p) => f2(p[0] / T)).join(';');
+    const sidePat = ['.wvvw....kk', '.wvvww..k..', '..wvwwb.k..', '...bbbbbbbe', '....l.l.l..'];
+    const sideCol = { w: c, v: '#ffffff', b: '#d8cfbf', k: '#d8cfbf', e: '#ffffff', l: '#d8cfbf' };
+    const rect = (x, y, ch) => `<rect x="${(x - 5) * P}" y="${y * P}" width="${P}" height="${P}" fill="${sideCol[ch]}"${ch === 'v' ? ' fill-opacity="0.6"' : ''}/>`;
+    const sideSprite = (flip) => {
+      let wing = '', rest = '';
+      sidePat.forEach((row, y) => [...row].forEach((ch, x) => { if (ch === '.') return; (ch === 'w' || ch === 'v' ? (wing += rect(x, y, ch)) : (rest += rect(x, y, ch))); }));
+      const px = (3 - 5) * P + P / 2, py = 3 * P;
+      const fan = `<animateTransform attributeName="transform" type="rotate" values="0 ${px} ${py};0 ${px} ${py};-14 ${px} ${py};0 ${px} ${py}" keyTimes="0;0.7;0.85;1" dur="${(3 + rnd() * 2).toFixed(1)}s" repeatCount="indefinite"/>`;
+      return `<g${flip ? ' transform="scale(-1 1)"' : ''}><g>${fan}${wing}</g>${rest}</g>`;
+    };
+    const sides = stops.map((_, i) => `<g opacity="0"><animate attributeName="opacity" calcMode="discrete" keyTimes="${kt(seg)}" values="${seg.map((s, j) => (j === 2 * i ? 1 : 0)).join(';')}" dur="${T}s" repeatCount="indefinite"/>${sideSprite(rnd() < 0.5)}</g>`).join('');
     const vis = (flying) => `<animate attributeName="opacity" calcMode="discrete" keyTimes="${kt(seg)}" values="${seg.map((s) => (s[1] === flying ? 1 : 0)).join(';')}" dur="${T}s" repeatCount="indefinite"/>`;
     const flap = (dur, lo) => `<animateTransform attributeName="transform" type="scale" values="1 1;${lo} 1;1 1" dur="${dur}s" repeatCount="indefinite"/>`;
     out += `<g shape-rendering="crispEdges"><g><animateTransform attributeName="transform" type="translate" calcMode="linear" keyTimes="${kt(pos)}" values="${pos.map((p) => `${f2(p[1])} ${f2(p[2])}`).join(';')}" dur="${T}s" repeatCount="indefinite"/>` +
-      `<g opacity="1">${vis(1)}<g>${flap(0.16, 0.2)}${wings()}</g></g><g opacity="0">${vis(0)}<g>${flap(1.8, 0.35)}${wings()}</g></g></g></g>`;
+      `<g opacity="1">${vis(1)}<g>${flap(0.16, 0.2)}${wings()}</g></g>${sides}</g></g>`;
   }
   return `<g pointer-events="none">${out}</g>`;
 }
