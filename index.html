@@ -399,7 +399,13 @@ function loadAchievements() {
   fetch('achievements.json?' + Date.now(), { cache: 'no-store' }).then((r) => { if (!r.ok) throw 0; return r.json(); }).then((j) => {
     const sc = document.createElement('script');
     sc.src = 'achievements-ui.js?' + encodeURIComponent(j.updated);
-    sc.onload = () => { AchUI.mount(box, j); box.style.display = ''; };
+    sc.onload = () => {
+      const want = (location.hash.match(/achievements(?:=(\w+))?/) || [])[0];
+      const v = want && (want.split('=')[1] || 'highlights');
+      AchUI.mount(box, j, { view: ['highlights', 'closest', 'all'].includes(v) ? v : 'highlights' });
+      box.style.display = '';
+      if (want) setTimeout(() => box.scrollIntoView({ behavior: 'smooth', block: 'start' }), 300);
+    };
     document.head.appendChild(sc);
   }).catch(() => {});
 }
