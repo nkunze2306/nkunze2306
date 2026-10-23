@@ -477,6 +477,25 @@ function backgroundSvg(w, h) {
   return `<defs><symbol id="bgtile0" viewBox="0 0 ${vb[0]} ${vb[1]}" width="${w}" height="${th.toFixed(2)}" overflow="hidden"><g shape-rendering="crispEdges">${inner}</g></symbol><g id="bgtile"><use href="#bgtile0" width="${w}" height="${th.toFixed(2)}"/></g></defs>${uses}`;
 }
 
+// Begrüßung (Überschrift + Text) liegt im Bild, damit der Hintergrund bis ganz nach oben reicht. **fett** markiert Hervorhebungen.
+const INTRO = {
+  title: "Hey, I'm Nicolas Kunze 👋",
+  lines: [
+    "I'm currently studying **Media Informatics and Interactive Entertainment** at **HSMW**",
+    '(University of Applied Sciences Mittweida) in Saxony, Germany.',
+    "I'm a **frontend dev** with a focus on **mobile apps** and **interactive experiences**.",
+  ],
+};
+
+function introBlock(y0) {
+  const x = M + PAD, h = 28 + 34 + INTRO.lines.length * 22 + 14;
+  const spans = (s) => s.split('**').map((t, i) => (i % 2 ? `<tspan fill="${C.text}" font-weight="700">${esc(t)}</tspan>` : `<tspan>${esc(t)}</tspan>`)).join('');
+  let svg = `<rect x="${M}" y="${y0}" width="${CW}" height="${h}" rx="16" fill="#0b0b0b" fill-opacity="0.72" stroke="${C.line}"/>`;
+  svg += text(x, y0 + 46, INTRO.title, { size: 26, fill: C.text, weight: 800 });
+  INTRO.lines.forEach((l, i) => { svg += `<text x="${x}" y="${y0 + 76 + i * 22}" font-size="13.5" fill="#c8c8c8">${spans(l)}</text>`; });
+  return { svg, h };
+}
+
 function readAchievements() {
   const f = process.env.STATS_ACH || 'achievements.json';
   try { return existsSync(f) ? JSON.parse(readFileSync(f, 'utf8')) : null; } catch { return null; }
@@ -559,6 +578,7 @@ function columns(parts, x, y, w, h, items, { labelSize = 10.5, valueSize = 10.5,
 function render(d) {
   const parts = [];
   let y = M + 4;
+  if (process.env.STATS_INTRO !== '0') { const ib = introBlock(y); parts.push(ib.svg); y += ib.h + G; }
   const dateStr = new Date(d.updated).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
   const add = d.addHuman + d.addAI, net = add - d.del, hr = add ? d.addHuman / add : 1;
 
