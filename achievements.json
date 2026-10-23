@@ -1,8 +1,8 @@
 {
- "updated": "2026-10-23T17:21:29.466Z",
+ "updated": "2026-10-23T17:25:06.168Z",
  "login": "nkunze2306",
  "unlocked": 20,
- "total": 34,
+ "total": 35,
  "metrics": {
   "followers": 2,
   "issuesClosed": 1,
@@ -12,19 +12,19 @@
   "forks": 0,
   "maxRepoStars": 0,
   "foreignRepos": 9,
-  "commits": 372,
+  "commits": 373,
   "nightCommits": 13,
   "earlyCommits": 0,
   "weekendCommits": 59,
-  "aiCommits": 48,
-  "linesAdded": 83734,
-  "linesDeleted": 20263,
+  "aiCommits": 49,
+  "linesAdded": 83736,
+  "linesDeleted": 20264,
   "handLines": 74713,
   "unicornCommits": 0,
   "christmasCommits": 0,
   "newYearCommits": 0,
   "languages": 15,
-  "topLanguageLines": 43207,
+  "topLanguageLines": 43208,
   "maxCommitsPerDay": 33,
   "activeDays": 126,
   "longestStreak": 5,
@@ -47,7 +47,7 @@
    "unit": "commits",
    "format": null,
    "description": "Total commits you authored",
-   "value": 372,
+   "value": 373,
    "tiers": [
     10,
     100,
@@ -59,7 +59,7 @@
    "level": 2,
    "next": 500,
    "maxed": false,
-   "progress": 0.744
+   "progress": 0.746
   },
   {
    "id": "streak-keeper",
@@ -386,18 +386,21 @@
    "unit": "lines",
    "format": null,
    "description": "Lines of code you added",
-   "value": 83734,
+   "value": 83736,
    "tiers": [
     1000,
     10000,
     50000,
     100000,
-    500000
+    500000,
+    1000000,
+    5000000,
+    10000000
    ],
    "level": 3,
    "next": 100000,
    "maxed": false,
-   "progress": 0.83734
+   "progress": 0.83736
   },
   {
    "id": "refactorer",
@@ -408,7 +411,7 @@
    "unit": "lines",
    "format": null,
    "description": "Lines of code you deleted",
-   "value": 20263,
+   "value": 20264,
    "tiers": [
     1000,
     5000,
@@ -419,7 +422,7 @@
    "level": 3,
    "next": 50000,
    "maxed": false,
-   "progress": 0.40526
+   "progress": 0.40528
   },
   {
    "id": "polyglot",
@@ -436,7 +439,8 @@
     5,
     8,
     12,
-    20
+    20,
+    30
    ],
    "level": 4,
    "next": 20,
@@ -452,7 +456,7 @@
    "unit": "lines",
    "format": null,
    "description": "Estimated lines in your biggest language",
-   "value": 43207,
+   "value": 43208,
    "tiers": [
     10000,
     50000,
@@ -461,7 +465,7 @@
    "level": 1,
    "next": 50000,
    "maxed": false,
-   "progress": 0.86414
+   "progress": 0.86416
   },
   {
    "id": "repo-builder",
@@ -514,7 +518,7 @@
    "unit": "AI commits",
    "format": null,
    "description": "Commits with an AI co-author",
-   "value": 48,
+   "value": 49,
    "tiers": [
     10,
     50,
@@ -524,7 +528,7 @@
    "level": 1,
    "next": 50,
    "maxed": false,
-   "progress": 0.96
+   "progress": 0.98
   },
   {
    "id": "coding-time",
@@ -716,6 +720,24 @@
    "progress": 0
   },
   {
+   "id": "babel",
+   "name": "Babel",
+   "group": "legendary",
+   "legendary": true,
+   "color": "#ffd34e",
+   "unit": "languages",
+   "format": null,
+   "description": "Code in 50 different languages",
+   "value": 15,
+   "tiers": [
+    50
+   ],
+   "level": 0,
+   "next": 50,
+   "maxed": false,
+   "progress": 0.3
+  },
+  {
    "id": "grandmaster",
    "name": "Grandmaster",
    "group": "legendary",
@@ -726,12 +748,12 @@
    "description": "Every other achievement on its highest level",
    "value": 3,
    "tiers": [
-    33
+    34
    ],
    "level": 0,
-   "next": 33,
+   "next": 34,
    "maxed": false,
-   "progress": 0.09090909090909091
+   "progress": 0.08823529411764706
   }
  ],
  "groups": {
