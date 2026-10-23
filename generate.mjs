@@ -508,16 +508,18 @@ function butterfliesLayer(w, h) {
   const side = ['..ooo.........kk', '.owwwo.......k..', '.owvvwo.....k...', 'owwvvwwo...k....', 'owwvvwwwo..bb...', 'owwwvwwwwo.bbb..', '.owwwwwwwwbbbbe.', '..owwwwwwbbbbbb.', '...ooowwobbbbbb.', '....bbbbbbbbb...', '....l..l..l..l..'];
   const colors = ['#ff9f43', '#38bdf8', '#ff5c9a', '#b794ff', '#fbbf24'];
   const shade = (hex, k) => '#' + [1, 3, 5].map((i) => Math.round(parseInt(hex.slice(i, i + 2), 16) * k).toString(16).padStart(2, '0')).join('');
-  let seed = 7;
+  let seed = process.env.STATS_SEED ? Number(process.env.STATS_SEED) : Date.now() % 2147483647; // Reihenfolge der Kacheln ist bei jedem Lauf (stündlich) zufällig
   const rnd = () => { seed = (seed + 0x6d2b79f5) | 0; let t = Math.imul(seed ^ (seed >>> 15), 1 | seed); t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t; return ((t ^ (t >>> 14)) >>> 0) / 4294967296; };
   const topY = Math.min(...CARD_TOPS.map((c) => c.y));
   const half = h / 2; // nur die obere Hälfte des Bildes
   const spots = CARD_TOPS.filter((c) => c.w > 120 && c.y > topY + 1 && c.y < half); // nicht auf die oberste Reihe (unter den Pills)
   const H = top.length * P; // Landehöhe: Füße stehen auf der Kartenkante
-  const spot = () => { const c = spots[Math.floor(rnd() * spots.length)]; return [c.x + 24 + rnd() * (c.w - 48), c.y - H]; };
+  let lastCard = null;
+  const spot = () => { let c; do { c = spots[Math.floor(rnd() * spots.length)]; } while (c === lastCard && spots.length > 1); lastCard = c; return [c.x + 24 + rnd() * (c.w - 48), c.y - H]; };
   const f2 = (n) => n.toFixed(2);
   let out = '';
   for (let bi = 0; bi < COUNT; bi++) {
+    lastCard = null;
     const stops = Array.from({ length: STOPS }, spot);
     const stays = Array.from({ length: STOPS }, () => 3 + rnd() * 4);
     const fly = (T - stays.reduce((x, y) => x + y, 0)) / STOPS;
