@@ -500,7 +500,7 @@ function introBlock(y0) {
 
 // Fünf Pixel-Schmetterlinge (reines SVG/SMIL, ohne Script): fliegen mit Flügelschlag und Wackeln, landen auf Kartenkanten, klappen langsam
 // die Flügel und fliegen weiter. Schleife 72 s, deterministisch (gleicher Aufbau bei jedem Lauf). STATS_BUTTERFLIES=0 schaltet sie ab.
-function butterfliesLayer(w) {
+function butterfliesLayer(w, h) {
   if (process.env.STATS_BUTTERFLIES === '0' || !CARD_TOPS.length) return '';
   const P = 2.5, T = 72, COUNT = 5, STOPS = 5; // HQ: 16 px breite Sprites (Draufsicht 16x12, Seitenansicht 16x11)
   const halfTop = ['......k.', '.oo...kb', 'owwoo.wb', 'owvwwwwb', 'owwvwwwb', '.owwwwwb', '..oowwwb', '..owwwwb', '..owvwwb', '...owwob', '....ooob', '.......b'];
@@ -511,7 +511,8 @@ function butterfliesLayer(w) {
   let seed = 7;
   const rnd = () => { seed = (seed + 0x6d2b79f5) | 0; let t = Math.imul(seed ^ (seed >>> 15), 1 | seed); t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t; return ((t ^ (t >>> 14)) >>> 0) / 4294967296; };
   const topY = Math.min(...CARD_TOPS.map((c) => c.y));
-  const spots = CARD_TOPS.filter((c) => c.w > 120 && c.y > topY + 1); // nicht auf die oberste Reihe (unter den Pills)
+  const half = h / 2; // nur die obere Hälfte des Bildes
+  const spots = CARD_TOPS.filter((c) => c.w > 120 && c.y > topY + 1 && c.y < half); // nicht auf die oberste Reihe (unter den Pills)
   const H = top.length * P; // Landehöhe: Füße stehen auf der Kartenkante
   const spot = () => { const c = spots[Math.floor(rnd() * spots.length)]; return [c.x + 24 + rnd() * (c.w - 48), c.y - H]; };
   const f2 = (n) => n.toFixed(2);
@@ -533,7 +534,7 @@ function butterfliesLayer(w) {
         const u = k / m, e = u * u * (3 - 2 * u), env = Math.sin(Math.PI * u);
         const wob = k === m ? 0 : env * (14 * Math.sin(phase + k * 1.7) + 8 * (rnd() - 0.5));
         const lift = k === m ? 0 : -env * (26 + 14 * Math.sin(phase * 2 + k));
-        pos.push([t + (fly * k) / m, x0 + (x1 - x0) * e + wob, y0 + (y1 - y0) * e + lift]);
+        pos.push([t + (fly * k) / m, x0 + (x1 - x0) * e + wob, Math.max(0, Math.min(half - 12, y0 + (y1 - y0) * e + lift))]);
       }
       t += fly;
     }
@@ -941,7 +942,7 @@ function render(d) {
   return `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" font-family="'Segoe UI', -apple-system, 'Helvetica Neue', Arial, sans-serif">
 ${backgroundSvg(W, H)}
 ${parts.join('\n')}
-${butterfliesLayer(W)}
+${butterfliesLayer(W, H)}
 </svg>
 `;
 }
