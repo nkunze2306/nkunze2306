@@ -4,10 +4,12 @@ I'm currently studying **Media Informatics and Interactive Entertainment** at **
 I'm a **frontend dev** with a focus on **mobile apps** and **interactive experiences**.
 
 <a href="https://nkunze2306.github.io/nkunze2306/">
-  <img src="stats.svg?v=1792774899" alt="GitHub all-time stats" width="100%">
+  <img src="achievements.svg" alt="GitHub achievements" width="100%">
 </a>
 
-<img src="achievements.svg" alt="GitHub achievements" width="100%">
+<a href="https://nkunze2306.github.io/nkunze2306/">
+  <img src="stats.svg?v=1792774899" alt="GitHub all-time stats" width="100%">
+</a>
 
 <p align="center">
   <a href="https://nkunze2306.github.io/nkunze2306/"><img src="https://img.shields.io/badge/LIVE%20DASHBOARD-34f5a0?style=for-the-badge&labelColor=121212" alt="Live dashboard"></a>

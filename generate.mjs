@@ -518,7 +518,7 @@ function render(d) {
     const w = (String(num(n)).length + l.length + 1) * 6.9 + 28;
     px -= w;
     parts.push(`<rect x="${px}" y="${y + 14}" width="${w}" height="32" rx="16" fill="#151515" stroke="#2c2c2c"/>`);
-    parts.push(`<text x="${px + 14}" y="${y + 34}" font-size="12.5"><tspan fill="#fff" font-weight="700">${esc(num(n))}</tspan><tspan fill="${C.mute}"> ${l}</tspan></text>`);
+    parts.push(`<text x="${px + w / 2}" y="${y + 34}" font-size="12.5" text-anchor="middle"><tspan fill="#fff" font-weight="700">${esc(num(n))}</tspan><tspan fill="${C.mute}"> ${l}</tspan></text>`);
     px -= 8;
   }
   y += 70;
