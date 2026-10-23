@@ -467,7 +467,9 @@ function readAchievements() {
 }
 
 function achIcon(ic, cx, cy, size, opacity = 1) {
-  const p = size / 12, x0 = cx - size / 2, y0 = cy - size / 2;
+  let x1 = 12, x2 = -1, y1 = 12, y2 = -1;
+  ic.rows.forEach((row, y) => { for (let x = 0; x < 12; x++) if (row[x] !== '.') { x1 = Math.min(x1, x); x2 = Math.max(x2, x); y1 = Math.min(y1, y); y2 = Math.max(y2, y); } });
+  const w = x2 - x1 + 1, h = y2 - y1 + 1, p = size / Math.max(w, h), ox = cx - (w * p) / 2 - x1 * p, oy = cy - (h * p) / 2 - y1 * p;
   let s = `<g shape-rendering="crispEdges"${opacity < 1 ? ` opacity="${opacity}"` : ''}>`;
   ic.rows.forEach((row, y) => {
     for (let x = 0; x < 12; ) {
@@ -475,7 +477,7 @@ function achIcon(ic, cx, cy, size, opacity = 1) {
       if (ch === '.') { x++; continue; }
       let e = x;
       while (e < 12 && row[e] === ch) e++;
-      s += `<rect x="${(x0 + x * p).toFixed(2)}" y="${(y0 + y * p).toFixed(2)}" width="${((e - x) * p + 0.03).toFixed(2)}" height="${(p + 0.03).toFixed(2)}" fill="${ic.palette[ch]}"/>`;
+      s += `<rect x="${(ox + x * p).toFixed(2)}" y="${(oy + y * p).toFixed(2)}" width="${((e - x) * p + 0.03).toFixed(2)}" height="${(p + 0.03).toFixed(2)}" fill="${ic.palette[ch]}"/>`;
       x = e;
     }
   });
@@ -491,7 +493,7 @@ function achTile(a, x, y, w, h) {
   const bw = badge.length * 6.2 + 14, ox = cx + r + 10, ow = x + w - 14 - ox, lock = a.level === 0 && !a.legendary;
   return `<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="13" fill="#161616" stroke="${a.legendary || a.maxed ? c + '55' : '#262626'}"/>
 <circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="#2a2a2a" stroke-width="5"/>${a.progress > 0 || a.maxed ? `<circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="${c}" stroke-width="5" stroke-linecap="round" stroke-dasharray="${(circ * (a.maxed ? 1 : a.progress)).toFixed(1)} ${circ.toFixed(1)}" transform="rotate(-90 ${cx} ${cy})"/>` : ''}
-${a.icon ? achIcon(a.icon, cx, cy, r * 1.3, lock ? 0.45 : 1) + `<circle cx="${(cx + r * 0.74).toFixed(1)}" cy="${(cy + r * 0.74).toFixed(1)}" r="6.5" fill="#0b0b0b" stroke="${c}" stroke-width="1.3"/>` + text(cx + r * 0.74, cy + r * 0.74 + 3.4, a.legendary ? (a.maxed ? '★' : '☆') : String(a.level), { size: 9, fill: lock ? '#777' : C.text, weight: 700, anchor: 'middle' }) : text(cx, cy + 6, a.legendary ? (a.maxed ? '★' : '☆') : String(a.level), { size: 18, fill: lock ? '#555' : C.text, weight: 700, anchor: 'middle' })}
+${a.icon ? achIcon(a.icon, cx, cy, r * 1.05, lock ? 0.45 : 1) + `<circle cx="${(cx + r * 0.74).toFixed(1)}" cy="${(cy + r * 0.74).toFixed(1)}" r="6.5" fill="#0b0b0b" stroke="${c}" stroke-width="1.3"/>` + text(cx + r * 0.74, cy + r * 0.74 + 3.4, a.legendary ? (a.maxed ? '★' : '☆') : String(a.level), { size: 9, fill: lock ? '#777' : C.text, weight: 700, anchor: 'middle' }) : text(cx, cy + 6, a.legendary ? (a.maxed ? '★' : '☆') : String(a.level), { size: 18, fill: lock ? '#555' : C.text, weight: 700, anchor: 'middle' })}
 ${text(ox, y + 22, (a.legendary ? '★ ' : '') + a.name, { size: 12.5, fill: lock ? '#9a9a9a' : C.text, weight: 700 })}
 <rect x="${x + w - 14 - bw}" y="${y + 9}" width="${bw}" height="17" rx="8.5" fill="${c}" fill-opacity="0.11" stroke="${c}" stroke-opacity="0.5"/>${text(x + w - 14 - bw / 2, y + 21, badge, { size: 9.5, fill: c, weight: 700, anchor: 'middle' })}
 ${bar(ox, y + 31, ow, 5, a.maxed ? 1 : a.progress, c)}
