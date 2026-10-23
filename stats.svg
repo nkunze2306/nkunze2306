@@ -724,12 +724,12 @@
 <circle cx="28" cy="1965" r="11" fill="#fbbf24" fill-opacity="0.13" stroke="#fbbf24" stroke-opacity="0.55"/>
 <circle cx="28" cy="1965" r="3.2" fill="#fbbf24"/>
 <text x="47" y="1969" font-size="11" fill="#9a9a9a" font-weight="700" text-anchor="start" letter-spacing="1.1">LANGUAGES · BY CODE</text><text x="332" y="1969" font-size="12" fill="#9a9a9a" font-weight="400" text-anchor="end">Top: Dart</text>
-<rect x="23" y="1991" width="156.8268251119476" height="11" rx="5.5" fill="#00B4AB"/>
-<rect x="183.8268251119476" y="1991" width="66.19127229287322" height="11" rx="5.5" fill="#7355dd"/>
-<rect x="254.01809740482082" y="1991" width="30.540147209218745" height="11" rx="5.5" fill="#8b949e"/>
-<rect x="288.55824461403955" y="1991" width="17.498248460092107" height="11" rx="5.5" fill="#e34c26"/>
-<rect x="310.05649307413165" y="1991" width="8.994221008679673" height="11" rx="5.5" fill="#f1e05a"/>
-<rect x="323.05071408281134" y="1991" width="8.949285917188655" height="11" rx="5.5" fill="#aace60"/>
+<rect x="23" y="1991" width="156.82695835894066" height="11" rx="5.5" fill="#00B4AB"/>
+<rect x="183.82695835894066" y="1991" width="66.19132853189988" height="11" rx="5.5" fill="#7355dd"/>
+<rect x="254.01828689084056" y="1991" width="30.540173157475877" height="11" rx="5.5" fill="#8b949e"/>
+<rect x="288.5584600483164" y="1991" width="17.49801778021972" height="11" rx="5.5" fill="#e34c26"/>
+<rect x="310.0564778285361" y="1991" width="8.994228650566853" height="11" rx="5.5" fill="#f1e05a"/>
+<rect x="323.050706479103" y="1991" width="8.949293520896997" height="11" rx="5.5" fill="#aace60"/>
 <circle cx="27" cy="2035" r="4.5" fill="#00B4AB"/>
 <text x="38" y="2039" text-anchor="start"><tspan font-size="13" font-weight="600" fill="#ffffff">Dart</tspan><tspan font-size="13" font-weight="400" fill="#9a9a9a">  54%</tspan></text>
 <circle cx="181.5" cy="2035" r="4.5" fill="#7355dd"/>
