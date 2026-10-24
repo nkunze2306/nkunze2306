@@ -1,5 +1,5 @@
 {
- "updated": "2026-10-24T21:16:48.752Z",
+ "updated": "2026-10-24T22:16:01.782Z",
  "login": "nkunze2306",
  "unlocked": 43,
  "total": 134,
@@ -43,7 +43,7 @@
   "monsterPRs": 7,
   "cleanSweeps": 7,
   "quickdraws": 52,
-  "wakaHours": 122.2675,
+  "wakaHours": 122.64972222222222,
   "marathonHours": 2.9491666666666667,
   "consistentDays": 5
  },
@@ -1079,7 +1079,7 @@
    "unit": "tracked",
    "format": "hours",
    "description": "Coding time tracked by WakaTime",
-   "value": 122.2675,
+   "value": 122.64972222222222,
    "tiers": [
     10,
     50,
@@ -1092,7 +1092,7 @@
    "level": 3,
    "next": 500,
    "maxed": false,
-   "progress": 0.244535
+   "progress": 0.24529944444444446
   },
   {
    "id": "marathon",
