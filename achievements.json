@@ -1,7 +1,7 @@
 {
- "updated": "2026-10-26T17:18:25.838Z",
+ "updated": "2026-10-26T18:18:22.878Z",
  "login": "nkunze2306",
- "unlocked": 45,
+ "unlocked": 48,
  "total": 134,
  "achievementsUnlocked": 21,
  "achievementsTotal": 35,
@@ -22,19 +22,19 @@
   "forks": 0,
   "maxRepoStars": 1,
   "foreignRepos": 9,
-  "commits": 410,
+  "commits": 414,
   "nightCommits": 14,
   "earlyCommits": 0,
   "weekendCommits": 62,
-  "aiCommits": 74,
-  "linesAdded": 88658,
-  "linesDeleted": 22003,
-  "handLines": 78378,
+  "aiCommits": 75,
+  "linesAdded": 113280,
+  "linesDeleted": 22055,
+  "handLines": 102986,
   "unicornCommits": 0,
   "christmasCommits": 0,
   "newYearCommits": 0,
   "languages": 15,
-  "topLanguageLines": 45078,
+  "topLanguageLines": 57589,
   "maxCommitsPerDay": 45,
   "activeDays": 129,
   "longestStreak": 8,
@@ -79,7 +79,7 @@
    "unit": "commits",
    "format": null,
    "description": "Total commits you authored",
-   "value": 410,
+   "value": 414,
    "tiers": [
     10,
     100,
@@ -91,7 +91,7 @@
    "level": 2,
    "next": 500,
    "maxed": false,
-   "progress": 0.82
+   "progress": 0.828
   },
   {
    "id": "streak-keeper",
@@ -765,7 +765,7 @@
    "unit": "lines",
    "format": null,
    "description": "Lines of code you added",
-   "value": 88658,
+   "value": 113280,
    "tiers": [
     1000,
     10000,
@@ -776,10 +776,10 @@
     5000000,
     10000000
    ],
-   "level": 3,
-   "next": 100000,
+   "level": 4,
+   "next": 500000,
    "maxed": false,
-   "progress": 0.88658
+   "progress": 0.22656
   },
   {
    "id": "refactorer",
@@ -811,7 +811,7 @@
    "unit": "lines",
    "format": null,
    "description": "Lines of code you deleted",
-   "value": 22003,
+   "value": 22055,
    "tiers": [
     1000,
     5000,
@@ -824,7 +824,7 @@
    "level": 3,
    "next": 50000,
    "maxed": false,
-   "progress": 0.44006
+   "progress": 0.4411
   },
   {
    "id": "polyglot",
@@ -901,17 +901,17 @@
    "unit": "lines",
    "format": null,
    "description": "Estimated lines in your biggest language",
-   "value": 45078,
+   "value": 57589,
    "tiers": [
     10000,
     50000,
     100000,
     250000
    ],
-   "level": 1,
-   "next": 50000,
+   "level": 2,
+   "next": 100000,
    "maxed": false,
-   "progress": 0.90156
+   "progress": 0.57589
   },
   {
    "id": "repo-builder",
@@ -990,7 +990,7 @@
    "unit": "lines",
    "format": null,
    "description": "Lines you wrote yourself, without AI co-author",
-   "value": 78378,
+   "value": 102986,
    "tiers": [
     10000,
     50000,
@@ -999,10 +999,10 @@
     500000,
     1000000
    ],
-   "level": 2,
-   "next": 100000,
+   "level": 3,
+   "next": 250000,
    "maxed": false,
-   "progress": 0.78378
+   "progress": 0.411944
   },
   {
    "id": "pair-programmer",
@@ -1036,7 +1036,7 @@
    "unit": "AI commits",
    "format": null,
    "description": "Commits with an AI co-author",
-   "value": 74,
+   "value": 75,
    "tiers": [
     10,
     50,
@@ -1046,7 +1046,7 @@
    "level": 2,
    "next": 250,
    "maxed": false,
-   "progress": 0.296
+   "progress": 0.3
   },
   {
    "id": "coding-time",
