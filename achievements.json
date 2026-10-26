@@ -1,9 +1,9 @@
 {
- "updated": "2026-10-26T16:23:50.563Z",
+ "updated": "2026-10-26T17:18:25.838Z",
  "login": "nkunze2306",
- "unlocked": 44,
+ "unlocked": 45,
  "total": 134,
- "achievementsUnlocked": 20,
+ "achievementsUnlocked": 21,
  "achievementsTotal": 35,
  "highlights": [
   "coding-time",
@@ -18,9 +18,9 @@
   "issuesClosed": 1,
   "prsMerged": 72,
   "ownRepos": 3,
-  "stars": 0,
+  "stars": 1,
   "forks": 0,
-  "maxRepoStars": 0,
+  "maxRepoStars": 1,
   "foreignRepos": 9,
   "commits": 410,
   "nightCommits": 14,
@@ -638,7 +638,7 @@
    "unit": "stars",
    "format": null,
    "description": "Stars on your own repos",
-   "value": 0,
+   "value": 1,
    "tiers": [
     1,
     10,
@@ -646,10 +646,10 @@
     250,
     1000
    ],
-   "level": 0,
-   "next": 1,
+   "level": 1,
+   "next": 10,
    "maxed": false,
-   "progress": 0
+   "progress": 0.1
   },
   {
    "id": "forked",
@@ -1455,14 +1455,14 @@
    "unit": "stars",
    "format": null,
    "description": "A single repo with 1,000 stars",
-   "value": 0,
+   "value": 1,
    "tiers": [
     1000
    ],
    "level": 0,
    "next": 1000,
    "maxed": false,
-   "progress": 0
+   "progress": 0.001
   },
   {
    "id": "babel",
