@@ -1,5 +1,5 @@
 {
- "updated": "2026-10-27T19:13:41.403Z",
+ "updated": "2026-10-27T19:17:13.896Z",
  "login": "nkunze2306",
  "unlocked": 50,
  "total": 134,
@@ -15,7 +15,7 @@
  ],
  "metrics": {
   "followers": 2,
-  "issuesClosed": 10,
+  "issuesClosed": 11,
   "prsMerged": 76,
   "ownRepos": 3,
   "stars": 1,
@@ -468,7 +468,7 @@
    "unit": "closed issues",
    "format": null,
    "description": "Issues you opened that were closed",
-   "value": 10,
+   "value": 11,
    "tiers": [
     5,
     25,
@@ -478,7 +478,7 @@
    "level": 1,
    "next": 25,
    "maxed": false,
-   "progress": 0.4
+   "progress": 0.44
   },
   {
    "id": "team-player",
