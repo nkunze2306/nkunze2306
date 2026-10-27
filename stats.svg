@@ -21,7 +21,7 @@
 <text x="23" y="355" font-size="12" fill="#9a9a9a" font-weight="400" text-anchor="start">365 in last 12 mo.</text>
 <line x1="23" x2="159.44" y1="379" y2="379" stroke="#262626"/>
 <text x="23" y="407" font-size="9.5" fill="#6a6a6a" font-weight="700" text-anchor="start" letter-spacing="1">TOTAL CONTRIBUTIONS</text>
-<text x="23" y="437" font-size="26" fill="#ffffff" font-weight="700" text-anchor="start">705</text>
+<text x="23" y="437" font-size="26" fill="#ffffff" font-weight="700" text-anchor="start">706</text>
 <rect x="193.44" y="229" width="277.6" height="232" rx="16" fill="#121212" stroke="#262626"/>
 <text x="215.44" y="259" font-size="11" fill="#ff5c9a" font-weight="700" text-anchor="start" letter-spacing="1.1">LINES OF CODE</text><text x="449.04" y="259" font-size="12" fill="#9a9a9a" font-weight="400" text-anchor="end">net +92k</text>
 <text x="215.44" y="311" text-anchor="start"><tspan font-size="32" font-weight="800" fill="#34f5a0">+114k</tspan><tspan font-size="32" font-weight="800" fill="#ff5c9a" dx="18">−22k</tspan></text>
@@ -102,19 +102,19 @@
 <circle cx="27" cy="779" r="4.5" fill="#34f5a0"/>
 <text x="38" y="783" font-size="12.5" fill="#e6e6e6" font-weight="400" text-anchor="start">Commits</text>
 <text x="190.8" y="783" font-size="12.5" fill="#ffffff" font-weight="700" text-anchor="end">433 · 61%</text>
-<rect x="23" y="792" width="167.8" height="6" rx="3" fill="#2a2a2a"/><rect x="23" y="792" width="103.06014184397164" height="6" rx="3" fill="#34f5a0"/>
+<rect x="23" y="792" width="167.8" height="6" rx="3" fill="#2a2a2a"/><rect x="23" y="792" width="102.91416430594901" height="6" rx="3" fill="#34f5a0"/>
 <circle cx="27" cy="812" r="4.5" fill="#38bdf8"/>
 <text x="38" y="816" font-size="12.5" fill="#e6e6e6" font-weight="400" text-anchor="start">Pull requests</text>
 <text x="190.8" y="816" font-size="12.5" fill="#ffffff" font-weight="700" text-anchor="end">84 · 12%</text>
-<rect x="23" y="825" width="167.8" height="6" rx="3" fill="#2a2a2a"/><rect x="23" y="825" width="19.993191489361703" height="6" rx="3" fill="#38bdf8"/>
+<rect x="23" y="825" width="167.8" height="6" rx="3" fill="#2a2a2a"/><rect x="23" y="825" width="19.964872521246463" height="6" rx="3" fill="#38bdf8"/>
 <circle cx="27" cy="845" r="4.5" fill="#ff5c9a"/>
 <text x="38" y="849" font-size="12.5" fill="#e6e6e6" font-weight="400" text-anchor="start">Issues</text>
-<text x="190.8" y="849" font-size="12.5" fill="#ffffff" font-weight="700" text-anchor="end">139 · 20%</text>
-<rect x="23" y="858" width="167.8" height="6" rx="3" fill="#2a2a2a"/><rect x="23" y="858" width="33.08397163120568" height="6" rx="3" fill="#ff5c9a"/>
+<text x="190.8" y="849" font-size="12.5" fill="#ffffff" font-weight="700" text-anchor="end">140 · 20%</text>
+<rect x="23" y="858" width="167.8" height="6" rx="3" fill="#2a2a2a"/><rect x="23" y="858" width="33.274787535410766" height="6" rx="3" fill="#ff5c9a"/>
 <circle cx="27" cy="878" r="4.5" fill="#b794ff"/>
 <text x="38" y="882" font-size="12.5" fill="#e6e6e6" font-weight="400" text-anchor="start">Code review</text>
 <text x="190.8" y="882" font-size="12.5" fill="#ffffff" font-weight="700" text-anchor="end">49 · 7%</text>
-<rect x="23" y="891" width="167.8" height="6" rx="3" fill="#2a2a2a"/><rect x="23" y="891" width="11.662695035460994" height="6" rx="3" fill="#b794ff"/>
+<rect x="23" y="891" width="167.8" height="6" rx="3" fill="#2a2a2a"/><rect x="23" y="891" width="11.64617563739377" height="6" rx="3" fill="#b794ff"/>
 <line x1="23" y1="906" x2="190.8" y2="906" stroke="#262626"/>
 <text x="23" y="925" font-size="12.5" fill="#e6e6e6" font-weight="400" text-anchor="start">Comments written</text>
 <text x="190.8" y="925" font-size="12.5" fill="#ffffff" font-weight="700" text-anchor="end">178</text>
@@ -508,9 +508,9 @@
 <text x="23" y="977" font-size="11" fill="#34f5a0" font-weight="700" text-anchor="start" letter-spacing="1.1">ACTIVITY OVERVIEW</text>
 <line x1="142.2" y1="1019" x2="142.2" y2="1147" stroke="#34f5a0" stroke-opacity="0.75" stroke-width="1.6"/>
 <line x1="78.19999999999999" y1="1083" x2="206.2" y2="1083" stroke="#34f5a0" stroke-opacity="0.75" stroke-width="1.6"/>
-<polygon points="142.2,1076.4 160.8,1083.0 142.2,1094.3 84.2,1083.0" fill="#34f5a0" fill-opacity="0.28" stroke="#34f5a0" stroke-width="1.6" stroke-linejoin="round"/>
+<polygon points="142.2,1076.4 161.0,1083.0 142.2,1094.3 84.2,1083.0" fill="#34f5a0" fill-opacity="0.28" stroke="#34f5a0" stroke-width="1.6" stroke-linejoin="round"/>
 <circle cx="142.2" cy="1076.4" r="3.8" fill="#34f5a0" stroke="#ffffff" stroke-width="1.6"/>
-<circle cx="160.8" cy="1083.0" r="3.8" fill="#34f5a0" stroke="#ffffff" stroke-width="1.6"/>
+<circle cx="161.0" cy="1083.0" r="3.8" fill="#34f5a0" stroke="#ffffff" stroke-width="1.6"/>
 <circle cx="142.2" cy="1094.3" r="3.8" fill="#34f5a0" stroke="#ffffff" stroke-width="1.6"/>
 <circle cx="84.2" cy="1083.0" r="3.8" fill="#34f5a0" stroke="#ffffff" stroke-width="1.6"/>
 <text x="142.2" y="993" font-size="13" fill="#ffffff" font-weight="700" text-anchor="middle">7%</text>
@@ -661,7 +661,7 @@
 <rect x="23" y="1787" width="153.78" height="7" rx="3.5" fill="#2a2a2a"/><rect x="23" y="1787" width="139.1342857142857" height="7" rx="3.5" fill="#38bdf8"/>
 <rect x="210.78" y="1699" width="197.78" height="108" rx="16" fill="#121212" stroke="#262626"/>
 <text x="232.78" y="1729" font-size="11" fill="#ff5c9a" font-weight="700" text-anchor="start" letter-spacing="1.1">ISSUES</text>
-<text x="232.78" y="1771" text-anchor="start"><tspan font-size="32" font-weight="700" fill="#ffffff">139</tspan><tspan font-size="12" font-weight="400" fill="#9a9a9a" dx="9">1 closed · 1%</tspan></text>
+<text x="232.78" y="1771" text-anchor="start"><tspan font-size="32" font-weight="700" fill="#ffffff">140</tspan><tspan font-size="12" font-weight="400" fill="#9a9a9a" dx="9">2 closed · 1%</tspan></text>
 <rect x="232.78" y="1787" width="153.78" height="7" rx="3.5" fill="#2a2a2a"/><rect x="232.78" y="1787" width="7" height="7" rx="3.5" fill="#ff5c9a"/>
 <rect x="420.56" y="1699" width="143.22" height="108" rx="16" fill="#121212" stroke="#262626"/>
 <text x="442.56" y="1729" font-size="11" fill="#b794ff" font-weight="700" text-anchor="start" letter-spacing="1.1">REVIEWS</text>
@@ -681,12 +681,12 @@
 <text x="407.88" y="1891" text-anchor="start"><tspan font-size="32" font-weight="700" fill="#ffffff">11</tspan><tspan font-size="12" font-weight="400" fill="#9a9a9a" dx="6"> own</tspan><tspan font-size="32" font-weight="700" fill="#ffffff" dx="26">10</tspan><tspan font-size="12" font-weight="400" fill="#9a9a9a" dx="6"> contributed to</tspan></text>
 <rect x="1" y="1939" width="353" height="190" rx="16" fill="#121212" stroke="#262626"/>
 <text x="23" y="1969" font-size="11" fill="#fbbf24" font-weight="700" text-anchor="start" letter-spacing="1.1">LANGUAGES · BY CODE</text><text x="332" y="1969" font-size="12" fill="#9a9a9a" font-weight="400" text-anchor="end">Top: Dart</text>
-<rect x="23" y="1991" width="157.78671219374863" height="11" rx="5.5" fill="#00B4AB"/>
-<rect x="184.78671219374863" y="1991" width="61.71437331542341" height="11" rx="5.5" fill="#7355dd"/>
-<rect x="250.50108550917204" y="1991" width="30.72707372999416" height="11" rx="5.5" fill="#8b949e"/>
-<rect x="285.2281592391662" y="1991" width="19.097613190582013" height="11" rx="5.5" fill="#e34c26"/>
-<rect x="308.3257724297482" y="1991" width="10.67016592233516" height="11" rx="5.5" fill="#f1e05a"/>
-<rect x="322.9959383520834" y="1991" width="9.004061647916618" height="11" rx="5.5" fill="#aace60"/>
+<rect x="23" y="1991" width="157.78662227180314" height="11" rx="5.5" fill="#00B4AB"/>
+<rect x="184.78662227180314" y="1991" width="61.71433814467653" height="11" rx="5.5" fill="#7355dd"/>
+<rect x="250.50096041647967" y="1991" width="30.727056218771505" height="11" rx="5.5" fill="#8b949e"/>
+<rect x="285.22801663525115" y="1991" width="19.097767006751837" height="11" rx="5.5" fill="#e34c26"/>
+<rect x="308.325783642003" y="1991" width="10.670159841455057" height="11" rx="5.5" fill="#f1e05a"/>
+<rect x="322.99594348345806" y="1991" width="9.004056516541931" height="11" rx="5.5" fill="#aace60"/>
 <circle cx="27" cy="2035" r="4.5" fill="#00B4AB"/>
 <text x="38" y="2039" text-anchor="start"><tspan font-size="13" font-weight="600" fill="#ffffff">Dart</tspan><tspan font-size="13" font-weight="400" fill="#9a9a9a">  55%</tspan></text>
 <circle cx="181.5" cy="2035" r="4.5" fill="#7355dd"/>

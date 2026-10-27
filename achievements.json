@@ -1,5 +1,5 @@
 {
- "updated": "2026-10-27T13:17:32.967Z",
+ "updated": "2026-10-27T13:21:19.675Z",
  "login": "nkunze2306",
  "unlocked": 49,
  "total": 134,
@@ -15,7 +15,7 @@
  ],
  "metrics": {
   "followers": 2,
-  "issuesClosed": 1,
+  "issuesClosed": 2,
   "prsMerged": 76,
   "ownRepos": 3,
   "stars": 1,
@@ -42,7 +42,7 @@
   "foreignMergedPRs": 64,
   "monsterPRs": 9,
   "cleanSweeps": 7,
-  "quickdraws": 53,
+  "quickdraws": 54,
   "wakaHours": 127.0736111111111,
   "marathonHours": 2.9491666666666667,
   "consistentDays": 5
@@ -468,7 +468,7 @@
    "unit": "closed issues",
    "format": null,
    "description": "Issues you opened that were closed",
-   "value": 1,
+   "value": 2,
    "tiers": [
     5,
     25,
@@ -478,7 +478,7 @@
    "level": 0,
    "next": 5,
    "maxed": false,
-   "progress": 0.2
+   "progress": 0.4
   },
   {
    "id": "team-player",
@@ -598,7 +598,7 @@
    "unit": "quick closes",
    "format": null,
    "description": "Issues or PRs you closed within 5 minutes",
-   "value": 53,
+   "value": 54,
    "tiers": [
     1,
     10,
