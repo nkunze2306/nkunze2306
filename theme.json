@@ -20,9 +20,9 @@
       "tint": "#9fc8ff"
     },
     "night": {
-      "dark": 28,
-      "fireflies": 2,
-      "stars": 10,
+      "dark": 16,
+      "fireflies": 8,
+      "stars": 44,
       "roses": true,
       "glow": 100,
       "color": "#7de0d0"
