@@ -463,9 +463,9 @@ function loadAchievements() {
     const sc = document.createElement('script');
     sc.src = 'achievements-ui.js?' + encodeURIComponent(j.updated);
     sc.onload = () => {
-      const want = (location.hash.match(/achievements(?:=(\w+))?/) || [])[0];
-      const v = want && (want.split('=')[1] || 'highlights');
-      AchUI.mount(box, j, { view: ['highlights', 'closest', 'all'].includes(v) ? v : 'highlights' });
+      // startet immer mit Highlights; ein Link mit #achievements scrollt nur zur Kachel
+      const want = /achievements/.test(location.hash);
+      AchUI.mount(box, j, { view: 'highlights' });
       box.style.display = '';
       if (want) setTimeout(() => box.scrollIntoView({ behavior: 'smooth', block: 'start' }), 300);
     };
