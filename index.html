@@ -507,16 +507,51 @@ function watchForUpdates(loaded) {
   document.addEventListener('visibilitychange', () => { if (!document.hidden) check(); });
 }
 
-// Theme & look: schmale Leiste über die volle Breite, nur für den Owner (einmal mit #settings öffnen, dann merkt sich dieser Browser das).
+// Anmeldung des Owners: Die Seite ist statisch und kennt dein GitHub-Konto nicht. "Sign in with GitHub" (OAuth) bestätigt auf jedem Gerät, wer du bist;
+// ein kleiner Worker (worker/oauth.js) tauscht den Code gegen den Login-Namen und gibt nur diesen zurück. Einrichtung: SETUP-LOGIN.md.
+// Solange hier nichts eingetragen ist, gilt der alte Weg (einmal mit #settings öffnen, merkt sich der Browser).
+const AUTH = { clientId: '', worker: '' };
+
+// Theme & look: schmale Leiste über die volle Breite, nur für den Owner.
 // Speichern ohne Token: "Save & rebuild" öffnet ein vorausgefülltes GitHub-Issue, der Workflow apply-theme.yml übernimmt es nur vom Owner.
 async function themeConfig() {
   const grid = document.querySelector('.grid'); if (!grid) return;
   const ls = (k, v) => { try { return v === undefined ? localStorage.getItem(k) : v === null ? localStorage.removeItem(k) : localStorage.setItem(k, v); } catch { return null; } };
+  const ss = (k, v) => { try { return v === undefined ? sessionStorage.getItem(k) : v === null ? sessionStorage.removeItem(k) : sessionStorage.setItem(k, v); } catch { return null; } };
   ls('cfgTok', null); ls('cfgRepo', null); // früher hier gespeicherter Token wird entfernt
-  if (/(^|[#?&])settings\b/.test(location.hash + location.search)) ls('tlOwner', '1');
-  if (ls('tlOwner') !== '1') return;
   const host = location.hostname, owner = host.endsWith('.github.io') ? host.split('.')[0] : '';
   const repo = owner ? owner + '/' + (location.pathname.split('/')[1] || host) : '';
+  const viaLogin = !!(AUTH.clientId && AUTH.worker);
+  let isOwner;
+  if (viaLogin) {
+    const q = new URLSearchParams(location.search), code = q.get('code');
+    if (code && q.get('state') && q.get('state') === ss('tlState')) {
+      ss('tlState', null);
+      history.replaceState(null, '', location.pathname + location.hash);
+      try {
+        const r = await fetch(AUTH.worker + '/token', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ code }) });
+        const j = await r.json(); if (j.login) ls('tlUser', j.login);
+      } catch {}
+    }
+    isOwner = String(ls('tlUser') || '').toLowerCase() === owner.toLowerCase();
+    const signIn = () => {
+      const st = (crypto.randomUUID ? crypto.randomUUID() : String(Math.random())).replace(/\W/g, ''); ss('tlState', st); ss('tlTried', '1');
+      location.href = 'https://github.com/login/oauth/authorize?' + new URLSearchParams({ client_id: AUTH.clientId, redirect_uri: location.origin + location.pathname, state: st });
+    };
+    if (!isOwner) {
+      // #settings öffnet direkt die Anmeldung (als Lesezeichen auf jedem Gerät nutzbar), sonst nur ein unauffälliger Link in der Fußzeile
+      const f = document.querySelector('footer');
+      if (f) { f.insertAdjacentHTML('beforeend', ' · <a href="#settings" id="tlSignIn" style="color:inherit">Owner sign-in</a>'); f.querySelector('#tlSignIn').onclick = (e) => { e.preventDefault(); signIn(); }; }
+      if (/(^|[#?&])settings\b/.test(location.hash + location.search) && !ss('tlTried')) signIn();
+      return;
+    }
+    ss('tlTried', null);
+  } else {
+    if (/(^|[#?&])settings\b/.test(location.hash + location.search)) ls('tlOwner', '1');
+    isOwner = ls('tlOwner') === '1';
+  }
+  if (!isOwner) return;
+  if (viaLogin) ls('tlOwner', null); // alter Geräte-Merker wird mit der Anmeldung überflüssig
 
   // Registry der Zusatz-Themes (Regler stehen in themes/index.mjs) und die gemeinsamen Regeln aus theme.mjs
   let THEMES, normalizeTheme;
@@ -594,7 +629,7 @@ async function themeConfig() {
         <div class="pv" id="tlPv"></div>
         <div class="acts"><button class="btn primary" id="cSave">Save &amp; rebuild</button><button class="btn" id="cCopy">Copy JSON</button></div>
         <div class="msg" id="cMsg"></div>
-        <div class="foot"><span>Saved through a GitHub issue · only @${esc(owner || 'owner')} is applied</span><button id="tlHide">Hide on this device</button></div>
+        <div class="foot"><span>Saved through a GitHub issue · only @${esc(owner || 'owner')} is applied</span><button id="tlHide">${viaLogin ? 'Sign out' : 'Hide on this device'}</button></div>
       </div>
       <div class="xtra" id="tlX"></div>
     </div>
@@ -691,7 +726,7 @@ async function themeConfig() {
   sec.addEventListener('click', (e) => {
     const b = e.target.closest('button'); if (!b) return;
     if (b.id === 'tlOpen') tl.classList.toggle('open');
-    else if (b.id === 'tlHide') { ls('tlOwner', null); sec.remove(); return; }
+    else if (b.id === 'tlHide') { ls('tlOwner', null); ls('tlUser', null); sec.remove(); return; }
     else if (b.dataset.ov === 'none') cfg.overlays = [];
     else if (b.dataset.ov) cfg.overlays = OV.map((o) => o[0]).filter((o) => (o === b.dataset.ov ? !has(o) : has(o)));
     else if (b.dataset.ring) cfg.ring = b.dataset.ring;
