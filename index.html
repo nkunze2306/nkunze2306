@@ -566,7 +566,7 @@ function themeConfig() {
       </div>
     </div>
   </div>`;
-  grid.appendChild(sec);
+  grid.prepend(sec); // direkt unter dem Header
   const $ = (id) => sec.querySelector('#' + id), tl = $('tl');
 
   // Vorschau: Mini-Kartenkante mit allen gewählten Overlays (CSS-Animation, deterministisch)

@@ -39,15 +39,15 @@ jobs:
           STATS_LOGIN: ${{ github.repository_owner }}
           WAKATIME_API_KEY: ${{ secrets.WAKATIME_API_KEY }}
         run: node generate.mjs
-      - name: Bump image version in README when the card changed
-        # GitHub cached Bilder im README über einen Proxy. Eine neue URL erzwingt das Neuladen.
+      - name: Version image URLs in README by content
+        # GitHub cached Bilder im README. Ein Hash des Bildinhalts in der URL heißt: neuer Inhalt = neue URL = kein alter Cache,
+        # gleicher Inhalt = gleiche URL. Läuft bei jedem Lauf, damit auch Änderungen aus anderen Commits sicher ankommen.
         run: |
-          if ! git diff --quiet -- stats.svg; then
-            sed -i -E "s#stats\.svg(\?v=[0-9]+)?#stats.svg?v=$(date +%s)#" README.md
-          fi
-          if ! git diff --quiet -- achievements.svg; then
-            sed -i -E "s#achievements\.svg(\?v=[0-9]+)?#achievements.svg?v=$(date +%s)#" README.md
-          fi
+          for f in stats.svg achievements.svg; do
+            [ -f "$f" ] || continue
+            h=$(sha1sum "$f" | cut -c1-12)
+            sed -i -E "s#${f//./\\.}(\?v=[0-9a-f]+)?#${f}?v=${h}#g" README.md
+          done
       - name: Commit if changed
         run: |
           git config user.name "github-actions[bot]"
