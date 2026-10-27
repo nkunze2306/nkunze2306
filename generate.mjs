@@ -5,6 +5,7 @@ import { writeFileSync, readFileSync, existsSync } from 'node:fs';
 import { autumnLayer } from './autumn.mjs';
 import { THEMES } from './themes/index.mjs';
 import { normalizeTheme } from './theme.mjs';
+import { collectGitLabCommits } from './gitlab.mjs';
 
 const TOKEN = (process.env.STATS_TOKEN || process.env.GITHUB_TOKEN || '').trim() || undefined;
 const LOGIN = process.env.STATS_LOGIN || process.env.GITHUB_REPOSITORY_OWNER;
@@ -118,6 +119,26 @@ async function fetchData() {
   const yearAgo = now.getTime() - 365 * 864e5;
   let commitsYear = 0, addHuman = 0, addAI = 0, del = 0, changed = 0;
 
+  const addCommit = (c, repoName) => {
+    if (seen.has(c.oid)) return;
+    seen.add(c.oid);
+    const ai = AI_RE.test(c.message);
+    const date = new Date(c.committedDate);
+    const p = Object.fromEntries(fmt.formatToParts(date).map((x) => [x.type, x.value]));
+    const m = monthly.get(`${p.year}-${p.month}`);
+    if (m) m[ai ? 'ai' : 'human']++;
+    const day = `${p.year}-${p.month}-${p.day}`;
+    daily.set(day, (daily.get(day) || 0) + 1);
+    weekday[WD[p.weekday]]++;
+    hours[Number(p.hour)]++;
+    repoCount.set(repoName, (repoCount.get(repoName) || 0) + 1);
+    if (date.getTime() >= yearAgo) commitsYear++;
+    // Merge-Commits enthalten den Code anderer (ganzer Diff des Merges) -> nicht als eigene Zeilen zählen
+    if (c.parents.totalCount > 1) return;
+    if (ai) addAI += c.additions; else addHuman += c.additions;
+    del += c.deletions;
+    changed += Math.min(c.additions, c.deletions); // in beide Richtungen vorkommende Zeilen = umgeschrieben (Refactoring)
+  };
   for (const r of repos) {
     const [owner, name] = r.nameWithOwner.split('/');
     try {
@@ -143,26 +164,7 @@ async function fetchData() {
             { owner, name, ref: `refs/heads/${br}`, id: u.id, after },
           )).repository?.ref?.target?.history;
           if (!h) break;
-          for (const c of h.nodes) {
-            if (seen.has(c.oid)) continue;
-            seen.add(c.oid);
-            const ai = AI_RE.test(c.message);
-            const date = new Date(c.committedDate);
-            const p = Object.fromEntries(fmt.formatToParts(date).map((x) => [x.type, x.value]));
-            const m = monthly.get(`${p.year}-${p.month}`);
-            if (m) m[ai ? 'ai' : 'human']++;
-            const day = `${p.year}-${p.month}-${p.day}`;
-            daily.set(day, (daily.get(day) || 0) + 1);
-            weekday[WD[p.weekday]]++;
-            hours[Number(p.hour)]++;
-            repoCount.set(r.nameWithOwner, (repoCount.get(r.nameWithOwner) || 0) + 1);
-            if (date.getTime() >= yearAgo) commitsYear++;
-            // Merge-Commits enthalten den Code anderer (ganzer Diff des Merges) -> nicht als eigene Zeilen zählen
-            if (c.parents.totalCount > 1) continue;
-            if (ai) addAI += c.additions; else addHuman += c.additions;
-            del += c.deletions;
-            changed += Math.min(c.additions, c.deletions); // in beide Richtungen vorkommende Zeilen = umgeschrieben (Refactoring)
-          }
+          for (const c of h.nodes) addCommit(c, r.nameWithOwner);
           if (!h.pageInfo.hasNextPage) break;
           after = h.pageInfo.endCursor;
         }
@@ -177,6 +179,8 @@ async function fetchData() {
     w.contributionDays.map((d) => ({ date: d.date, count: Math.max(d.contributionCount, daily.get(d.date) || 0) })),
   );
   const contribYear = weeks.flat().reduce((s, d) => s + d.count, 0);
+  // optional GitLab: nur Commits, die du selbst verfasst hast (siehe gitlab.mjs)
+  for (const c of await collectGitLabCommits()) addCommit(c, 'gitlab');
   const commitsAll = seen.size;
   // pro Jahr: GitHub-Kalender, pro Tag das Maximum aus GitHub und den eigenen Commits
   const calendars = Object.fromEntries(Object.entries(yearData).map(([k, v]) => [k.slice(1),

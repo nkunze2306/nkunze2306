@@ -6,7 +6,7 @@ on:
   workflow_dispatch: # manuell per Button
   push:
     branches: [main]
-    paths: [generate.mjs, autumn.mjs, theme.mjs, themes/**, theme.json, index.html, assets/**, .github/workflows/update-stats.yml]
+    paths: [generate.mjs, gitlab.mjs, autumn.mjs, theme.mjs, themes/**, theme.json, index.html, assets/**, .github/workflows/update-stats.yml]
 
 permissions:
   contents: write
@@ -30,16 +30,20 @@ jobs:
         with:
           node-version: 20
       - name: Achievements
-        uses: nkunze2306/github-achievements-by-niounze@v1
+        uses: nkunze2306/github-achievements-by-niounze@v2
         with:
           token: ${{ secrets.STATS_TOKEN || secrets.GITHUB_TOKEN }}
           wakatime-key: ${{ secrets.WAKATIME_API_KEY }}
+          gitlab-sources: '[{"host":"https://git.hs-mittweida.de","token":"${{ secrets.GITLAB_COM_TOKEN }}"}]'
+          gitlab-author-emails: 'nkunze923@gmail.com,nkunze1@hs-mittweida.de'
       - name: Generate stats.svg
         env:
           # PAT mit Repo-Lesezugriff (inkl. privater Repos); Fallback: Standard-Token (nur oeffentlich)
           STATS_TOKEN: ${{ secrets.STATS_TOKEN || secrets.GITHUB_TOKEN }}
           STATS_LOGIN: ${{ github.repository_owner }}
           WAKATIME_API_KEY: ${{ secrets.WAKATIME_API_KEY }}
+          GITLAB_SOURCES: '[{"host":"https://git.hs-mittweida.de","token":"${{ secrets.GITLAB_COM_TOKEN }}"}]'
+          GITLAB_AUTHOR_EMAILS: 'nkunze923@gmail.com,nkunze1@hs-mittweida.de'
         run: node generate.mjs
       - name: Commit if changed
         run: |
