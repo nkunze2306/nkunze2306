@@ -10,9 +10,9 @@
   "reduceMotion": true,
   "options": {
     "rain": {
-      "drops": 80,
+      "drops": 20,
       "angle": -28,
-      "dim": 42,
+      "dim": 0,
       "puddles": false,
       "splashes": false,
       "mist": true,
