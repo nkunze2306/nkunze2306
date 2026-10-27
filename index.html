@@ -125,18 +125,58 @@
   }
   @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
 
-  /* Theme-Konfiguration */
-  .cfg { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px 22px; align-items: end; }
-  .cfg label { display: block; font-size: 11.5px; color: var(--mute); }
-  .cfg label b { color: #fff; float: right; }
-  .cfg input[type=range] { width: 100%; accent-color: var(--c); margin: 8px 0 0; }
-  .cfg input[type=text], .cfg input[type=password] { width: 100%; margin-top: 6px; background: #0c0c0c; border: 1px solid #2c2c2c; border-radius: 10px; color: #ddd; padding: 8px 10px; font: inherit; font-size: 12px; }
-  .seg2 { display: inline-flex; border: 1px solid #2c2c2c; border-radius: 999px; overflow: hidden; margin-top: 6px; }
-  .seg2 button { background: #151515; color: #bbb; border: 0; padding: 7px 16px; font: inherit; font-size: 12.5px; cursor: pointer; }
-  .seg2 button.on { background: var(--c); color: #1a0e02; font-weight: 700; }
-  .cfgbar { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; margin-top: 16px; }
-  .cfgbar .msg { font-size: 12px; color: var(--mute); }
-  button.btn { cursor: pointer; font: inherit; font-size: 12.5px; }
+  /* Theme & look */
+  .tl { max-width: 720px; }
+  .tl .lbl { font-size: 10.5px; font-weight: 700; letter-spacing: 1.3px; text-transform: uppercase; color: var(--dim); margin: 20px 0 10px; }
+  .tl .ov { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+  .tl .ov button { background: #141414; border: 1px solid #2c2c2c; border-radius: 14px; padding: 16px 8px 12px; display: flex; flex-direction: column; align-items: center; gap: 10px; color: #cfcfcf; font: inherit; font-size: 13.5px; cursor: pointer; transition: border-color .15s, box-shadow .15s, color .15s; }
+  .tl .ov button:hover { border-color: #444; }
+  .tl .ov button .ic { height: 40px; display: grid; place-items: center; }
+  .tl .ov button.on { border-color: var(--ac); color: #fff; box-shadow: 0 0 0 1px var(--ac), 0 0 18px color-mix(in srgb, var(--ac) 40%, transparent); }
+  .tl .rings { display: flex; flex-wrap: wrap; gap: 8px; }
+  .tl .rings button { background: #141414; border: 1px solid #2c2c2c; border-radius: 999px; padding: 9px 20px; color: #cfcfcf; font: inherit; font-size: 13.5px; cursor: pointer; transition: border-color .15s, color .15s; }
+  .tl .rings button:hover { border-color: #444; }
+  .tl .rings button.on { border-color: var(--green); color: #fff; background: color-mix(in srgb, var(--green) 9%, #141414); }
+  .tl .drow { display: flex; align-items: center; justify-content: space-between; gap: 14px; padding: 8px 0; font-size: 14px; color: #ddd; transition: opacity .15s; }
+  .tl .drow.off { opacity: .35; pointer-events: none; }
+  .tl .dens { display: flex; align-items: center; gap: 16px; flex: 1; justify-content: flex-end; }
+  .tl .dens span { color: var(--mute); font-size: 13px; }
+  .tl input[type=range] { -webkit-appearance: none; appearance: none; width: min(300px, 55%); height: 6px; border-radius: 6px; margin: 0; outline: none; cursor: pointer; background: linear-gradient(90deg, #ff9f5a var(--p), #2a2a2a var(--p)); }
+  .tl input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 22px; height: 22px; border-radius: 50%; background: #fff; border: 0; box-shadow: 0 0 10px rgba(255, 159, 90, .7); }
+  .tl input[type=range]::-moz-range-thumb { width: 22px; height: 22px; border-radius: 50%; background: #fff; border: 0; box-shadow: 0 0 10px rgba(255, 159, 90, .7); }
+  .tl .sw { position: relative; width: 48px; height: 28px; flex: none; border-radius: 999px; border: 1px solid #2c2c2c; background: #1b1b1b; cursor: pointer; padding: 0; transition: background .15s, border-color .15s; }
+  .tl .sw::after { content: ''; position: absolute; top: 4px; left: 4px; width: 18px; height: 18px; border-radius: 50%; background: #555; transition: left .15s, background .15s; }
+  .tl .sw.on { background: color-mix(in srgb, var(--green) 22%, #0f0f0f); border-color: var(--green); }
+  .tl .sw.on::after { left: 24px; background: var(--green); }
+  .tl .pv { position: relative; height: 144px; margin-top: 16px; border: 1px solid #2a2a2a; border-radius: 14px; background: #0d0d0d; overflow: hidden; }
+  .tl .pv .edge { position: absolute; left: -1px; right: -1px; bottom: -1px; height: 44px; border: 1px solid #2c2c2c; border-radius: 14px 14px 0 0; background: #151515; }
+  .tl .pv .it { position: absolute; top: 0; left: 0; }
+  .tl .pv svg { display: block; }
+  .tl .pv .fl { animation: pvFall linear infinite; }
+  .tl .pv .sway { animation: pvSway ease-in-out infinite alternate; }
+  .tl .pv .pile { position: absolute; bottom: 41px; width: 110px; height: 20px; }
+  .tl .pv .pile span { position: absolute; bottom: 0; }
+  .tl .pv .pile.gust { animation: pvGust 10s ease-in infinite; }
+  .tl .pv .bf { animation: pvBf ease-in-out infinite; }
+  .tl .pv .flap { animation: pvFlap .18s linear infinite alternate; }
+  .tl .pv .none { position: absolute; inset: 0 0 44px; display: grid; place-items: center; font-size: 12px; color: var(--dim); }
+  @keyframes pvFall { from { transform: translate(var(--x0), -34px); opacity: 0 } 8% { opacity: 1 } 88% { opacity: 1 } to { transform: translate(var(--x1), var(--y1)); opacity: 0 } }
+  @keyframes pvSway { from { transform: translateX(-7px) rotate(-35deg) } to { transform: translateX(7px) rotate(35deg) } }
+  @keyframes pvGust { 0%, 76% { transform: none; opacity: 1 } 88% { transform: translate(170px, -34px) rotate(50deg); opacity: 0 } 89% { transform: none; opacity: 0 } 100% { opacity: 1 } }
+  @keyframes pvBf { 0% { transform: translate(var(--x0), 20px) } 30% { transform: translate(var(--xl), 76px) } 62% { transform: translate(var(--xl), 76px) } 80% { transform: translate(calc(var(--xl) + 60px), 6px) } 100% { transform: translate(var(--x1), 24px) } }
+  @keyframes pvFlap { from { transform: scaleX(1) } to { transform: scaleX(.3) } }
+  @media (prefers-reduced-motion: reduce) { .tl .pv.rm * { animation-play-state: paused !important; } }
+  .tl .acts { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; margin-top: 18px; }
+  .tl .acts .btn { font: inherit; font-size: 14.5px; padding: 12px 24px; cursor: pointer; }
+  .tl .acts .msg { font-size: 12px; color: var(--mute); }
+  .tl .tok { display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #232323; margin-top: 20px; padding-top: 14px; font-size: 13px; color: var(--dim); }
+  .tl .tok button { background: none; border: 0; color: var(--mute); font: inherit; cursor: pointer; padding: 0; }
+  .tl .tok button:hover { color: #fff; }
+  .tl .tokp { display: none; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 12px; }
+  .tl .tokp.open { display: grid; }
+  .tl .tokp label { font-size: 11.5px; color: var(--mute); }
+  .tl .tokp input { display: block; width: 100%; margin-top: 6px; background: #0c0c0c; border: 1px solid #2c2c2c; border-radius: 10px; color: #ddd; padding: 9px 11px; font: inherit; font-size: 12.5px; }
+  @media (max-width: 600px) { .tl .tokp { grid-template-columns: 1fr; } .tl .ov button { font-size: 12.5px; } .tl .drow { font-size: 13px; } }
 </style>
 </head>
 <body>
@@ -439,40 +479,125 @@ function themeConfig() {
   const host = location.hostname, owner0 = host.endsWith('.github.io') ? host.split('.')[0] : '';
   const path0 = location.pathname.split('/')[1];
   const ls = (k, v) => { try { return v === undefined ? localStorage.getItem(k) : localStorage.setItem(k, v); } catch { return null; } };
-  let cfg = { theme: 'autumn', autumn: { fliers: 10, piles: 2, pileLeaves: 8, wind: true } };
-  const sec = document.createElement('section');
-  sec.className = 'card c12'; sec.style.setProperty('--c', '#f29a1f');
-  const sl = (id, label, min, max) => `<label>${label}<b id="${id}V"></b><input type="range" id="${id}" min="${min}" max="${max}"></label>`;
-  sec.innerHTML = `<div class="t"><span class="dot"></span>Theme &amp; look<span class="r">applied to stats.svg on the next run</span></div>
-    <div class="cfg">
-      <div><label>Theme</label><div class="seg2" id="thSeg"><button data-v="none">None</button><button data-v="autumn">Autumn leaves</button></div></div>
-      ${sl('cF', 'Flying leaves', 0, 20)}${sl('cP', 'Piles per card', 0, 2)}${sl('cL', 'Leaves per pile', 4, 14)}
-      <div><label>Wind gust at the end of each loop</label><div class="seg2" id="wSeg"><button data-v="1">On</button><button data-v="0">Off</button></div></div>
-    </div>
-    <div class="cfg" style="margin-top:14px">
-      <label>Repository (owner/name)<input type="text" id="cRepo" value="${esc(ls('cfgRepo') || (owner0 ? owner0 + '/' + (path0 || host.split('.')[0] + '.github.io') : ''))}"></label>
-      <label>GitHub token (fine-grained, Contents: read &amp; write)<input type="password" id="cTok" value="${esc(ls('cfgTok') || '')}" placeholder="stored only in this browser"></label>
-    </div>
-    <div class="cfgbar"><button class="btn primary" id="cSave">Save &amp; rebuild</button><button class="btn" id="cCopy">Copy JSON</button><span class="msg" id="cMsg"></span></div>`;
-  grid.appendChild(sec);
-  const $ = (id) => sec.querySelector('#' + id), a = () => cfg.autumn;
-  const paint = () => {
-    sec.querySelectorAll('#thSeg button').forEach((b) => b.classList.toggle('on', b.dataset.v === cfg.theme));
-    sec.querySelectorAll('#wSeg button').forEach((b) => b.classList.toggle('on', (b.dataset.v === '1') === !!a().wind));
-    [['cF', 'fliers'], ['cP', 'piles'], ['cL', 'pileLeaves']].forEach(([id, k]) => { $(id).value = a()[k]; $(id + 'V').textContent = a()[k]; $(id).disabled = cfg.theme !== 'autumn'; });
+  const OV = [['none', 'None', '#8a8a8a'], ['butterflies', 'Butterflies', '#ff5c9a'], ['autumn', 'Autumn', '#ff9f5a']];
+  const RINGS = [['classic', 'Classic'], ['orbit', 'Orbit'], ['rank', 'Rank'], ['rarity', 'Rarity']];
+  const DENS = ['Sparse', 'Light', 'Normal', 'Dense', 'Storm'];
+  // gleiche Regeln wie readTheme() in generate.mjs, inkl. altem Format { theme, autumn }
+  const norm = (j = {}) => {
+    const ov = j.overlay || j.theme;
+    return {
+      overlay: OV.some((o) => o[0] === ov) ? ov : 'autumn',
+      ring: RINGS.some((r) => r[0] === j.ring) ? j.ring : 'classic',
+      density: Math.min(5, Math.max(1, Math.round(j.density ?? 3))),
+      piles: j.piles ?? (j.autumn?.piles ?? 2) > 0,
+      wind: j.wind ?? j.autumn?.wind ?? true,
+      reduceMotion: j.reduceMotion ?? true,
+    };
   };
+  let cfg = norm(), saved = null;
   const json = () => JSON.stringify(cfg, null, 2) + '\n';
+
+  // Pixel-Sprites (gleiche Farben wie im Bild)
+  const SPR = {
+    maple: ['.....r.....', '....rrr....', '.r..ror..r.', '.rr.ror.rr.', 'rrrrroorrrr', '.rrrrorrrr.', '..rrroorr..', '.rrrrorrrr.', '....ror....', '.....s.....', '.....s.....'],
+    oak: ['...r...', '..rrr..', '.rrorr.', '.rrorr.', 'rrrorrr', '.rrorr.', '.rrorr.', '..ror..', '...s...', '...s...'],
+    fly: ['.pppp.....pppp.', 'pppppp.d.pppppp', 'ppppwppdppwpppp', 'pppppppdppppppp', '.ppppppdpppppp.', '..pppppdppppp..', '.ppppppdpppppp.', 'pppppppdppppppp', '.ppp.pp.pp.ppp.'],
+  };
+  const LEAF = [{ r: '#e0562b', o: '#a82a22', s: '#6b4220' }, { r: '#f29a1f', o: '#c2491b', s: '#6b4220' }, { r: '#f2d24b', o: '#e69a28', s: '#6b4220' }, { r: '#b3263a', o: '#7e1a2a', s: '#5e3d17' }];
+  const FLY = ['#ff5c9a', '#38bdf8', '#ff9f43', '#b794ff'];
+  const pix = (rows, pal, s) => {
+    let r = '';
+    rows.forEach((row, y) => [...row].forEach((ch, x) => { if (ch !== '.') r += `<rect x="${x}" y="${y}" width="1.04" height="1.04" fill="${pal[ch]}"/>`; }));
+    return `<svg viewBox="0 0 ${rows[0].length} ${rows.length}" width="${(rows[0].length * s).toFixed(1)}" height="${(rows.length * s).toFixed(1)}" shape-rendering="crispEdges">${r}</svg>`;
+  };
+  const leaf = (i, s) => pix(i % 3 === 2 ? SPR.oak : SPR.maple, LEAF[i % LEAF.length], s);
+  const fly = (s, i = 0) => pix(SPR.fly, { p: FLY[i % FLY.length], w: '#fff', d: '#241533' }, s);
+  const ICON = {
+    none: '<svg width="44" height="44" viewBox="0 0 44 44"><circle cx="22" cy="22" r="15" fill="none" stroke="#4a4a4a" stroke-width="2.5" stroke-dasharray="3.5 4"/></svg>',
+    butterflies: fly(3), autumn: leaf(0, 3.6),
+  };
+
+  const sec = document.createElement('section');
+  sec.className = 'card c12'; sec.style.setProperty('--c', '#ff9f5a');
+  const repo0 = ls('cfgRepo') || (owner0 ? owner0 + '/' + (path0 || host.split('.')[0] + '.github.io') : '');
+  sec.innerHTML = `<div class="tl">
+    <div class="t"><span class="dot"></span>Theme &amp; look<span class="r" id="tlSt"></span></div>
+    <div class="lbl">Overlay theme</div>
+    <div class="ov">${OV.map(([v, l, c]) => `<button data-ov="${v}" style="--ac:${c}"><span class="ic">${ICON[v]}</span>${l}</button>`).join('')}</div>
+    <div class="lbl">Ring design</div>
+    <div class="rings">${RINGS.map(([v, l]) => `<button data-ring="${v}">${l}</button>`).join('')}</div>
+    <div class="lbl">Details</div>
+    <div class="drow" data-need="any"><span>Density</span><div class="dens"><span id="tlDv"></span><input type="range" id="tlD" min="1" max="5" step="1" aria-label="Density"></div></div>
+    <div class="drow" data-need="autumn"><span>Leaves pile up on cards</span><button class="sw" data-k="piles" aria-label="Leaves pile up on cards"></button></div>
+    <div class="drow" data-need="autumn"><span>Wind gusts blow them away</span><button class="sw" data-k="wind" aria-label="Wind gusts"></button></div>
+    <div class="drow" data-need="any"><span>Pause when "reduce motion" is on</span><button class="sw" data-k="reduceMotion" aria-label="Pause when reduce motion is on"></button></div>
+    <div class="pv" id="tlPv"></div>
+    <div class="acts"><button class="btn primary" id="cSave">Save &amp; rebuild</button><button class="btn" id="cCopy">Copy JSON</button><span class="msg" id="cMsg"></span></div>
+    <div class="tok"><span>GitHub token · stays in this browser</span><button id="tlTok"></button></div>
+    <div class="tokp" id="tlTokP">
+      <label>Repository (owner/name)<input type="text" id="cRepo" value="${esc(repo0)}"></label>
+      <label>Token (fine-grained, Contents: read &amp; write)<input type="password" id="cTok" value="${esc(ls('cfgTok') || '')}" placeholder="github_pat_…"></label>
+    </div>
+  </div>`;
+  grid.appendChild(sec);
+  const $ = (id) => sec.querySelector('#' + id);
+
+  // Vorschau: Mini-Kartenkante mit dem gewählten Overlay (CSS-Animation, deterministisch)
+  const preview = () => {
+    const pv = $('tlPv'), W = pv.clientWidth || 640, d = cfg.density - 1;
+    let s = 7; const rnd = () => ((s = (s * 16807) % 2147483647) / 2147483647);
+    let h = '<div class="edge"></div>';
+    if (cfg.overlay === 'autumn') {
+      for (let i = 0, n = [2, 3, 5, 7, 9][d]; i < n; i++) {
+        const x0 = rnd() * (W - 60), dur = 5 + rnd() * 4;
+        h += `<div class="it fl" style="--x0:${x0.toFixed(0)}px;--x1:${(x0 + 30 + rnd() * 70).toFixed(0)}px;--y1:${cfg.piles ? 82 : 150}px;animation-duration:${dur.toFixed(1)}s;animation-delay:${(-rnd() * dur).toFixed(1)}s"><div class="sway" style="animation-duration:${(1.1 + rnd() * 0.9).toFixed(1)}s">${leaf(i, 2.6 + rnd() * 0.9)}</div></div>`;
+      }
+      if (cfg.piles) for (const fx of [0.18, 0.68]) {
+        let p = '';
+        for (let j = 0, n = [3, 4, 5, 6, 7][d]; j < n; j++) p += `<span style="left:${(j * (80 / n) + rnd() * 8).toFixed(0)}px;bottom:${(rnd() * 5).toFixed(0)}px;transform:rotate(${(rnd() * 60 - 30).toFixed(0)}deg) scaleY(.5)">${leaf(j + 1, 3)}</span>`;
+        h += `<div class="pile${cfg.wind ? ' gust' : ''}" style="left:${(W * fx).toFixed(0)}px">${p}</div>`;
+      }
+    } else if (cfg.overlay === 'butterflies') {
+      for (let i = 0, n = [1, 2, 2, 3, 4][d]; i < n; i++) {
+        const dur = 9 + rnd() * 5;
+        h += `<div class="it bf" style="--x0:-40px;--xl:${(W * (0.15 + 0.7 * rnd())).toFixed(0)}px;--x1:${W + 40}px;animation-duration:${dur.toFixed(1)}s;animation-delay:${(-rnd() * dur).toFixed(1)}s"><div class="flap">${fly(2.6, i)}</div></div>`;
+      }
+    } else h += '<div class="none">No overlay, just the cards</div>';
+    pv.innerHTML = h;
+    pv.classList.toggle('rm', cfg.reduceMotion);
+  };
+
+  let lastPv = '';
+  const paint = () => {
+    sec.querySelectorAll('[data-ov]').forEach((b) => b.classList.toggle('on', b.dataset.ov === cfg.overlay));
+    sec.querySelectorAll('[data-ring]').forEach((b) => b.classList.toggle('on', b.dataset.ring === cfg.ring));
+    sec.querySelectorAll('.sw').forEach((b) => { b.classList.toggle('on', !!cfg[b.dataset.k]); b.setAttribute('aria-pressed', !!cfg[b.dataset.k]); });
+    sec.querySelectorAll('[data-need]').forEach((r) => r.classList.toggle('off', cfg.overlay === 'none' || (r.dataset.need === 'autumn' && cfg.overlay !== 'autumn')));
+    const rg = $('tlD'); rg.value = cfg.density; rg.style.setProperty('--p', ((cfg.density - 1) / 4) * 100 + '%');
+    $('tlDv').textContent = DENS[cfg.density - 1];
+    $('tlSt').textContent = saved === null ? '' : json() === saved ? 'saved · applies on next run' : 'unsaved changes';
+    $('tlTok').textContent = (ls('cfgTok') ? '✓ set ' : 'set ') + ($('tlTokP').classList.contains('open') ? '▾' : '▸');
+    const key = [cfg.overlay, cfg.density, cfg.piles, cfg.wind, cfg.reduceMotion].join();
+    if (key !== lastPv) { lastPv = key; preview(); }
+  };
+  const tokOpen = (open) => { $('tlTokP').classList.toggle('open', open); paint(); };
+  const msg = (t, bad) => { const m = $('cMsg'); m.textContent = t; m.style.color = bad ? 'var(--pink)' : 'var(--mute)'; };
+
   sec.addEventListener('click', (e) => {
-    const b = e.target.closest('.seg2 button'); if (!b) return;
-    if (b.parentNode.id === 'thSeg') cfg.theme = b.dataset.v; else a().wind = b.dataset.v === '1';
+    const b = e.target.closest('button'); if (!b) return;
+    if (b.dataset.ov) cfg.overlay = b.dataset.ov;
+    else if (b.dataset.ring) cfg.ring = b.dataset.ring;
+    else if (b.dataset.k) cfg[b.dataset.k] = !cfg[b.dataset.k];
+    else if (b.id === 'tlTok') return tokOpen(!$('tlTokP').classList.contains('open'));
+    else return;
+    msg('');
     paint();
   });
-  sec.addEventListener('input', (e) => { const k = { cF: 'fliers', cP: 'piles', cL: 'pileLeaves' }[e.target.id]; if (k) { a()[k] = +e.target.value; paint(); } });
-  const msg = (t, bad) => { const m = $('cMsg'); m.textContent = t; m.style.color = bad ? 'var(--pink)' : 'var(--mute)'; };
+  $('tlD').addEventListener('input', (e) => { cfg.density = +e.target.value; paint(); });
   $('cCopy').onclick = () => navigator.clipboard.writeText(json()).then(() => msg('Copied. Paste it into theme.json and commit.'), () => msg('Copy failed', 1));
   $('cSave').onclick = async () => {
     const repo = $('cRepo').value.trim(), tok = $('cTok').value.trim();
-    if (!/^[\w.-]+\/[\w.-]+$/.test(repo) || !tok) return msg('Enter repository and token first (or use Copy JSON).', 1);
+    if (!/^[\w.-]+\/[\w.-]+$/.test(repo) || !tok) { tokOpen(true); return msg('Set repository and token below, or use Copy JSON.', 1); }
     ls('cfgRepo', repo); ls('cfgTok', tok);
     const url = `https://api.github.com/repos/${repo}/contents/theme.json`, h = { Authorization: `Bearer ${tok}`, Accept: 'application/vnd.github+json' };
     msg('Saving…');
@@ -480,11 +605,12 @@ function themeConfig() {
       const cur = await fetch(url, { headers: h }); const sha = cur.ok ? (await cur.json()).sha : undefined;
       const r = await fetch(url, { method: 'PUT', headers: h, body: JSON.stringify({ message: 'chore: update theme', content: btoa(json()), sha }) });
       if (!r.ok) throw new Error((await r.json()).message || r.status);
-      msg('Saved. The workflow rebuilds stats.svg in about a minute.');
+      saved = json(); tokOpen(false);
+      msg('Saved. stats.svg rebuilds in about a minute.');
     } catch (err) { msg('Failed: ' + err.message, 1); }
   };
   fetch('theme.json?' + Date.now(), { cache: 'no-store' }).then((r) => (r.ok ? r.json() : null)).then((j) => {
-    if (j) cfg = { theme: j.theme || 'autumn', autumn: { ...cfg.autumn, ...(j.autumn || {}) } };
+    if (j) { cfg = norm(j); saved = json(); }
   }).catch(() => {}).finally(paint);
 }
 

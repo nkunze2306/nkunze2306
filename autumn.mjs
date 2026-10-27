@@ -92,7 +92,7 @@ export function autumnLayer(W, H, cards, o = {}) {
   for (let i = 0; i < o.fliers; i++) {
     const k = ri(0, 2), ci = ri(0, PALS.length - 1), dur = rr(16, 28);
     const pts = drift(rr(-60, W * 0.8), -30, rr(180, 360), H + 80, 14, rr(18, 40), rr(0, 6.3), rr(1.5, 3)), n = pts.length;
-    out += `<g shape-rendering="geometricPrecision">${tr(pts.map(([x, y]) => `${f(x)},${f(y)}`).join(';'), pts.map((_, j) => (j / (n - 1)).toFixed(3)).join(';'), dur.toFixed(1), -rr(0, dur).toFixed(1))}${flyleaf(sym(k, ci), rr(1.6, 3), rr(3, 5))}</g>`;
+    out += `<g class="mo" shape-rendering="geometricPrecision">${tr(pts.map(([x, y]) => `${f(x)},${f(y)}`).join(';'), pts.map((_, j) => (j / (n - 1)).toFixed(3)).join(';'), dur.toFixed(1), -rr(0, dur).toFixed(1))}${flyleaf(sym(k, ci), rr(1.6, 3), rr(3, 5))}</g>`;
   }
 
   // Haufen auf den Oberkanten der breiten Kacheln
@@ -127,13 +127,13 @@ export function autumnLayer(W, H, cards, o = {}) {
     const ks = [0, ...pts.map((_, i) => (s + (fl * i) / (n - 1)) / T), 1]; ks[1] = Math.max(ks[1], 0.001);
     const vals = [pts[0], ...pts, pts[n - 1]].map(([x, y]) => `${f(x)},${f(y)}`).join(';');
     const use = sym(l.k, l.ci);
-    out += `<g opacity="0" shape-rendering="geometricPrecision"><animate attributeName="opacity" calcMode="discrete" dur="${T}s" repeatCount="indefinite" keyTimes="${kt([0, s, ld])}" values="0;1;0"/><g>${tr(vals, ks.map((k) => k.toFixed(3)).join(';'))}${flyleaf(use, 2.2, 3.4)}</g></g>`;
+    out += `<g class="mo" opacity="0" shape-rendering="geometricPrecision"><animate attributeName="opacity" calcMode="discrete" dur="${T}s" repeatCount="indefinite" keyTimes="${kt([0, s, ld])}" values="0;1;0"/><g>${tr(vals, ks.map((k) => k.toFixed(3)).join(';'))}${flyleaf(use, 2.2, 3.4)}</g></g>`;
     const dx = rr(300, 460), dy = -rr(20, 80), gt = g + rr(0, 1.5);
     const times = [0, ld, gt, gt + 3.2, T], p0 = `${f(l.x)},${f(l.y)}`, p1 = `${f(l.x + dx)},${f(l.y + dy)}`;
     const r0 = l.rot.toFixed(0), r1 = (l.rot + 230).toFixed(0);
     const live = o.wind ? `<g transform="${sq(l)}" shape-rendering="geometricPrecision"><g><animateTransform attributeName="transform" type="rotate" dur="${T}s" repeatCount="indefinite" keyTimes="${kt(times)}" values="${[r0, r0, r0, r1, r1].map((r) => r + ' 0 0').join(';')}"/><use href="${use}"/></g></g>` : `<g transform="${sq(l)} rotate(${r0})"><use href="${use}"/></g>`;
     const op = o.wind ? `<animate attributeName="opacity" dur="${T}s" repeatCount="indefinite" keyTimes="${kt([0, ld, gt + 0.4, gt + 3.0, T])}" values="0;1;1;0;0"/>` : `<animate attributeName="opacity" dur="${T}s" repeatCount="indefinite" keyTimes="${kt([0, ld, T])}" values="0;1;1"/>`;
-    out += `<g opacity="0">${op}<g>${tr(o.wind ? [p0, p0, p0, p1, p1].join(';') : [p0, p0, p0].join(';'), kt(o.wind ? times : [0, ld, T]))}${live}</g></g>`;
+    out += `<g class="mo" opacity="0">${op}<g>${tr(o.wind ? [p0, p0, p0, p1, p1].join(';') : [p0, p0, p0].join(';'), kt(o.wind ? times : [0, ld, T]))}${live}</g></g>`;
   }
 
   const defs = [...used].map((u) => { const [k, ci] = u.split('|'); return `<g id="lf_${KINDS[k]}_${ci}"><g transform="scale(${PX}) translate(-12 -12)">${leafPaths(KINDS[k], PALS[ci])}</g></g>`; }).join('');

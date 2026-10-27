@@ -1,4 +1,8 @@
 {
-  "theme": "autumn",
-  "autumn": { "fliers": 10, "piles": 2, "pileLeaves": 8, "wind": true }
+  "overlay": "autumn",
+  "ring": "classic",
+  "density": 3,
+  "piles": true,
+  "wind": true,
+  "reduceMotion": true
 }

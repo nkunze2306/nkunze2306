@@ -464,15 +464,33 @@ const bar = (x, y, w, h, ratio, color) =>
   `<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="${h / 2}" fill="${C.track}"/>` +
   (ratio > 0 ? `<rect x="${x}" y="${y}" width="${Math.max(h, w * Math.min(ratio, 1))}" height="${h}" rx="${h / 2}" fill="${color}"/>` : '');
 
-// theme.json (von der Website-Konfiguration geschrieben): { "theme": "autumn" | "none", "autumn": { fliers, piles, pileLeaves, wind } }
+// theme.json (von der Website-Konfiguration geschrieben):
+// { overlay: none|butterflies|autumn, ring: classic|orbit|rank|rarity, density: 1–5, piles, wind, reduceMotion }
+// Altes Format { theme, autumn: { piles, wind } } wird weiter verstanden.
 function readTheme() {
   const f = process.env.STATS_THEME || 'theme.json';
-  try { return existsSync(f) ? JSON.parse(readFileSync(f, 'utf8')) : { theme: 'autumn' }; } catch { return { theme: 'autumn' }; }
+  let j = {};
+  try { if (existsSync(f)) j = JSON.parse(readFileSync(f, 'utf8')); } catch {}
+  const ov = j.overlay || j.theme;
+  return {
+    overlay: ['none', 'butterflies', 'autumn'].includes(ov) ? ov : 'autumn',
+    ring: ['classic', 'orbit', 'rank', 'rarity'].includes(j.ring) ? j.ring : 'classic',
+    density: Math.min(5, Math.max(1, Math.round(j.density ?? 3))),
+    piles: j.piles ?? (j.autumn?.piles ?? 2) > 0,
+    wind: j.wind ?? j.autumn?.wind ?? true,
+    reduceMotion: j.reduceMotion ?? true,
+  };
 }
+const THEME = readTheme();
 
+// Overlay über dem ganzen Bild; mit reduceMotion blendet eine Media-Query alles Bewegte aus (Laubhaufen bleiben liegen)
 function themeSvg(W, H) {
-  const t = readTheme();
-  return t.theme === 'autumn' ? autumnLayer(W, H, CARD_TOPS, t.autumn || {}) : '';
+  const t = THEME, d = t.density - 1;
+  let layer = '';
+  if (t.overlay === 'autumn') layer = autumnLayer(W, H, CARD_TOPS, { fliers: [3, 6, 10, 15, 20][d], piles: t.piles ? 2 : 0, pileLeaves: [4, 6, 8, 11, 14][d], wind: t.wind });
+  else if (t.overlay === 'butterflies') layer = butterfliesLayer(W, H, [2, 3, 5, 7, 9][d]);
+  if (!layer) return '';
+  return (t.reduceMotion ? '<style>@media (prefers-reduced-motion: reduce) { .mo { display: none } }</style>' : '') + layer;
 }
 
 // Begrüßung (Überschrift + Text) liegt im Bild, damit der Hintergrund bis ganz nach oben reicht. **fett** markiert Hervorhebungen.
@@ -496,9 +514,9 @@ function introBlock(y0) {
 
 // Fünf Pixel-Schmetterlinge (reines SVG/SMIL, ohne Script): fliegen mit Flügelschlag und Wackeln, landen auf Kartenkanten, klappen langsam
 // die Flügel und fliegen weiter. Schleife 72 s, deterministisch (gleicher Aufbau bei jedem Lauf). STATS_BUTTERFLIES=0 schaltet sie ab.
-function butterfliesLayer(w, h) {
+function butterfliesLayer(w, h, COUNT = 5) {
   if (process.env.STATS_BUTTERFLIES === '0' || !CARD_TOPS.length) return '';
-  const P = 2.5, T = 72, COUNT = 5, STOPS = 5; // HQ: 16 px breite Sprites (Draufsicht 16x12, Seitenansicht 16x11)
+  const P = 2.5, T = 72, STOPS = 5; // HQ: 16 px breite Sprites (Draufsicht 16x12, Seitenansicht 16x11)
   const halfTop = ['......k.', '.oo...kb', 'owwoo.wb', 'owvwwwwb', 'owwvwwwb', '.owwwwwb', '..oowwwb', '..owwwwb', '..owvwwb', '...owwob', '....ooob', '.......b'];
   const top = halfTop.map((r) => r + [...r].reverse().join(''));
   const side = ['..ooo.........kk', '.owwwo.......k..', '.owvvwo.....k...', 'owwvvwwo...k....', 'owwvvwwwo..bb...', 'owwwvwwwwo.bbb..', '.owwwwwwwwbbbbe.', '..owwwwwwbbbbbb.', '...ooowwobbbbbb.', '....bbbbbbbbb...', '....l..l..l..l..'];
@@ -556,7 +574,7 @@ function butterfliesLayer(w, h) {
     out += `<g shape-rendering="crispEdges"><g><animateTransform attributeName="transform" type="translate" calcMode="linear" keyTimes="${kt(pos)}" values="${pos.map((p) => `${f2(p[1])} ${f2(p[2])}`).join(';')}" dur="${T}s" repeatCount="indefinite"/>` +
       `<g opacity="1">${vis(1)}<g>${flap(0.16, 0.2)}${draw(top)}</g></g>${sides}</g></g>`;
   }
-  return `<g pointer-events="none">${out}</g>`;
+  return `<g class="mo" pointer-events="none">${out}</g>`;
 }
 
 function readAchievements() {
@@ -582,15 +600,45 @@ function achIcon(ic, cx, cy, size, opacity = 1) {
   return s + '</g>';
 }
 
+// Rarity: Farbe nach erreichtem Anteil der Stufen (common → legendary)
+const RARITY = ['#9aa4b2', '#34f5a0', '#38bdf8', '#b794ff', '#ffd34e'];
+const rarityColor = (a) => (a.legendary || a.maxed ? RARITY[4] : RARITY[Math.min(3, Math.floor((a.level / Math.max(1, a.tiers?.length || 1)) * 4))]);
+
+// Fortschrittsring je nach THEME.ring: classic (dicker Bogen), orbit (dünne Bahn mit Planet), rank (ein Segment pro Stufe), rarity (Glühen)
+function achRing(a, cx, cy, r, c) {
+  const circ = 2 * Math.PI * r, p = a.maxed ? 1 : a.progress, rot = `transform="rotate(-90 ${cx} ${cy})"`;
+  const arc = (len, sw, col, off = 0, cap = 'round') => `<circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="${col}" stroke-width="${sw}" stroke-linecap="${cap}" stroke-dasharray="${len.toFixed(1)} ${circ.toFixed(1)}" stroke-dashoffset="${(-off).toFixed(1)}" ${rot}/>`;
+  const track = (sw) => `<circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="#2a2a2a" stroke-width="${sw}"/>`;
+  if (THEME.ring === 'orbit') {
+    const ang = -Math.PI / 2 + 2 * Math.PI * p, px = (cx + r * Math.cos(ang)).toFixed(1), py = (cy + r * Math.sin(ang)).toFixed(1);
+    return `<circle cx="${cx}" cy="${cy}" r="${r + 4}" fill="none" stroke="${c}" stroke-opacity="0.25" stroke-width="1" stroke-dasharray="1.5 3"/>${track(2)}` +
+      (p > 0 ? `${arc(circ * p, 2, c)}<circle cx="${px}" cy="${py}" r="6" fill="${c}" fill-opacity="0.18"/><circle cx="${px}" cy="${py}" r="3.2" fill="${c}"/>` : '');
+  }
+  if (THEME.ring === 'rank') {
+    const n = a.legendary ? 1 : Math.max(1, a.tiers?.length || 1), step = circ / n, gap = n > 1 ? 3.5 : 0, seg = step - gap;
+    let s = '';
+    for (let i = 0; i < n; i++) {
+      const fill = a.maxed || i < a.level ? 1 : i === a.level ? a.progress : 0;
+      s += arc(seg, 5, '#2a2a2a', i * step + gap / 2, 'butt') + (fill > 0 ? arc(seg * fill, 5, c, i * step + gap / 2, 'butt') : '');
+    }
+    return s;
+  }
+  if (THEME.ring === 'rarity') {
+    return `<circle cx="${cx}" cy="${cy}" r="${r - 5}" fill="${c}" fill-opacity="0.08"/><circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="${c}" stroke-opacity="0.13" stroke-width="10"/>${track(4)}` +
+      (p > 0 ? arc(circ * p, 4, c) : '');
+  }
+  return track(5) + (p > 0 ? arc(circ * p, 5, c) : '');
+}
+
 function achTile(a, x, y, w, h) {
-  const c = a.maxed ? '#ffd34e' : a.color || C.blue, r = 17, cx = x + 12 + r, cy = y + h / 2, circ = 2 * Math.PI * r;
+  const c = THEME.ring === 'rarity' ? rarityColor(a) : a.maxed ? '#ffd34e' : a.color || C.blue, r = 17, cx = x + 12 + r, cy = y + h / 2;
   const fv = (v) => (a.format === 'hours' ? `${Math.round(v)}h` : short(v));
   const sub0 = a.maxed ? `${fv(a.value)} ${a.unit} · max` : `${fv(a.value)} / ${fv(a.next)} ${a.unit}`;
   const sub = sub0.length > 21 ? sub0.replace(` ${a.unit}`, '') : sub0;
   const badge = a.legendary ? (a.maxed ? 'UNLOCKED' : 'LEGENDARY') : `${a.level} / ${a.tiers.length}`;
   const bw = badge.length * 6.2 + 14, ox = cx + r + 10, ow = x + w - 14 - ox, lock = a.level === 0 && !a.legendary;
   return `<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="13" fill="#161616" stroke="${a.legendary || a.maxed ? c + '55' : '#262626'}"/>
-<circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="#2a2a2a" stroke-width="5"/>${a.progress > 0 || a.maxed ? `<circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="${c}" stroke-width="5" stroke-linecap="round" stroke-dasharray="${(circ * (a.maxed ? 1 : a.progress)).toFixed(1)} ${circ.toFixed(1)}" transform="rotate(-90 ${cx} ${cy})"/>` : ''}
+${achRing(a, cx, cy, r, c)}
 ${a.icon ? achIcon(a.icon, cx, cy, r * 0.945, lock ? 0.45 : 1) + `<circle cx="${(cx + r * 0.74).toFixed(1)}" cy="${(cy + r * 0.74).toFixed(1)}" r="6.5" fill="#0b0b0b" stroke="${c}" stroke-width="1.3"/>` + text(cx + r * 0.74, cy + r * 0.74 + 3.4, a.legendary ? (a.maxed ? '★' : '☆') : String(a.level), { size: 9, fill: lock ? '#777' : C.text, weight: 700, anchor: 'middle' }) : text(cx, cy + 6, a.legendary ? (a.maxed ? '★' : '☆') : String(a.level), { size: 18, fill: lock ? '#555' : C.text, weight: 700, anchor: 'middle' })}
 ${text(ox, y + 22, (a.legendary ? '★ ' : '') + a.name, { size: 12.5, fill: lock ? '#9a9a9a' : C.text, weight: 700 })}
 <rect x="${x + w - 14 - bw}" y="${y + 9}" width="${bw}" height="17" rx="8.5" fill="${c}" fill-opacity="0.11" stroke="${c}" stroke-opacity="0.5"/>${text(x + w - 14 - bw / 2, y + 21, badge, { size: 9.5, fill: c, weight: 700, anchor: 'middle' })}
@@ -941,7 +989,6 @@ function render(d) {
 
   return `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" font-family="'Segoe UI', -apple-system, 'Helvetica Neue', Arial, sans-serif">
 ${parts.join('\n')}
-${butterfliesLayer(W, H)}
 ${themeSvg(W, H)}
 </svg>
 `;
