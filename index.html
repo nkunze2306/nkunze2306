@@ -184,9 +184,14 @@
   .tl .xtra:empty { display: none; }
   .tl .xtra .lbl { color: var(--ac); }
   .tl .cs { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; justify-content: flex-end; }
-  .tl .cs button { width: 20px; height: 20px; border-radius: 50%; border: 2px solid #2c2c2c; padding: 0; cursor: pointer; }
-  .tl .cs button.on { border-color: #fff; }
-  .tl .cs input[type=color] { width: 24px; height: 24px; padding: 0; border: 0; border-radius: 50%; background: none; cursor: pointer; }
+  .tl .cs { gap: 8px; }
+  .tl .cs button { position: relative; width: 26px; height: 26px; border-radius: 50%; border: 2px solid rgba(255, 255, 255, .18); padding: 0; cursor: pointer; opacity: .55; transition: transform .12s, opacity .12s, box-shadow .12s; }
+  .tl .cs button:hover { opacity: .9; }
+  .tl .cs button.on { opacity: 1; transform: scale(1.18); border-color: #fff; box-shadow: 0 0 0 3px #0f0f0f, 0 0 0 5px var(--ac), 0 0 14px var(--ac); }
+  .tl .cs button.on::after { content: '✓'; position: absolute; inset: 0; display: grid; place-items: center; font-size: 13px; font-weight: 800; color: #111; text-shadow: 0 0 3px rgba(255, 255, 255, .8); }
+  .tl .cs input[type=color] { width: 26px; height: 26px; padding: 0; border: 2px dashed rgba(255, 255, 255, .3); border-radius: 50%; background: none; cursor: pointer; opacity: .55; }
+  .tl .cs input[type=color].on { opacity: 1; border: 2px solid #fff; box-shadow: 0 0 0 3px #0f0f0f, 0 0 0 5px var(--ac), 0 0 14px var(--ac); }
+  .tl .hx { font-style: normal; font-size: 11px; color: var(--mute); margin-left: 6px; letter-spacing: .5px; }
   .tl .pv svg.x { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
   .tl .acts { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; margin-top: 12px; }
   .tl .acts .btn { font: inherit; font-size: 13.5px; padding: 10px 20px; cursor: pointer; }
@@ -516,7 +521,13 @@ async function themeConfig() {
   const ORDER = ['rain', 'night', 'snow', 'sakura', 'roses']; // wie in generate.mjs: Stimmung zuerst, Dekor darüber
   const extras = () => THEMES.filter((t) => has(t.id)).sort((a, b) => ORDER.indexOf(a.id) - ORDER.indexOf(b.id));
   // Optionen eines Zusatz-Themes (fehlende Werte aus den Standardwerten); bleiben im Speicher, auch wenn das Overlay zwischendurch aus ist
-  const opts = (t) => (cfg.options = cfg.options || {}, cfg.options[t.id] = { ...t.defaults, ...cfg.options[t.id] });
+  // dasselbe Objekt bei jedem Aufruf zurückgeben, sonst gehen Schreibzugriffe wie opts(t)[k] = !opts(t)[k] verloren
+  const opts = (t) => {
+    cfg.options = cfg.options || {};
+    const o = cfg.options[t.id] = cfg.options[t.id] || {};
+    for (const k in t.defaults) if (o[k] === undefined) o[k] = t.defaults[k];
+    return o;
+  };
   const fmt = (c, v) => (c.scale ? Math.round(v * c.scale) : v) + (c.unit || '');
 
   // Pixel-Sprites (gleiche Farben wie im Bild)
@@ -622,7 +633,7 @@ async function themeConfig() {
       const at = `data-xt="${t.id}" data-xi="${i}"`;
       if (c.type === 'range') return `<div class="drow"><span>${esc(c.label)}</span><div class="dens"><span data-xv="${t.id}.${i}"></span><input type="range" ${at} min="${c.min}" max="${c.max}" step="${c.step || 1}" aria-label="${esc(c.label)}"></div></div>`;
       if (c.type === 'toggle') return `<div class="drow"><span>${esc(c.label)}</span><button class="sw" ${at} aria-label="${esc(c.label)}"></button></div>`;
-      return `<div class="drow"><span>${esc(c.label)}</span><div class="cs" ${at}>${c.colors.map((k) => `<button data-c="${k}" style="background:${k}" aria-label="${k}"></button>`).join('')}<input type="color" aria-label="Custom colour"></div></div>`;
+      return `<div class="drow"><span>${esc(c.label)} <i class="hx" data-xv="${t.id}.${i}"></i></span><div class="cs" ${at}>${c.colors.map((k) => `<button data-c="${k}" style="background:${k}" title="${k}" aria-label="${k}"></button>`).join('')}<input type="color" title="Custom colour" aria-label="Custom colour"></div></div>`;
     }).join('')}</div>`).join('');
   };
   const paintExtra = () => extras().forEach((t) => {
@@ -636,7 +647,10 @@ async function themeConfig() {
         const b = sec.querySelector('.sw' + sel); b.classList.toggle('on', !!v); b.setAttribute('aria-pressed', !!v);
       } else {
         const w = sec.querySelector('.cs' + sel);
-        w.querySelectorAll('button').forEach((b) => b.classList.toggle('on', b.dataset.c.toLowerCase() === String(v).toLowerCase())); w.querySelector('input').value = v;
+        const bs = [...w.querySelectorAll('button')], hit = bs.some((b) => b.dataset.c.toLowerCase() === String(v).toLowerCase());
+        bs.forEach((b) => b.classList.toggle('on', b.dataset.c.toLowerCase() === String(v).toLowerCase()));
+        const ci = w.querySelector('input'); ci.value = v; ci.classList.toggle('on', !hit);
+        sec.querySelector(`[data-xv="${t.id}.${i}"]`).textContent = String(v).toUpperCase();
       }
     });
   });
