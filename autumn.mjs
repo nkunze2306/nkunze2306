@@ -95,25 +95,22 @@ export function autumnLayer(W, H, cards, o = {}) {
     out += `<g class="mo" shape-rendering="geometricPrecision">${tr(pts.map(([x, y]) => `${f(x)},${f(y)}`).join(';'), pts.map((_, j) => (j / (n - 1)).toFixed(3)).join(';'), dur.toFixed(1), -rr(0, dur).toFixed(1))}${flyleaf(sym(k, ci), rr(1.6, 3), rr(3, 5))}</g>`;
   }
 
-  // Haufen auf den Oberkanten der breiten Kacheln
-  const mound = (cx, base, n, hw, hmax) => {
-    const items = Array.from({ length: n }, () => {
-      const g = (R() + R() + R() + R() - 2) / 0.58; // ~Normalverteilung
-      const dx = Math.max(-hw, Math.min(hw, (g * hw) / 2.3));
-      return { dx, y: base - 1.2 - hmax * Math.max(0, 1 - (dx / hw) ** 2) * rr(0.35, 1) };
-    });
-    items.sort((a, b) => b.y - a.y);
-    return items.map((it, rank) => ({ x: cx + it.dx, y: it.y, rank, n, rot: (it.dx / hw) * 104 + rr(-56, 56), k: ri(0, 2), ci: ri(0, PALS.length - 1), s: rr(0.6, 0.85) }));
+  // Lockerer Blätterteppich entlang der Oberkante breiter Kacheln: flach, mit Lücken, kleine Grüppchen statt Haufen
+  const carpet = (c) => {
+    const items = [], gap = 180 / Math.max(1, o.pileLeaves); // mittlerer Abstand, pileLeaves = Dichte
+    for (let x = c.x + 18 + rr(0, gap); x < c.x + c.w - 18; ) {
+      items.push({ x, y: c.y - 1.2 - rr(0, 3.2), rot: rr(-180, 180), k: ri(0, 2), ci: ri(0, PALS.length - 1), s: rr(0.55, 0.8) });
+      x += R() < 0.22 ? rr(gap * 1.8, gap * 3.5) : rr(gap * 0.35, gap * 1.1); // ab und zu eine richtige Lücke
+    }
+    return items;
   };
   const landing = [], still = [];
-  const wide = cards.filter((c) => c.w >= 170), step = Math.max(1, Math.ceil((wide.length * o.piles) / (o.maxPiles || 8)));
-  for (const c of wide.filter((_, i) => i % step === 0)) {
-    for (const side of [0.22, 0.7].slice(0, o.piles)) {
-      const cx = c.x + c.w * side + rr(-10, 10), hw = rr(30, 38), hm = rr(11, 15);
-      still.push(...mound(cx, c.y, ri(6, 8), hw * 0.8, hm * 0.6));
-      landing.push(...mound(cx, c.y, o.pileLeaves + ri(-1, 3), hw, hm).map((l) => ({ ...l, t: 6 + ((T - 26 - 6) * l.rank) / Math.max(1, l.n - 1) + rr(-1.2, 1.2) })));
-    }
+  const wide = cards.filter((c) => c.w >= 170), step = Math.max(1, Math.ceil(wide.length / (o.maxPiles || 8)));
+  if (o.piles > 0) for (const c of wide.filter((_, i) => i % step === 0)) {
+    // knapp die Hälfte liegt schon (auch ohne Animation sichtbar), der Rest fällt im Lauf der Schleife dazu
+    for (const l of carpet(c)) (R() < 0.45 ? still : landing).push(l);
   }
+  landing.forEach((l, i, a) => { l.t = 6 + ((T - 26 - 6) * ((i * 7919) % a.length)) / Math.max(1, a.length - 1) + rr(-1.2, 1.2); });
   const sq = (l) => `scale(${l.s.toFixed(2)} ${(l.s * 0.55).toFixed(2)})`;
   // Grundbestand (auch sichtbar, wenn Animationen aus sind)
   for (const l of still) out += `<g transform="translate(${f(l.x)} ${f(l.y)}) ${sq(l)}" shape-rendering="geometricPrecision"><g transform="rotate(${l.rot.toFixed(0)})"><use href="${sym(l.k, l.ci)}"/></g></g>`;

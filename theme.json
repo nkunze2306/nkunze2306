@@ -1,5 +1,7 @@
 {
-  "overlay": "autumn",
+  "overlays": [
+    "autumn"
+  ],
   "ring": "classic",
   "density": 3,
   "piles": true,

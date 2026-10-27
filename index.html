@@ -11,8 +11,9 @@
     --green: #34f5a0; --purple: #b794ff; --blue: #38bdf8; --pink: #ff5c9a; --yellow: #fbbf24;
     color-scheme: dark;
   }
+  @font-face { font-family: 'Space Grotesk'; font-weight: 400 700; font-display: swap; src: url(assets/space-grotesk.woff2) format('woff2'); }
   * { box-sizing: border-box; }
-  body { margin: 0; background: var(--bg); color: var(--text); font-family: 'Segoe UI', -apple-system, 'Helvetica Neue', Arial, sans-serif; -webkit-font-smoothing: antialiased; }
+  body { margin: 0; background: var(--bg); color: var(--text); font-family: 'Space Grotesk', 'Segoe UI', -apple-system, 'Helvetica Neue', Arial, sans-serif; -webkit-font-smoothing: antialiased; }
   a { color: inherit; text-decoration: none; }
   main { max-width: 1040px; margin: 0 auto; padding: 24px 16px 40px; }
   .grid { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 12px; }
@@ -34,10 +35,8 @@
 
   .card { background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 16px 18px; position: relative; min-width: 0; transition: border-color .2s, transform .2s; }
   .card:hover { border-color: #3a3a3a; }
-  .t { display: flex; align-items: center; gap: 10px; font-size: 10.5px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--mute); margin-bottom: 12px; }
-  .t .dot { width: 22px; height: 22px; border-radius: 50%; border: 1px solid color-mix(in srgb, var(--c) 55%, transparent); background: color-mix(in srgb, var(--c) 12%, transparent); display: grid; place-items: center; flex: none; }
-  .t .dot::after { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--c); }
-  .t .r { margin-left: auto; font-weight: 400; letter-spacing: 0; text-transform: none; font-size: 11px; text-align: right; }
+  .t { display: flex; align-items: center; gap: 10px; font-size: 11px; font-weight: 700; letter-spacing: 1.4px; text-transform: uppercase; color: var(--c, var(--mute)); margin-bottom: 12px; }
+  .t .r { margin-left: auto; font-weight: 400; letter-spacing: 0; text-transform: none; font-size: 11px; text-align: right; color: var(--mute); }
   .hero2 { font-size: 40px; font-weight: 800; line-height: 1; margin-right: 18px; }
   .big { font-size: 28px; font-weight: 700; line-height: 1.1; }
   .sub { font-size: 12px; color: var(--mute); }
@@ -125,58 +124,64 @@
   }
   @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
 
-  /* Theme & look */
-  .tl { max-width: 720px; }
-  .tl .lbl { font-size: 10.5px; font-weight: 700; letter-spacing: 1.3px; text-transform: uppercase; color: var(--dim); margin: 20px 0 10px; }
-  .tl .ov { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
-  .tl .ov button { background: #141414; border: 1px solid #2c2c2c; border-radius: 14px; padding: 16px 8px 12px; display: flex; flex-direction: column; align-items: center; gap: 10px; color: #cfcfcf; font: inherit; font-size: 13.5px; cursor: pointer; transition: border-color .15s, box-shadow .15s, color .15s; }
+  /* Theme & look: schmale Leiste, klappt bei Bedarf auf */
+  .tlcard { padding: 12px 18px !important; }
+  .tl .bar { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; min-height: 34px; }
+  .tl .bar .t { margin: 0; }
+  .tl .sum { display: flex; gap: 6px; flex-wrap: wrap; flex: 1; }
+  .tl .sum span { font-size: 12px; color: #cfcfcf; border: 1px solid #2a2a2a; border-radius: 999px; padding: 3px 10px; background: #151515; }
+  .tl .st { font-size: 12px; color: var(--mute); }
+  .tl .bar .btn { font: inherit; font-size: 12.5px; padding: 7px 14px; cursor: pointer; }
+  .tl .body { display: none; grid-template-columns: 1.15fr 1fr 1.25fr; gap: 28px; margin-top: 14px; padding-top: 4px; border-top: 1px solid #232323; }
+  .tl.open .body { display: grid; }
+  .tl .lbl { font-size: 10.5px; font-weight: 700; letter-spacing: 1.3px; text-transform: uppercase; color: var(--dim); margin: 14px 0 10px; }
+  .tl .ov { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+  .tl .ov button { background: #141414; border: 1px solid #2c2c2c; border-radius: 12px; padding: 10px 6px 8px; display: flex; flex-direction: column; align-items: center; gap: 6px; color: #cfcfcf; font: inherit; font-size: 12.5px; cursor: pointer; transition: border-color .15s, box-shadow .15s, color .15s; }
   .tl .ov button:hover { border-color: #444; }
-  .tl .ov button .ic { height: 40px; display: grid; place-items: center; }
-  .tl .ov button.on { border-color: var(--ac); color: #fff; box-shadow: 0 0 0 1px var(--ac), 0 0 18px color-mix(in srgb, var(--ac) 40%, transparent); }
-  .tl .rings { display: flex; flex-wrap: wrap; gap: 8px; }
-  .tl .rings button { background: #141414; border: 1px solid #2c2c2c; border-radius: 999px; padding: 9px 20px; color: #cfcfcf; font: inherit; font-size: 13.5px; cursor: pointer; transition: border-color .15s, color .15s; }
+  .tl .ov button .ic { height: 30px; display: grid; place-items: center; }
+  .tl .ov button.on { border-color: var(--ac); color: #fff; box-shadow: 0 0 0 1px var(--ac), 0 0 14px color-mix(in srgb, var(--ac) 40%, transparent); }
+  .tl .hint { font-size: 11.5px; color: var(--dim); margin-top: 8px; }
+  .tl .rings { display: flex; flex-wrap: wrap; gap: 6px; }
+  .tl .rings button { background: #141414; border: 1px solid #2c2c2c; border-radius: 999px; padding: 7px 15px; color: #cfcfcf; font: inherit; font-size: 12.5px; cursor: pointer; transition: border-color .15s, color .15s; }
   .tl .rings button:hover { border-color: #444; }
   .tl .rings button.on { border-color: var(--green); color: #fff; background: color-mix(in srgb, var(--green) 9%, #141414); }
-  .tl .drow { display: flex; align-items: center; justify-content: space-between; gap: 14px; padding: 8px 0; font-size: 14px; color: #ddd; transition: opacity .15s; }
+  .tl .drow { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 6px 0; font-size: 13px; color: #ddd; transition: opacity .15s; }
   .tl .drow.off { opacity: .35; pointer-events: none; }
-  .tl .dens { display: flex; align-items: center; gap: 16px; flex: 1; justify-content: flex-end; }
-  .tl .dens span { color: var(--mute); font-size: 13px; }
-  .tl input[type=range] { -webkit-appearance: none; appearance: none; width: min(300px, 55%); height: 6px; border-radius: 6px; margin: 0; outline: none; cursor: pointer; background: linear-gradient(90deg, #ff9f5a var(--p), #2a2a2a var(--p)); }
-  .tl input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 22px; height: 22px; border-radius: 50%; background: #fff; border: 0; box-shadow: 0 0 10px rgba(255, 159, 90, .7); }
-  .tl input[type=range]::-moz-range-thumb { width: 22px; height: 22px; border-radius: 50%; background: #fff; border: 0; box-shadow: 0 0 10px rgba(255, 159, 90, .7); }
-  .tl .sw { position: relative; width: 48px; height: 28px; flex: none; border-radius: 999px; border: 1px solid #2c2c2c; background: #1b1b1b; cursor: pointer; padding: 0; transition: background .15s, border-color .15s; }
-  .tl .sw::after { content: ''; position: absolute; top: 4px; left: 4px; width: 18px; height: 18px; border-radius: 50%; background: #555; transition: left .15s, background .15s; }
+  .tl .dens { display: flex; align-items: center; gap: 12px; flex: 1; justify-content: flex-end; }
+  .tl .dens span { color: var(--mute); font-size: 12px; }
+  .tl input[type=range] { -webkit-appearance: none; appearance: none; width: min(170px, 55%); height: 6px; border-radius: 6px; margin: 0; outline: none; cursor: pointer; background: linear-gradient(90deg, #ff9f5a var(--p), #2a2a2a var(--p)); }
+  .tl input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 18px; height: 18px; border-radius: 50%; background: #fff; border: 0; box-shadow: 0 0 10px rgba(255, 159, 90, .7); }
+  .tl input[type=range]::-moz-range-thumb { width: 18px; height: 18px; border-radius: 50%; background: #fff; border: 0; box-shadow: 0 0 10px rgba(255, 159, 90, .7); }
+  .tl .sw { position: relative; width: 42px; height: 24px; flex: none; border-radius: 999px; border: 1px solid #2c2c2c; background: #1b1b1b; cursor: pointer; padding: 0; transition: background .15s, border-color .15s; }
+  .tl .sw::after { content: ''; position: absolute; top: 3px; left: 3px; width: 16px; height: 16px; border-radius: 50%; background: #555; transition: left .15s, background .15s; }
   .tl .sw.on { background: color-mix(in srgb, var(--green) 22%, #0f0f0f); border-color: var(--green); }
-  .tl .sw.on::after { left: 24px; background: var(--green); }
-  .tl .pv { position: relative; height: 144px; margin-top: 16px; border: 1px solid #2a2a2a; border-radius: 14px; background: #0d0d0d; overflow: hidden; }
-  .tl .pv .edge { position: absolute; left: -1px; right: -1px; bottom: -1px; height: 44px; border: 1px solid #2c2c2c; border-radius: 14px 14px 0 0; background: #151515; }
+  .tl .sw.on::after { left: 21px; background: var(--green); }
+  .tl .pv { position: relative; height: 124px; margin-top: 14px; border: 1px solid #2a2a2a; border-radius: 12px; background: #0d0d0d; overflow: hidden; }
+  .tl .pv .edge { position: absolute; left: -1px; right: -1px; bottom: -1px; height: 38px; border: 1px solid #2c2c2c; border-radius: 12px 12px 0 0; background: #151515; }
   .tl .pv .it { position: absolute; top: 0; left: 0; }
   .tl .pv svg { display: block; }
   .tl .pv .fl { animation: pvFall linear infinite; }
   .tl .pv .sway { animation: pvSway ease-in-out infinite alternate; }
-  .tl .pv .pile { position: absolute; bottom: 41px; width: 110px; height: 20px; }
+  .tl .pv .pile { position: absolute; bottom: 35px; left: 0; right: 0; height: 20px; }
   .tl .pv .pile span { position: absolute; bottom: 0; }
-  .tl .pv .pile.gust { animation: pvGust 10s ease-in infinite; }
+  .tl .pv .pile i { display: block; }
+  .tl .pv .pile .gust { animation: pvGust 10s ease-in infinite; }
   .tl .pv .bf { animation: pvBf ease-in-out infinite; }
   .tl .pv .flap { animation: pvFlap .18s linear infinite alternate; }
-  .tl .pv .none { position: absolute; inset: 0 0 44px; display: grid; place-items: center; font-size: 12px; color: var(--dim); }
+  .tl .pv .none { position: absolute; inset: 0 0 38px; display: grid; place-items: center; font-size: 12px; color: var(--dim); }
   @keyframes pvFall { from { transform: translate(var(--x0), -34px); opacity: 0 } 8% { opacity: 1 } 88% { opacity: 1 } to { transform: translate(var(--x1), var(--y1)); opacity: 0 } }
   @keyframes pvSway { from { transform: translateX(-7px) rotate(-35deg) } to { transform: translateX(7px) rotate(35deg) } }
   @keyframes pvGust { 0%, 76% { transform: none; opacity: 1 } 88% { transform: translate(170px, -34px) rotate(50deg); opacity: 0 } 89% { transform: none; opacity: 0 } 100% { opacity: 1 } }
-  @keyframes pvBf { 0% { transform: translate(var(--x0), 20px) } 30% { transform: translate(var(--xl), 76px) } 62% { transform: translate(var(--xl), 76px) } 80% { transform: translate(calc(var(--xl) + 60px), 6px) } 100% { transform: translate(var(--x1), 24px) } }
+  @keyframes pvBf { 0% { transform: translate(var(--x0), 14px) } 30% { transform: translate(var(--xl), 62px) } 62% { transform: translate(var(--xl), 62px) } 80% { transform: translate(calc(var(--xl) + 60px), 6px) } 100% { transform: translate(var(--x1), 20px) } }
   @keyframes pvFlap { from { transform: scaleX(1) } to { transform: scaleX(.3) } }
   @media (prefers-reduced-motion: reduce) { .tl .pv.rm * { animation-play-state: paused !important; } }
-  .tl .acts { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; margin-top: 18px; }
-  .tl .acts .btn { font: inherit; font-size: 14.5px; padding: 12px 24px; cursor: pointer; }
-  .tl .acts .msg { font-size: 12px; color: var(--mute); }
-  .tl .tok { display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #232323; margin-top: 20px; padding-top: 14px; font-size: 13px; color: var(--dim); }
-  .tl .tok button { background: none; border: 0; color: var(--mute); font: inherit; cursor: pointer; padding: 0; }
-  .tl .tok button:hover { color: #fff; }
-  .tl .tokp { display: none; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 12px; }
-  .tl .tokp.open { display: grid; }
-  .tl .tokp label { font-size: 11.5px; color: var(--mute); }
-  .tl .tokp input { display: block; width: 100%; margin-top: 6px; background: #0c0c0c; border: 1px solid #2c2c2c; border-radius: 10px; color: #ddd; padding: 9px 11px; font: inherit; font-size: 12.5px; }
-  @media (max-width: 600px) { .tl .tokp { grid-template-columns: 1fr; } .tl .ov button { font-size: 12.5px; } .tl .drow { font-size: 13px; } }
+  .tl .acts { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; margin-top: 12px; }
+  .tl .acts .btn { font: inherit; font-size: 13.5px; padding: 10px 20px; cursor: pointer; }
+  .tl .msg { font-size: 12px; color: var(--mute); margin-top: 8px; min-height: 1em; }
+  .tl .foot { display: flex; justify-content: space-between; gap: 10px; flex-wrap: wrap; font-size: 11.5px; color: var(--dim); margin-top: 10px; }
+  .tl .foot button { background: none; border: 0; color: var(--mute); font: inherit; cursor: pointer; padding: 0; }
+  .tl .foot button:hover { color: #fff; }
+  @media (max-width: 900px) { .tl .body { grid-template-columns: 1fr; gap: 6px; } .tl .sum { order: 3; flex-basis: 100%; } }
 </style>
 </head>
 <body>
@@ -191,7 +196,7 @@ const vivid = (hex) => { const n = parseInt(hex.slice(1), 16); return 0.299 * (n
 const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]);
 const pct = (a, b) => (b ? Math.round((a / b) * 100) : 0);
 const card = (cls, title, color, right, body, hint = '') =>
-  `<section class="card ${cls}" style="--c:${COL[color]}"${hint ? ` data-tip="${esc(hint)}"` : ''}><div class="t"><span class="dot"></span>${esc(title)}${right ? `<span class="r">${right}</span>` : ''}</div>${body}</section>`;
+  `<section class="card ${cls}" style="--c:${COL[color]}"${hint ? ` data-tip="${esc(hint)}"` : ''}><div class="t">${esc(title)}${right ? `<span class="r">${right}</span>` : ''}</div>${body}</section>`;
 const tip = (s) => `data-tip="${esc(s)}"`;
 
 function streaks(weeks) {
@@ -473,29 +478,36 @@ function watchForUpdates(loaded) {
   document.addEventListener('visibilitychange', () => { if (!document.hidden) check(); });
 }
 
-// Theme & look: schreibt theme.json ins Repo (Token mit Contents-Schreibrecht, nur im Browser gespeichert); der Push startet den Workflow
+// Theme & look: schmale Leiste über die volle Breite, nur für den Owner (einmal mit #settings öffnen, dann merkt sich dieser Browser das).
+// Speichern ohne Token: "Save & rebuild" öffnet ein vorausgefülltes GitHub-Issue, der Workflow apply-theme.yml übernimmt es nur vom Owner.
 function themeConfig() {
   const grid = document.querySelector('.grid'); if (!grid) return;
-  const host = location.hostname, owner0 = host.endsWith('.github.io') ? host.split('.')[0] : '';
-  const path0 = location.pathname.split('/')[1];
-  const ls = (k, v) => { try { return v === undefined ? localStorage.getItem(k) : localStorage.setItem(k, v); } catch { return null; } };
-  const OV = [['none', 'None', '#8a8a8a'], ['butterflies', 'Butterflies', '#ff5c9a'], ['autumn', 'Autumn', '#ff9f5a']];
+  const ls = (k, v) => { try { return v === undefined ? localStorage.getItem(k) : v === null ? localStorage.removeItem(k) : localStorage.setItem(k, v); } catch { return null; } };
+  ls('cfgTok', null); ls('cfgRepo', null); // früher hier gespeicherter Token wird entfernt
+  if (/(^|[#?&])settings\b/.test(location.hash + location.search)) ls('tlOwner', '1');
+  if (ls('tlOwner') !== '1') return;
+  const host = location.hostname, owner = host.endsWith('.github.io') ? host.split('.')[0] : '';
+  const repo = owner ? owner + '/' + (location.pathname.split('/')[1] || host) : '';
+
+  const OV = [['butterflies', 'Butterflies', '#ff5c9a'], ['autumn', 'Autumn', '#ff9f5a']];
   const RINGS = [['classic', 'Classic'], ['orbit', 'Orbit'], ['rank', 'Rank'], ['rarity', 'Rarity']];
   const DENS = ['Sparse', 'Light', 'Normal', 'Dense', 'Storm'];
-  // gleiche Regeln wie readTheme() in generate.mjs, inkl. altem Format { theme, autumn }
+  // gleiche Regeln wie normalizeTheme() in theme.mjs
   const norm = (j = {}) => {
-    const ov = j.overlay || j.theme;
+    const list = Array.isArray(j.overlays) ? j.overlays : [j.overlay ?? j.theme ?? 'autumn'];
+    const bool = (v, d) => (typeof v === 'boolean' ? v : d);
     return {
-      overlay: OV.some((o) => o[0] === ov) ? ov : 'autumn',
+      overlays: OV.map((o) => o[0]).filter((o) => list.includes(o)),
       ring: RINGS.some((r) => r[0] === j.ring) ? j.ring : 'classic',
-      density: Math.min(5, Math.max(1, Math.round(j.density ?? 3))),
-      piles: j.piles ?? (j.autumn?.piles ?? 2) > 0,
-      wind: j.wind ?? j.autumn?.wind ?? true,
-      reduceMotion: j.reduceMotion ?? true,
+      density: Math.min(5, Math.max(1, Math.round(Number(j.density) || 3))),
+      piles: bool(j.piles, (j.autumn?.piles ?? 2) > 0),
+      wind: bool(j.wind, bool(j.autumn?.wind, true)),
+      reduceMotion: bool(j.reduceMotion, true),
     };
   };
-  let cfg = norm(), saved = null;
+  let cfg = norm(), saved = null, poll = null;
   const json = () => JSON.stringify(cfg, null, 2) + '\n';
+  const has = (o) => cfg.overlays.includes(o);
 
   // Pixel-Sprites (gleiche Farben wie im Bild)
   const SPR = {
@@ -513,105 +525,128 @@ function themeConfig() {
   const leaf = (i, s) => pix(i % 3 === 2 ? SPR.oak : SPR.maple, LEAF[i % LEAF.length], s);
   const fly = (s, i = 0) => pix(SPR.fly, { p: FLY[i % FLY.length], w: '#fff', d: '#241533' }, s);
   const ICON = {
-    none: '<svg width="44" height="44" viewBox="0 0 44 44"><circle cx="22" cy="22" r="15" fill="none" stroke="#4a4a4a" stroke-width="2.5" stroke-dasharray="3.5 4"/></svg>',
-    butterflies: fly(3), autumn: leaf(0, 3.6),
+    none: '<svg width="30" height="30" viewBox="0 0 30 30"><circle cx="15" cy="15" r="11" fill="none" stroke="#4a4a4a" stroke-width="2.2" stroke-dasharray="3 3.5"/></svg>',
+    butterflies: fly(2.1), autumn: leaf(0, 2.6),
   };
 
   const sec = document.createElement('section');
-  sec.className = 'card c12'; sec.style.setProperty('--c', '#ff9f5a');
-  const repo0 = ls('cfgRepo') || (owner0 ? owner0 + '/' + (path0 || host.split('.')[0] + '.github.io') : '');
-  sec.innerHTML = `<div class="tl">
-    <div class="t"><span class="dot"></span>Theme &amp; look<span class="r" id="tlSt"></span></div>
-    <div class="lbl">Overlay theme</div>
-    <div class="ov">${OV.map(([v, l, c]) => `<button data-ov="${v}" style="--ac:${c}"><span class="ic">${ICON[v]}</span>${l}</button>`).join('')}</div>
-    <div class="lbl">Ring design</div>
-    <div class="rings">${RINGS.map(([v, l]) => `<button data-ring="${v}">${l}</button>`).join('')}</div>
-    <div class="lbl">Details</div>
-    <div class="drow" data-need="any"><span>Density</span><div class="dens"><span id="tlDv"></span><input type="range" id="tlD" min="1" max="5" step="1" aria-label="Density"></div></div>
-    <div class="drow" data-need="autumn"><span>Leaves pile up on cards</span><button class="sw" data-k="piles" aria-label="Leaves pile up on cards"></button></div>
-    <div class="drow" data-need="autumn"><span>Wind gusts blow them away</span><button class="sw" data-k="wind" aria-label="Wind gusts"></button></div>
-    <div class="drow" data-need="any"><span>Pause when "reduce motion" is on</span><button class="sw" data-k="reduceMotion" aria-label="Pause when reduce motion is on"></button></div>
-    <div class="pv" id="tlPv"></div>
-    <div class="acts"><button class="btn primary" id="cSave">Save &amp; rebuild</button><button class="btn" id="cCopy">Copy JSON</button><span class="msg" id="cMsg"></span></div>
-    <div class="tok"><span>GitHub token · stays in this browser</span><button id="tlTok"></button></div>
-    <div class="tokp" id="tlTokP">
-      <label>Repository (owner/name)<input type="text" id="cRepo" value="${esc(repo0)}"></label>
-      <label>Token (fine-grained, Contents: read &amp; write)<input type="password" id="cTok" value="${esc(ls('cfgTok') || '')}" placeholder="github_pat_…"></label>
+  sec.className = 'card c12 tlcard'; sec.style.setProperty('--c', '#ff9f5a');
+  sec.innerHTML = `<div class="tl" id="tl">
+    <div class="bar">
+      <div class="t">Theme &amp; look</div>
+      <div class="sum" id="tlSum"></div>
+      <span class="st" id="tlSt"></span>
+      <button class="btn" id="tlOpen" aria-expanded="false"></button>
+    </div>
+    <div class="body">
+      <div>
+        <div class="lbl">Overlay theme</div>
+        <div class="ov"><button data-ov="none" style="--ac:#8a8a8a"><span class="ic">${ICON.none}</span>None</button>${OV.map(([v, l, c]) => `<button data-ov="${v}" style="--ac:${c}"><span class="ic">${ICON[v]}</span>${l}</button>`).join('')}</div>
+        <div class="hint">Pick one or combine both.</div>
+        <div class="lbl">Ring design</div>
+        <div class="rings">${RINGS.map(([v, l]) => `<button data-ring="${v}">${l}</button>`).join('')}</div>
+      </div>
+      <div>
+        <div class="lbl">Details</div>
+        <div class="drow" data-need="any"><span>Density</span><div class="dens"><span id="tlDv"></span><input type="range" id="tlD" min="1" max="5" step="1" aria-label="Density"></div></div>
+        <div class="drow" data-need="autumn"><span>Leaves settle on the cards</span><button class="sw" data-k="piles" aria-label="Leaves settle on the cards"></button></div>
+        <div class="drow" data-need="autumn"><span>Wind gusts blow them away</span><button class="sw" data-k="wind" aria-label="Wind gusts"></button></div>
+        <div class="drow" data-need="any"><span>Pause when "reduce motion" is on</span><button class="sw" data-k="reduceMotion" aria-label="Pause when reduce motion is on"></button></div>
+      </div>
+      <div>
+        <div class="pv" id="tlPv"></div>
+        <div class="acts"><button class="btn primary" id="cSave">Save &amp; rebuild</button><button class="btn" id="cCopy">Copy JSON</button></div>
+        <div class="msg" id="cMsg"></div>
+        <div class="foot"><span>Saved through a GitHub issue · only @${esc(owner || 'owner')} is applied</span><button id="tlHide">Hide on this device</button></div>
+      </div>
     </div>
   </div>`;
   grid.appendChild(sec);
-  const $ = (id) => sec.querySelector('#' + id);
+  const $ = (id) => sec.querySelector('#' + id), tl = $('tl');
 
-  // Vorschau: Mini-Kartenkante mit dem gewählten Overlay (CSS-Animation, deterministisch)
+  // Vorschau: Mini-Kartenkante mit allen gewählten Overlays (CSS-Animation, deterministisch)
   const preview = () => {
-    const pv = $('tlPv'), W = pv.clientWidth || 640, d = cfg.density - 1;
+    const pv = $('tlPv'), W = pv.clientWidth || 360, d = cfg.density - 1;
     let s = 7; const rnd = () => ((s = (s * 16807) % 2147483647) / 2147483647);
     let h = '<div class="edge"></div>';
-    if (cfg.overlay === 'autumn') {
-      for (let i = 0, n = [2, 3, 5, 7, 9][d]; i < n; i++) {
-        const x0 = rnd() * (W - 60), dur = 5 + rnd() * 4;
-        h += `<div class="it fl" style="--x0:${x0.toFixed(0)}px;--x1:${(x0 + 30 + rnd() * 70).toFixed(0)}px;--y1:${cfg.piles ? 82 : 150}px;animation-duration:${dur.toFixed(1)}s;animation-delay:${(-rnd() * dur).toFixed(1)}s"><div class="sway" style="animation-duration:${(1.1 + rnd() * 0.9).toFixed(1)}s">${leaf(i, 2.6 + rnd() * 0.9)}</div></div>`;
+    if (has('autumn')) {
+      for (let i = 0, n = [2, 3, 4, 6, 8][d]; i < n; i++) {
+        const x0 = rnd() * (W - 50), dur = 5 + rnd() * 4;
+        h += `<div class="it fl" style="--x0:${x0.toFixed(0)}px;--x1:${(x0 + 30 + rnd() * 60).toFixed(0)}px;--y1:${cfg.piles ? 70 : 140}px;animation-duration:${dur.toFixed(1)}s;animation-delay:${(-rnd() * dur).toFixed(1)}s"><div class="sway" style="animation-duration:${(1.1 + rnd() * 0.9).toFixed(1)}s">${leaf(i, 2.3 + rnd() * 0.8)}</div></div>`;
       }
-      if (cfg.piles) for (const fx of [0.18, 0.68]) {
+      if (cfg.piles) {
+        // lockerer Blätterteppich über die ganze Kante, mit Lücken; Böen fegen ihn von links nach rechts weg
+        const gap = [30, 22, 16, 12, 9][d];
         let p = '';
-        for (let j = 0, n = [3, 4, 5, 6, 7][d]; j < n; j++) p += `<span style="left:${(j * (80 / n) + rnd() * 8).toFixed(0)}px;bottom:${(rnd() * 5).toFixed(0)}px;transform:rotate(${(rnd() * 60 - 30).toFixed(0)}deg) scaleY(.5)">${leaf(j + 1, 3)}</span>`;
-        h += `<div class="pile${cfg.wind ? ' gust' : ''}" style="left:${(W * fx).toFixed(0)}px">${p}</div>`;
+        for (let x = 8 + rnd() * gap, j = 0; x < W - 20; j++) {
+          p += `<span${cfg.wind ? ' class="gust"' : ''} style="left:${x.toFixed(0)}px;bottom:${(rnd() * 3).toFixed(0)}px;animation-delay:${((x / W) * 0.8).toFixed(2)}s"><i style="transform:rotate(${(rnd() * 360 - 180).toFixed(0)}deg) scaleY(.45)">${leaf(j + 1, 2.3)}</i></span>`;
+          x += rnd() < 0.22 ? gap * (1.8 + rnd() * 1.7) : gap * (0.4 + rnd() * 0.7);
+        }
+        h += `<div class="pile">${p}</div>`;
       }
-    } else if (cfg.overlay === 'butterflies') {
-      for (let i = 0, n = [1, 2, 2, 3, 4][d]; i < n; i++) {
+    }
+    if (has('butterflies')) {
+      for (let i = 0, n = [1, 1, 2, 3, 3][d]; i < n; i++) {
         const dur = 9 + rnd() * 5;
-        h += `<div class="it bf" style="--x0:-40px;--xl:${(W * (0.15 + 0.7 * rnd())).toFixed(0)}px;--x1:${W + 40}px;animation-duration:${dur.toFixed(1)}s;animation-delay:${(-rnd() * dur).toFixed(1)}s"><div class="flap">${fly(2.6, i)}</div></div>`;
+        h += `<div class="it bf" style="--x0:-40px;--xl:${(W * (0.15 + 0.7 * rnd())).toFixed(0)}px;--x1:${W + 40}px;animation-duration:${dur.toFixed(1)}s;animation-delay:${(-rnd() * dur).toFixed(1)}s"><div class="flap">${fly(2.3, i)}</div></div>`;
       }
-    } else h += '<div class="none">No overlay, just the cards</div>';
+    }
+    if (!cfg.overlays.length) h += '<div class="none">No overlay, just the cards</div>';
     pv.innerHTML = h;
     pv.classList.toggle('rm', cfg.reduceMotion);
   };
 
   let lastPv = '';
   const paint = () => {
-    sec.querySelectorAll('[data-ov]').forEach((b) => b.classList.toggle('on', b.dataset.ov === cfg.overlay));
+    const open = tl.classList.contains('open');
+    sec.querySelectorAll('[data-ov]').forEach((b) => b.classList.toggle('on', b.dataset.ov === 'none' ? !cfg.overlays.length : has(b.dataset.ov)));
     sec.querySelectorAll('[data-ring]').forEach((b) => b.classList.toggle('on', b.dataset.ring === cfg.ring));
     sec.querySelectorAll('.sw').forEach((b) => { b.classList.toggle('on', !!cfg[b.dataset.k]); b.setAttribute('aria-pressed', !!cfg[b.dataset.k]); });
-    sec.querySelectorAll('[data-need]').forEach((r) => r.classList.toggle('off', cfg.overlay === 'none' || (r.dataset.need === 'autumn' && cfg.overlay !== 'autumn')));
+    sec.querySelectorAll('[data-need]').forEach((r) => r.classList.toggle('off', r.dataset.need === 'autumn' ? !has('autumn') : !cfg.overlays.length));
     const rg = $('tlD'); rg.value = cfg.density; rg.style.setProperty('--p', ((cfg.density - 1) / 4) * 100 + '%');
     $('tlDv').textContent = DENS[cfg.density - 1];
-    $('tlSt').textContent = saved === null ? '' : json() === saved ? 'saved · applies on next run' : 'unsaved changes';
-    $('tlTok').textContent = (ls('cfgTok') ? '✓ set ' : 'set ') + ($('tlTokP').classList.contains('open') ? '▾' : '▸');
-    const key = [cfg.overlay, cfg.density, cfg.piles, cfg.wind, cfg.reduceMotion].join();
-    if (key !== lastPv) { lastPv = key; preview(); }
+    const names = cfg.overlays.map((o) => OV.find((x) => x[0] === o)[1]);
+    $('tlSum').innerHTML = [names.length ? names.join(' + ') : 'No overlay', RINGS.find((r) => r[0] === cfg.ring)[1] + ' rings', ...(cfg.overlays.length ? [DENS[cfg.density - 1]] : [])].map((x) => `<span>${esc(x)}</span>`).join('');
+    $('tlSt').textContent = saved === null ? '' : poll ? 'waiting for GitHub…' : json() === saved ? 'saved' : 'unsaved changes';
+    $('tlOpen').textContent = open ? 'Close ▴' : 'Customize ▾';
+    $('tlOpen').setAttribute('aria-expanded', open);
+    const key = [open, cfg.overlays, cfg.density, cfg.piles, cfg.wind, cfg.reduceMotion].join();
+    if (open && key !== lastPv) { lastPv = key; preview(); }
   };
-  const tokOpen = (open) => { $('tlTokP').classList.toggle('open', open); paint(); };
   const msg = (t, bad) => { const m = $('cMsg'); m.textContent = t; m.style.color = bad ? 'var(--pink)' : 'var(--mute)'; };
 
   sec.addEventListener('click', (e) => {
     const b = e.target.closest('button'); if (!b) return;
-    if (b.dataset.ov) cfg.overlay = b.dataset.ov;
+    if (b.id === 'tlOpen') tl.classList.toggle('open');
+    else if (b.id === 'tlHide') { ls('tlOwner', null); sec.remove(); return; }
+    else if (b.dataset.ov === 'none') cfg.overlays = [];
+    else if (b.dataset.ov) cfg.overlays = OV.map((o) => o[0]).filter((o) => (o === b.dataset.ov ? !has(o) : has(o)));
     else if (b.dataset.ring) cfg.ring = b.dataset.ring;
     else if (b.dataset.k) cfg[b.dataset.k] = !cfg[b.dataset.k];
-    else if (b.id === 'tlTok') return tokOpen(!$('tlTokP').classList.contains('open'));
     else return;
-    msg('');
+    if (b.id !== 'tlOpen') msg('');
     paint();
   });
   $('tlD').addEventListener('input', (e) => { cfg.density = +e.target.value; paint(); });
   $('cCopy').onclick = () => navigator.clipboard.writeText(json()).then(() => msg('Copied. Paste it into theme.json and commit.'), () => msg('Copy failed', 1));
-  $('cSave').onclick = async () => {
-    const repo = $('cRepo').value.trim(), tok = $('cTok').value.trim();
-    if (!/^[\w.-]+\/[\w.-]+$/.test(repo) || !tok) { tokOpen(true); return msg('Set repository and token below, or use Copy JSON.', 1); }
-    ls('cfgRepo', repo); ls('cfgTok', tok);
-    const url = `https://api.github.com/repos/${repo}/contents/theme.json`, h = { Authorization: `Bearer ${tok}`, Accept: 'application/vnd.github+json' };
-    msg('Saving…');
-    try {
-      const cur = await fetch(url, { headers: h }); const sha = cur.ok ? (await cur.json()).sha : undefined;
-      const r = await fetch(url, { method: 'PUT', headers: h, body: JSON.stringify({ message: 'chore: update theme', content: btoa(json()), sha }) });
-      if (!r.ok) throw new Error((await r.json()).message || r.status);
-      saved = json(); tokOpen(false);
-      msg('Saved. stats.svg rebuilds in about a minute.');
-    } catch (err) { msg('Failed: ' + err.message, 1); }
+
+  // Prüft theme.json, bis die Seite die neuen Einstellungen ausliefert (Workflow + Pages brauchen 1–3 Minuten)
+  const loadTheme = () => fetch('theme.json?' + Date.now(), { cache: 'no-store' }).then((r) => (r.ok ? r.json() : null));
+  $('cSave').onclick = () => {
+    if (!repo) return msg('Repository not detected on this host, use Copy JSON instead.', 1);
+    const want = json();
+    const body = 'Theme settings from the dashboard. Click **Create** to apply them, the workflow then rebuilds stats.svg and closes this issue.\n\n```json\n' + want + '```\n';
+    window.open(`https://github.com/${repo}/issues/new?title=${encodeURIComponent('theme: update')}&body=${encodeURIComponent(body)}`, '_blank', 'noopener');
+    msg('GitHub opened in a new tab. Click "Create" there; the change is applied within a few minutes.');
+    clearInterval(poll);
+    const t0 = Date.now();
+    poll = setInterval(() => loadTheme().then((j) => {
+      if (j && JSON.stringify(norm(j), null, 2) + '\n' === want) { clearInterval(poll); poll = null; saved = want; msg('Applied. stats.svg is being rebuilt.'); paint(); }
+      else if (Date.now() - t0 > 10 * 60e3) { clearInterval(poll); poll = null; msg('Not applied yet. Check the issue on GitHub.', 1); paint(); }
+    }).catch(() => {}), 15000);
+    paint();
   };
-  fetch('theme.json?' + Date.now(), { cache: 'no-store' }).then((r) => (r.ok ? r.json() : null)).then((j) => {
-    if (j) { cfg = norm(j); saved = json(); }
-  }).catch(() => {}).finally(paint);
+  loadTheme().then((j) => { if (j) { cfg = norm(j); saved = json(); } }).catch(() => {}).finally(paint);
 }
 
 fetch('stats.json?' + Date.now(), { cache: 'no-store' })

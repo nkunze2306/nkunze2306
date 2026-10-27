@@ -3,6 +3,7 @@
 //           node generate.mjs --demo   (Dummy-Daten zum Design-Check)
 import { writeFileSync, readFileSync, existsSync } from 'node:fs';
 import { autumnLayer } from './autumn.mjs';
+import { normalizeTheme } from './theme.mjs';
 
 const TOKEN = (process.env.STATS_TOKEN || process.env.GITHUB_TOKEN || '').trim() || undefined;
 const LOGIN = process.env.STATS_LOGIN || process.env.GITHUB_REPOSITORY_OWNER;
@@ -451,35 +452,30 @@ const line = (x, y, spans, anchor = 'start') =>
   `<text x="${x}" y="${y}" text-anchor="${anchor}">${spans.map(([s, o = {}]) =>
     `<tspan font-size="${o.size || 12}" font-weight="${o.weight || 400}" fill="${o.fill || C.mute}"${o.dx ? ` dx="${o.dx}"` : ''}>${esc(s)}</tspan>`).join('')}</text>`;
 
+// Space Grotesk wird ins SVG eingebettet, weil ein <img> keine externen Schriften lädt (~30 KB)
+function fontStyle() {
+  const f = 'assets/space-grotesk.woff2';
+  if (!existsSync(f)) return '';
+  return `<style>@font-face { font-family: 'Space Grotesk'; font-weight: 400 700; src: url(data:font/woff2;base64,${readFileSync(f).toString('base64')}) format('woff2'); }</style>`;
+}
+
 const CARD_TOPS = []; // Oberkanten aller Karten, dort landen die Schmetterlinge
 function card(x, y, w, h, title, color, right = '') {
   CARD_TOPS.push({ x, y, w });
   return `<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="16" fill="${C.card}" stroke="${C.line}"/>
-<circle cx="${x + PAD + 5}" cy="${y + 26}" r="11" fill="${color}" fill-opacity="0.13" stroke="${color}" stroke-opacity="0.55"/>
-<circle cx="${x + PAD + 5}" cy="${y + 26}" r="3.2" fill="${color}"/>
-${text(x + PAD + 24, y + 30, title.toUpperCase(), { size: 11, weight: 700, ls: 1.1 })}${right ? text(x + w - PAD, y + 30, right, { size: 12, anchor: 'end' }) : ''}`;
+${text(x + PAD, y + 30, title.toUpperCase(), { size: 11, fill: color, weight: 700, ls: 1.1 })}${right ? text(x + w - PAD, y + 30, right, { size: 12, anchor: 'end' }) : ''}`;
 }
 
 const bar = (x, y, w, h, ratio, color) =>
   `<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="${h / 2}" fill="${C.track}"/>` +
   (ratio > 0 ? `<rect x="${x}" y="${y}" width="${Math.max(h, w * Math.min(ratio, 1))}" height="${h}" rx="${h / 2}" fill="${color}"/>` : '');
 
-// theme.json (von der Website-Konfiguration geschrieben):
-// { overlay: none|butterflies|autumn, ring: classic|orbit|rank|rarity, density: 1–5, piles, wind, reduceMotion }
-// Altes Format { theme, autumn: { piles, wind } } wird weiter verstanden.
+// theme.json (vom Workflow apply-theme.yml geschrieben): Format und Regeln in theme.mjs
 function readTheme() {
   const f = process.env.STATS_THEME || 'theme.json';
   let j = {};
   try { if (existsSync(f)) j = JSON.parse(readFileSync(f, 'utf8')); } catch {}
-  const ov = j.overlay || j.theme;
-  return {
-    overlay: ['none', 'butterflies', 'autumn'].includes(ov) ? ov : 'autumn',
-    ring: ['classic', 'orbit', 'rank', 'rarity'].includes(j.ring) ? j.ring : 'classic',
-    density: Math.min(5, Math.max(1, Math.round(j.density ?? 3))),
-    piles: j.piles ?? (j.autumn?.piles ?? 2) > 0,
-    wind: j.wind ?? j.autumn?.wind ?? true,
-    reduceMotion: j.reduceMotion ?? true,
-  };
+  return normalizeTheme(j);
 }
 const THEME = readTheme();
 
@@ -487,8 +483,8 @@ const THEME = readTheme();
 function themeSvg(W, H) {
   const t = THEME, d = t.density - 1;
   let layer = '';
-  if (t.overlay === 'autumn') layer = autumnLayer(W, H, CARD_TOPS, { fliers: [3, 6, 10, 15, 20][d], piles: t.piles ? 2 : 0, pileLeaves: [4, 6, 8, 11, 14][d], wind: t.wind });
-  else if (t.overlay === 'butterflies') layer = butterfliesLayer(W, H, [2, 3, 5, 7, 9][d]);
+  if (t.overlays.includes('autumn')) layer += autumnLayer(W, H, CARD_TOPS, { fliers: [3, 6, 10, 15, 20][d], piles: t.piles ? 2 : 0, pileLeaves: [4, 6, 8, 11, 14][d], wind: t.wind });
+  if (t.overlays.includes('butterflies')) layer += butterfliesLayer(W, H, [2, 3, 5, 7, 9][d]);
   if (!layer) return '';
   return (t.reduceMotion ? '<style>@media (prefers-reduced-motion: reduce) { .mo { display: none } }</style>' : '') + layer;
 }
@@ -987,7 +983,8 @@ function render(d) {
   parts.push(text(W - M, y + 4, `Updated ${dateStr} · generated automatically by GitHub Actions`, { size: 10.5, fill: C.dim, anchor: 'end' }));
   const H = y + 14;
 
-  return `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" font-family="'Segoe UI', -apple-system, 'Helvetica Neue', Arial, sans-serif">
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" font-family="'Space Grotesk', 'Segoe UI', -apple-system, 'Helvetica Neue', Arial, sans-serif">
+${fontStyle()}
 ${parts.join('\n')}
 ${themeSvg(W, H)}
 </svg>
