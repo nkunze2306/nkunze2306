@@ -124,6 +124,11 @@
   }
   @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
 
+  /* Achievements-Kachel an die übrigen Kacheln angleichen (achievements-ui.js wird von der Action bei jedem Lauf neu geschrieben, darum hier) */
+  #achCard .ach-root { font-family: inherit; }
+  #achCard .ach-dot { display: none !important; }
+  #achCard .ach-title { color: var(--c); letter-spacing: 1.4px; }
+
   /* Theme & look: schmale Leiste, klappt bei Bedarf auf */
   .tlcard { padding: 12px 18px !important; }
   .tl .bar { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; min-height: 34px; }
