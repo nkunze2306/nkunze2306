@@ -39,19 +39,22 @@ jobs:
           STATS_LOGIN: ${{ github.repository_owner }}
           WAKATIME_API_KEY: ${{ secrets.WAKATIME_API_KEY }}
         run: node generate.mjs
-      - name: Version image URLs in README by content
-        # GitHub cached Bilder im README. Ein Hash des Bildinhalts in der URL heißt: neuer Inhalt = neue URL = kein alter Cache,
-        # gleicher Inhalt = gleiche URL. Läuft bei jedem Lauf, damit auch Änderungen aus anderen Commits sicher ankommen.
-        run: |
-          for f in stats.svg achievements.svg; do
-            [ -f "$f" ] || continue
-            h=$(sha1sum "$f" | cut -c1-12)
-            sed -i -E "s#${f//./\\.}(\?v=[0-9a-f]+)?#${f}?v=${h}#g" README.md
-          done
       - name: Commit if changed
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add stats.svg stats.json README.md achievements.svg achievements-closest.svg achievements-all.svg achievements.json achievements.html achievements-ui.js
+          git add stats.svg stats.json achievements.svg achievements-closest.svg achievements-all.svg achievements.json achievements.html achievements-ui.js
           for f in wakatime.json .achievements-state.json; do if [ -f $f ]; then git add $f; fi; done
           git diff --cached --quiet || (git commit -m "chore: update stats" && git pull --rebase && git push)
+      - name: Pin README images to the commit that last changed them
+        # GitHub cached README-Bilder (raw-CDN und Bild-Proxy) und ignoriert dabei ?v=. Eine URL mit Commit-SHA ist unveränderlich,
+        # zeigt also immer genau den richtigen Stand. Läuft bei jedem Lauf, damit auch Bilder aus anderen Commits ankommen.
+        run: |
+          git pull --rebase
+          for f in stats.svg achievements.svg; do
+            [ -f "$f" ] || continue
+            url="https://raw.githubusercontent.com/${GITHUB_REPOSITORY}/$(git log -1 --format=%H -- "$f")/${f}"
+            sed -i -E "s#(https://raw\.githubusercontent\.com/[^\"' )]*/)?${f//./\\.}(\?v=[0-9a-f]+)?#${url}#g" README.md
+          done
+          git add README.md
+          git diff --cached --quiet || (git commit -m "chore: pin README images" && git push)
