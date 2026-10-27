@@ -2,7 +2,7 @@
   "overlays": [
     "autumn"
   ],
-  "ring": "rank",
+  "ring": "rarity",
   "density": 5,
   "piles": true,
   "wind": false,
