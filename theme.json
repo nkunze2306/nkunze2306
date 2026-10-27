@@ -1,6 +1,6 @@
 {
   "overlays": [
-    "rain",
+    "snow",
     "night"
   ],
   "ring": "orbit",
@@ -9,15 +9,13 @@
   "wind": false,
   "reduceMotion": true,
   "options": {
-    "rain": {
-      "drops": 20,
-      "angle": -28,
-      "dim": 0,
-      "puddles": false,
-      "splashes": false,
-      "mist": true,
-      "lightning": false,
-      "tint": "#9fc8ff"
+    "snow": {
+      "flakes": 150,
+      "piles": 3,
+      "wind": 15,
+      "icicles": true,
+      "sparkle": true,
+      "tint": "#cfe0ff"
     },
     "night": {
       "dark": 0,
