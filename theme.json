@@ -1,6 +1,5 @@
 {
   "overlays": [
-    "sakura",
     "rain",
     "night"
   ],
@@ -10,14 +9,6 @@
   "wind": false,
   "reduceMotion": true,
   "options": {
-    "sakura": {
-      "color": "#c7a6ff",
-      "branches": 2,
-      "blossoms": 110,
-      "petals": 42,
-      "landing": 6,
-      "sway": true
-    },
     "rain": {
       "drops": 140,
       "angle": -28,
@@ -29,7 +20,7 @@
       "tint": "#9fc8ff"
     },
     "night": {
-      "dark": 60,
+      "dark": 28,
       "fireflies": 2,
       "stars": 10,
       "roses": true,
