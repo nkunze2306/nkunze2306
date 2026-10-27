@@ -180,6 +180,14 @@
   @keyframes pvBf { 0% { transform: translate(var(--x0), 14px) } 30% { transform: translate(var(--xl), 62px) } 62% { transform: translate(var(--xl), 62px) } 80% { transform: translate(calc(var(--xl) + 60px), 6px) } 100% { transform: translate(var(--x1), 20px) } }
   @keyframes pvFlap { from { transform: scaleX(1) } to { transform: scaleX(.3) } }
   @media (prefers-reduced-motion: reduce) { .tl .pv.rm * { animation-play-state: paused !important; } }
+  .tl .xtra { grid-column: 1 / -1; display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 0 28px; border-top: 1px solid #232323; }
+  .tl .xtra:empty { display: none; }
+  .tl .xtra .lbl { color: var(--ac); }
+  .tl .cs { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; justify-content: flex-end; }
+  .tl .cs button { width: 20px; height: 20px; border-radius: 50%; border: 2px solid #2c2c2c; padding: 0; cursor: pointer; }
+  .tl .cs button.on { border-color: #fff; }
+  .tl .cs input[type=color] { width: 24px; height: 24px; padding: 0; border: 0; border-radius: 50%; background: none; cursor: pointer; }
+  .tl .pv svg.x { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
   .tl .acts { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; margin-top: 12px; }
   .tl .acts .btn { font: inherit; font-size: 13.5px; padding: 10px 20px; cursor: pointer; }
   .tl .msg { font-size: 12px; color: var(--mute); margin-top: 8px; min-height: 1em; }
@@ -485,7 +493,7 @@ function watchForUpdates(loaded) {
 
 // Theme & look: schmale Leiste über die volle Breite, nur für den Owner (einmal mit #settings öffnen, dann merkt sich dieser Browser das).
 // Speichern ohne Token: "Save & rebuild" öffnet ein vorausgefülltes GitHub-Issue, der Workflow apply-theme.yml übernimmt es nur vom Owner.
-function themeConfig() {
+async function themeConfig() {
   const grid = document.querySelector('.grid'); if (!grid) return;
   const ls = (k, v) => { try { return v === undefined ? localStorage.getItem(k) : v === null ? localStorage.removeItem(k) : localStorage.setItem(k, v); } catch { return null; } };
   ls('cfgTok', null); ls('cfgRepo', null); // früher hier gespeicherter Token wird entfernt
@@ -494,25 +502,22 @@ function themeConfig() {
   const host = location.hostname, owner = host.endsWith('.github.io') ? host.split('.')[0] : '';
   const repo = owner ? owner + '/' + (location.pathname.split('/')[1] || host) : '';
 
-  const OV = [['butterflies', 'Butterflies', '#ff5c9a'], ['autumn', 'Autumn', '#ff9f5a']];
+  // Registry der Zusatz-Themes (Regler stehen in themes/index.mjs) und die gemeinsamen Regeln aus theme.mjs
+  let THEMES, normalizeTheme;
+  try { ({ THEMES } = await import('./themes/index.mjs')); ({ normalizeTheme } = await import('./theme.mjs')); } catch { return; }
+  const ACC = { roses: '#7db8ff', snow: '#dff1ff', sakura: '#ff9ac8', rain: '#9fc8ff', night: '#b794ff' };
+  const OV = [['butterflies', 'Butterflies', '#ff5c9a'], ['autumn', 'Autumn', '#ff9f5a'], ...THEMES.map((t) => [t.id, t.label, ACC[t.id] || '#ff9f5a'])];
   const RINGS = [['classic', 'Classic'], ['orbit', 'Orbit'], ['rank', 'Rank'], ['rarity', 'Rarity']];
   const DENS = ['Sparse', 'Light', 'Normal', 'Dense', 'Storm'];
-  // gleiche Regeln wie normalizeTheme() in theme.mjs
-  const norm = (j = {}) => {
-    const list = Array.isArray(j.overlays) ? j.overlays : [j.overlay ?? j.theme ?? 'autumn'];
-    const bool = (v, d) => (typeof v === 'boolean' ? v : d);
-    return {
-      overlays: OV.map((o) => o[0]).filter((o) => list.includes(o)),
-      ring: RINGS.some((r) => r[0] === j.ring) ? j.ring : 'classic',
-      density: Math.min(5, Math.max(1, Math.round(Number(j.density) || 3))),
-      piles: bool(j.piles, (j.autumn?.piles ?? 2) > 0),
-      wind: bool(j.wind, bool(j.autumn?.wind, true)),
-      reduceMotion: bool(j.reduceMotion, true),
-    };
-  };
+  const norm = (j) => normalizeTheme(j);
   let cfg = norm(), saved = null, poll = null;
-  const json = () => JSON.stringify(cfg, null, 2) + '\n';
+  const json = () => JSON.stringify(normalizeTheme(cfg), null, 2) + '\n';
   const has = (o) => cfg.overlays.includes(o);
+  const ORDER = ['rain', 'night', 'snow', 'sakura', 'roses']; // wie in generate.mjs: Stimmung zuerst, Dekor darüber
+  const extras = () => THEMES.filter((t) => has(t.id)).sort((a, b) => ORDER.indexOf(a.id) - ORDER.indexOf(b.id));
+  // Optionen eines Zusatz-Themes (fehlende Werte aus den Standardwerten); bleiben im Speicher, auch wenn das Overlay zwischendurch aus ist
+  const opts = (t) => (cfg.options = cfg.options || {}, cfg.options[t.id] = { ...t.defaults, ...cfg.options[t.id] });
+  const fmt = (c, v) => (c.scale ? Math.round(v * c.scale) : v) + (c.unit || '');
 
   // Pixel-Sprites (gleiche Farben wie im Bild)
   const SPR = {
@@ -532,6 +537,11 @@ function themeConfig() {
   const ICON = {
     none: '<svg width="30" height="30" viewBox="0 0 30 30"><circle cx="15" cy="15" r="11" fill="none" stroke="#4a4a4a" stroke-width="2.2" stroke-dasharray="3 3.5"/></svg>',
     butterflies: fly(2.1), autumn: leaf(0, 2.6),
+    snow: '<svg width="30" height="30" viewBox="0 0 30 30" fill="none" stroke="#dff1ff" stroke-width="2" stroke-linecap="round"><path d="M15 3v24M4.6 9l20.8 12M4.6 21L25.4 9M12 5l3 3 3-3M12 25l3-3 3 3"/></svg>',
+    sakura: '<svg width="30" height="30" viewBox="0 0 30 30"><g fill="#ff9ac8" stroke="#c4568f" stroke-width="1">' + [0, 72, 144, 216, 288].map((a) => `<ellipse cx="15" cy="8.5" rx="4.6" ry="6.4" transform="rotate(${a} 15 15)"/>`).join('') + '</g><circle cx="15" cy="15" r="2.6" fill="#ffe27a"/></svg>',
+    rain: '<svg width="30" height="30" viewBox="0 0 30 30" fill="none" stroke="#9fc8ff" stroke-width="2.4" stroke-linecap="round"><path d="M9 6l-3 9M17 4l-3 10M24 8l-3 9M13 19l-3 8M22 21l-3 7"/></svg>',
+    night: '<svg width="30" height="30" viewBox="0 0 30 30"><path d="M21 4.5A11 11 0 1 0 25.5 21 9 9 0 0 1 21 4.5z" fill="#b794ff"/><circle cx="23" cy="9" r="1.3" fill="#fff"/><circle cx="27" cy="15" r="1" fill="#fff"/></svg>',
+    roses: '<svg width="30" height="30" viewBox="0 0 30 30" fill="none" stroke="#7db8ff" stroke-width="2"><circle cx="15" cy="15" r="11"/><circle cx="15" cy="15" r="6.5"/><circle cx="15" cy="15" r="2.2" fill="#7db8ff"/></svg>',
   };
 
   const sec = document.createElement('section');
@@ -547,13 +557,13 @@ function themeConfig() {
       <div>
         <div class="lbl">Overlay theme</div>
         <div class="ov"><button data-ov="none" style="--ac:#8a8a8a"><span class="ic">${ICON.none}</span>None</button>${OV.map(([v, l, c]) => `<button data-ov="${v}" style="--ac:${c}"><span class="ic">${ICON[v]}</span>${l}</button>`).join('')}</div>
-        <div class="hint">Pick one or combine both.</div>
+        <div class="hint">Pick one or combine several.</div>
         <div class="lbl">Ring design</div>
         <div class="rings">${RINGS.map(([v, l]) => `<button data-ring="${v}">${l}</button>`).join('')}</div>
       </div>
       <div>
         <div class="lbl">Details</div>
-        <div class="drow" data-need="any"><span>Density</span><div class="dens"><span id="tlDv"></span><input type="range" id="tlD" min="1" max="5" step="1" aria-label="Density"></div></div>
+        <div class="drow" data-need="dens"><span title="Applies to Autumn and Butterflies">Density</span><div class="dens"><span id="tlDv"></span><input type="range" id="tlD" min="1" max="5" step="1" aria-label="Density"></div></div>
         <div class="drow" data-need="autumn"><span>Leaves settle on the cards</span><button class="sw" data-k="piles" aria-label="Leaves settle on the cards"></button></div>
         <div class="drow" data-need="autumn"><span>Wind gusts blow them away</span><button class="sw" data-k="wind" aria-label="Wind gusts"></button></div>
         <div class="drow" data-need="any"><span>Pause when "reduce motion" is on</span><button class="sw" data-k="reduceMotion" aria-label="Pause when reduce motion is on"></button></div>
@@ -564,6 +574,7 @@ function themeConfig() {
         <div class="msg" id="cMsg"></div>
         <div class="foot"><span>Saved through a GitHub issue · only @${esc(owner || 'owner')} is applied</span><button id="tlHide">Hide on this device</button></div>
       </div>
+      <div class="xtra" id="tlX"></div>
     </div>
   </div>`;
   grid.prepend(sec); // direkt unter dem Header
@@ -596,26 +607,58 @@ function themeConfig() {
         h += `<div class="it bf" style="--x0:-40px;--xl:${(W * (0.15 + 0.7 * rnd())).toFixed(0)}px;--x1:${W + 40}px;animation-duration:${dur.toFixed(1)}s;animation-delay:${(-rnd() * dur).toFixed(1)}s"><div class="flap">${fly(2.3, i)}</div></div>`;
       }
     }
+    const ex = extras();
+    if (ex.length) { // die echten Theme-Layer auf einer Mini-Kartenkante
+      const H = 124, cards = [{ x: 0, y: H - 38, w: W, h: 200 }];
+      h += `<svg class="x" viewBox="0 0 ${W} ${H}" preserveAspectRatio="none">${ex.map((t) => t.render(W, H, cards, opts(t))).join('')}</svg>`;
+    }
     if (!cfg.overlays.length) h += '<div class="none">No overlay, just the cards</div>';
     pv.innerHTML = h;
     pv.classList.toggle('rm', cfg.reduceMotion);
   };
 
-  let lastPv = '';
+  const buildExtra = () => {
+    $('tlX').innerHTML = extras().map((t) => `<div style="--ac:${ACC[t.id] || '#ff9f5a'}"><div class="lbl">${esc(t.label)}</div>${t.controls.map((c, i) => {
+      const at = `data-xt="${t.id}" data-xi="${i}"`;
+      if (c.type === 'range') return `<div class="drow"><span>${esc(c.label)}</span><div class="dens"><span data-xv="${t.id}.${i}"></span><input type="range" ${at} min="${c.min}" max="${c.max}" step="${c.step || 1}" aria-label="${esc(c.label)}"></div></div>`;
+      if (c.type === 'toggle') return `<div class="drow"><span>${esc(c.label)}</span><button class="sw" ${at} aria-label="${esc(c.label)}"></button></div>`;
+      return `<div class="drow"><span>${esc(c.label)}</span><div class="cs" ${at}>${c.colors.map((k) => `<button data-c="${k}" style="background:${k}" aria-label="${k}"></button>`).join('')}<input type="color" aria-label="Custom colour"></div></div>`;
+    }).join('')}</div>`).join('');
+  };
+  const paintExtra = () => extras().forEach((t) => {
+    const o = opts(t);
+    t.controls.forEach((c, i) => {
+      const sel = `[data-xt="${t.id}"][data-xi="${i}"]`, v = o[c.key];
+      if (c.type === 'range') {
+        const el = sec.querySelector('input' + sel), l = sec.querySelector(`[data-xv="${t.id}.${i}"]`);
+        el.value = c.scale ? Math.round(v * c.scale) : v; el.style.setProperty('--p', ((el.value - c.min) / (c.max - c.min)) * 100 + '%'); l.textContent = fmt(c, v);
+      } else if (c.type === 'toggle') {
+        const b = sec.querySelector('.sw' + sel); b.classList.toggle('on', !!v); b.setAttribute('aria-pressed', !!v);
+      } else {
+        const w = sec.querySelector('.cs' + sel);
+        w.querySelectorAll('button').forEach((b) => b.classList.toggle('on', b.dataset.c.toLowerCase() === String(v).toLowerCase())); w.querySelector('input').value = v;
+      }
+    });
+  });
+
+  let lastPv = '', lastOv = null;
   const paint = () => {
     const open = tl.classList.contains('open');
     sec.querySelectorAll('[data-ov]').forEach((b) => b.classList.toggle('on', b.dataset.ov === 'none' ? !cfg.overlays.length : has(b.dataset.ov)));
     sec.querySelectorAll('[data-ring]').forEach((b) => b.classList.toggle('on', b.dataset.ring === cfg.ring));
-    sec.querySelectorAll('.sw').forEach((b) => { b.classList.toggle('on', !!cfg[b.dataset.k]); b.setAttribute('aria-pressed', !!cfg[b.dataset.k]); });
-    sec.querySelectorAll('[data-need]').forEach((r) => r.classList.toggle('off', r.dataset.need === 'autumn' ? !has('autumn') : !cfg.overlays.length));
+    sec.querySelectorAll('.sw[data-k]').forEach((b) => { b.classList.toggle('on', !!cfg[b.dataset.k]); b.setAttribute('aria-pressed', !!cfg[b.dataset.k]); });
+    sec.querySelectorAll('[data-need]').forEach((r) => r.classList.toggle('off', { autumn: !has('autumn'), dens: !has('autumn') && !has('butterflies'), any: !cfg.overlays.length }[r.dataset.need]));
+    const ovKey = cfg.overlays.join();
+    if (ovKey !== lastOv) { lastOv = ovKey; buildExtra(); }
+    paintExtra();
     const rg = $('tlD'); rg.value = cfg.density; rg.style.setProperty('--p', ((cfg.density - 1) / 4) * 100 + '%');
     $('tlDv').textContent = DENS[cfg.density - 1];
     const names = cfg.overlays.map((o) => OV.find((x) => x[0] === o)[1]);
-    $('tlSum').innerHTML = [names.length ? names.join(' + ') : 'No overlay', RINGS.find((r) => r[0] === cfg.ring)[1] + ' rings', ...(cfg.overlays.length ? [DENS[cfg.density - 1]] : [])].map((x) => `<span>${esc(x)}</span>`).join('');
+    $('tlSum').innerHTML = [names.length ? names.join(' + ') : 'No overlay', RINGS.find((r) => r[0] === cfg.ring)[1] + ' rings', ...(has('autumn') || has('butterflies') ? [DENS[cfg.density - 1]] : [])].map((x) => `<span>${esc(x)}</span>`).join('');
     $('tlSt').textContent = saved === null ? '' : poll ? 'waiting for GitHub…' : json() === saved ? 'saved' : 'unsaved changes';
     $('tlOpen').textContent = open ? 'Close ▴' : 'Customize ▾';
     $('tlOpen').setAttribute('aria-expanded', open);
-    const key = [open, cfg.overlays, cfg.density, cfg.piles, cfg.wind, cfg.reduceMotion].join();
+    const key = [open, cfg.overlays, cfg.density, cfg.piles, cfg.wind, cfg.reduceMotion, JSON.stringify(extras().map(opts))].join();
     if (open && key !== lastPv) { lastPv = key; preview(); }
   };
   const msg = (t, bad) => { const m = $('cMsg'); m.textContent = t; m.style.color = bad ? 'var(--pink)' : 'var(--mute)'; };
@@ -628,9 +671,19 @@ function themeConfig() {
     else if (b.dataset.ov) cfg.overlays = OV.map((o) => o[0]).filter((o) => (o === b.dataset.ov ? !has(o) : has(o)));
     else if (b.dataset.ring) cfg.ring = b.dataset.ring;
     else if (b.dataset.k) cfg[b.dataset.k] = !cfg[b.dataset.k];
+    else if (b.dataset.xt || b.dataset.c) {
+      const host = b.dataset.xt ? b : b.closest('.cs'), t = THEMES.find((x) => x.id === host.dataset.xt), c = t.controls[+host.dataset.xi];
+      opts(t)[c.key] = b.dataset.c ? b.dataset.c : !opts(t)[c.key];
+    }
     else return;
     if (b.id !== 'tlOpen') msg('');
     paint();
+  });
+  sec.addEventListener('input', (e) => {
+    const el = e.target, host = el.dataset.xt ? el : el.closest('.cs'); if (!host || !host.dataset.xt) return;
+    const t = THEMES.find((x) => x.id === host.dataset.xt), c = t.controls[+host.dataset.xi];
+    opts(t)[c.key] = c.type === 'range' ? (c.scale ? +el.value / c.scale : +el.value) : el.value;
+    msg(''); paint();
   });
   $('tlD').addEventListener('input', (e) => { cfg.density = +e.target.value; paint(); });
   $('cCopy').onclick = () => navigator.clipboard.writeText(json()).then(() => msg('Copied. Paste it into theme.json and commit.'), () => msg('Copy failed', 1));

@@ -3,6 +3,7 @@
 //           node generate.mjs --demo   (Dummy-Daten zum Design-Check)
 import { writeFileSync, readFileSync, existsSync } from 'node:fs';
 import { autumnLayer } from './autumn.mjs';
+import { THEMES } from './themes/index.mjs';
 import { normalizeTheme } from './theme.mjs';
 
 const TOKEN = (process.env.STATS_TOKEN || process.env.GITHUB_TOKEN || '').trim() || undefined;
@@ -459,9 +460,9 @@ function fontStyle() {
   return `<style>@font-face { font-family: 'Space Grotesk'; font-weight: 400 700; src: url(data:font/woff2;base64,${readFileSync(f).toString('base64')}) format('woff2'); }</style>`;
 }
 
-const CARD_TOPS = []; // Oberkanten aller Karten, dort landen die Schmetterlinge
+const CARD_TOPS = []; // alle Karten (x, y, w, h): Schmetterlinge landen auf den Oberkanten, die Themes setzen Dekor an die Kanten
 function card(x, y, w, h, title, color, right = '') {
-  CARD_TOPS.push({ x, y, w });
+  CARD_TOPS.push({ x, y, w, h });
   return `<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="16" fill="${C.card}" stroke="${C.line}"/>
 ${text(x + PAD, y + 30, title.toUpperCase(), { size: 11, fill: color, weight: 700, ls: 1.1 })}${right ? text(x + w - PAD, y + 30, right, { size: 12, anchor: 'end' }) : ''}`;
 }
@@ -479,10 +480,13 @@ function readTheme() {
 }
 const THEME = readTheme();
 
-// Overlay über dem ganzen Bild; mit reduceMotion blendet eine Media-Query alles Bewegte aus (Laubhaufen bleiben liegen)
+// Overlay über dem ganzen Bild; mit reduceMotion blendet eine Media-Query alles Bewegte aus (Laubhaufen bleiben liegen, die übrigen Themes verschwinden ganz)
 function themeSvg(W, H) {
   const t = THEME, d = t.density - 1;
-  let layer = '';
+  // Stimmungs-Themes (Regen, Nacht) zuerst, damit ihre Abdunklung unter dem übrigen Dekor liegt
+  const order = ['rain', 'night', 'snow', 'sakura', 'roses'];
+  const extra = THEMES.filter((th) => t.overlays.includes(th.id)).sort((a, b) => order.indexOf(a.id) - order.indexOf(b.id));
+  let layer = extra.map((th) => `<g class="mo">${th.render(W, H, CARD_TOPS, { ...th.defaults, ...t.options?.[th.id] })}</g>`).join('');
   if (t.overlays.includes('autumn')) layer += autumnLayer(W, H, CARD_TOPS, { fliers: [3, 6, 10, 15, 20][d], piles: t.piles ? 2 : 0, pileLeaves: [4, 6, 8, 11, 14][d], wind: t.wind });
   if (t.overlays.includes('butterflies')) layer += butterfliesLayer(W, H, [2, 3, 5, 7, 9][d]);
   if (!layer) return '';
