@@ -596,11 +596,11 @@ function achIcon(ic, cx, cy, size, opacity = 1) {
   return s + '</g>';
 }
 
-// Rarity: Farbe nach erreichtem Anteil der Stufen (common → legendary)
-const RARITY = ['#9aa4b2', '#34f5a0', '#38bdf8', '#b794ff', '#ffd34e'];
-const rarityColor = (a) => (a.legendary || a.maxed ? RARITY[4] : RARITY[Math.min(3, Math.floor((a.level / Math.max(1, a.tiers?.length || 1)) * 4))]);
+// Farbe eines Achievements: dieselbe Regel wie die Website (achievements-ui.js): voll ausgebaut = Gold, sonst die Farbe aus achievements.json.
+// Das Ring-Design (Theme) ändert nur die Form, nie die Farbe, damit Profil und Website immer übereinstimmen.
+const achColor = (a) => (a.maxed ? '#ffd34e' : a.color || C.blue);
 
-// Fortschrittsring je nach THEME.ring: classic (dicker Bogen), orbit (dünne Bahn mit Planet), rank (ein Segment pro Stufe), rarity (Glühen)
+// Fortschrittsring je nach THEME.ring: classic (dicker Bogen), orbit (dünne Bahn mit Planet), rank (ein Segment pro Stufe), rarity (Glühen, je höher die Stufe desto stärker)
 function achRing(a, cx, cy, r, c) {
   const circ = 2 * Math.PI * r, p = a.maxed ? 1 : a.progress, rot = `transform="rotate(-90 ${cx} ${cy})"`;
   const arc = (len, sw, col, off = 0, cap = 'round') => `<circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="${col}" stroke-width="${sw}" stroke-linecap="${cap}" stroke-dasharray="${len.toFixed(1)} ${circ.toFixed(1)}" stroke-dashoffset="${(-off).toFixed(1)}" ${rot}/>`;
@@ -620,14 +620,16 @@ function achRing(a, cx, cy, r, c) {
     return s;
   }
   if (THEME.ring === 'rarity') {
-    return `<circle cx="${cx}" cy="${cy}" r="${r - 5}" fill="${c}" fill-opacity="0.08"/><circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="${c}" stroke-opacity="0.13" stroke-width="10"/>${track(4)}` +
+    // gleiche Farbe wie überall, nur der Schein wächst mit der Stufe (0 = kaum, maxed/legendär = stark)
+    const g = a.maxed || a.legendary ? 1 : Math.min(1, a.level / Math.max(1, a.tiers?.length || 1));
+    return `<circle cx="${cx}" cy="${cy}" r="${r - 5}" fill="${c}" fill-opacity="${(0.03 + 0.1 * g).toFixed(3)}"/><circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="${c}" stroke-opacity="${(0.05 + 0.2 * g).toFixed(3)}" stroke-width="${(7 + 4 * g).toFixed(1)}"/>${track(4)}` +
       (p > 0 ? arc(circ * p, 4, c) : '');
   }
   return track(5) + (p > 0 ? arc(circ * p, 5, c) : '');
 }
 
 function achTile(a, x, y, w, h) {
-  const c = THEME.ring === 'rarity' ? rarityColor(a) : a.maxed ? '#ffd34e' : a.color || C.blue, r = 17, cx = x + 12 + r, cy = y + h / 2;
+  const c = achColor(a), r = 17, cx = x + 12 + r, cy = y + h / 2;
   const fv = (v) => (a.format === 'hours' ? `${Math.round(v)}h` : short(v));
   const sub0 = a.maxed ? `${fv(a.value)} ${a.unit} · max` : `${fv(a.value)} / ${fv(a.next)} ${a.unit}`;
   const sub = sub0.length > 21 ? sub0.replace(` ${a.unit}`, '') : sub0;
