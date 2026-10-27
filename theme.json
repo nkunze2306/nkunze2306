@@ -1,10 +1,40 @@
 {
   "overlays": [
-    "autumn"
+    "sakura",
+    "rain",
+    "night"
   ],
   "ring": "orbit",
   "density": 5,
   "piles": true,
   "wind": false,
-  "reduceMotion": true
+  "reduceMotion": true,
+  "options": {
+    "sakura": {
+      "color": "#c7a6ff",
+      "branches": 2,
+      "blossoms": 110,
+      "petals": 42,
+      "landing": 6,
+      "sway": true
+    },
+    "rain": {
+      "drops": 140,
+      "angle": -28,
+      "dim": 42,
+      "puddles": true,
+      "splashes": true,
+      "mist": true,
+      "lightning": false,
+      "tint": "#9fc8ff"
+    },
+    "night": {
+      "dark": 60,
+      "fireflies": 2,
+      "stars": 10,
+      "roses": true,
+      "glow": 100,
+      "color": "#7de0d0"
+    }
+  }
 }
