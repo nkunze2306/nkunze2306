@@ -13,7 +13,7 @@
       "drops": 20,
       "angle": 0,
       "dim": 4,
-      "puddles": true,
+      "puddles": false,
       "splashes": true,
       "mist": true,
       "lightning": false,
