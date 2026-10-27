@@ -2,9 +2,9 @@
   "overlays": [
     "autumn"
   ],
-  "ring": "classic",
-  "density": 3,
+  "ring": "rank",
+  "density": 5,
   "piles": true,
-  "wind": true,
+  "wind": false,
   "reduceMotion": true
 }
