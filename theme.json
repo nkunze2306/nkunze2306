@@ -1,7 +1,7 @@
 {
   "overlays": [
-    "snow",
-    "night"
+    "autumn",
+    "rain"
   ],
   "ring": "orbit",
   "density": 5,
@@ -9,21 +9,15 @@
   "wind": false,
   "reduceMotion": true,
   "options": {
-    "snow": {
-      "flakes": 150,
-      "piles": 3,
-      "wind": 15,
-      "icicles": true,
-      "sparkle": true,
-      "tint": "#cfe0ff"
-    },
-    "night": {
-      "dark": 0,
-      "fireflies": 8,
-      "stars": 44,
-      "roses": false,
-      "glow": 0,
-      "color": "#b794ff"
+    "rain": {
+      "drops": 20,
+      "angle": 0,
+      "dim": 4,
+      "puddles": true,
+      "splashes": true,
+      "mist": true,
+      "lightning": false,
+      "tint": "#9fc8ff"
     }
   }
 }
