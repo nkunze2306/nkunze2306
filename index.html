@@ -486,6 +486,17 @@ function loadAchievements() {
   }).catch(() => {});
 }
 
+// Veraltete Seite erkennen: GitHub Pages erlaubt 10 Minuten Browser-Cache für index.html. Weicht der Stand auf dem Server ab, einmal neu laden.
+function checkPageVersion() {
+  fetch(location.pathname, { cache: 'no-store', method: 'HEAD' }).then((r) => {
+    const lm = r.headers.get('last-modified'); if (!lm || !document.lastModified) return;
+    if (new Date(lm).getTime() - new Date(document.lastModified).getTime() > 1000) {
+      let n = 0; try { n = +sessionStorage.getItem('pgReload') || 0; sessionStorage.setItem('pgReload', n + 1); } catch {}
+      if (n < 2) location.reload();
+    }
+  }).catch(() => {});
+}
+
 // Neue Daten erkennen: beim Zurückkehren auf den Tab und alle 10 Minuten nachsehen, bei neuem Stand neu laden
 function watchForUpdates(loaded) {
   const check = () => fetch('stats.json?' + Date.now(), { cache: 'no-store' })
@@ -723,7 +734,7 @@ async function themeConfig() {
 
 fetch('stats.json?' + Date.now(), { cache: 'no-store' })
   .then((r) => { if (!r.ok) throw new Error(r.status); return r.json(); })
-  .then((d) => { render(d); themeConfig(); watchForUpdates(d.updated); })
+  .then((d) => { render(d); themeConfig(); watchForUpdates(d.updated); checkPageVersion(); })
   .catch((e) => { document.getElementById('err').textContent = 'Could not load stats.json (' + e.message + ')'; });
 </script>
 </body>
