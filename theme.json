@@ -1,0 +1,4 @@
+{
+  "theme": "autumn",
+  "autumn": { "fliers": 10, "piles": 2, "pileLeaves": 8, "wind": true }
+}

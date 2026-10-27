@@ -2,6 +2,7 @@
 // Nutzung:  node generate.mjs          (echte Daten, braucht STATS_TOKEN + STATS_LOGIN)
 //           node generate.mjs --demo   (Dummy-Daten zum Design-Check)
 import { writeFileSync, readFileSync, existsSync } from 'node:fs';
+import { autumnLayer } from './autumn.mjs';
 
 const TOKEN = (process.env.STATS_TOKEN || process.env.GITHUB_TOKEN || '').trim() || undefined;
 const LOGIN = process.env.STATS_LOGIN || process.env.GITHUB_REPOSITORY_OWNER;
@@ -463,20 +464,15 @@ const bar = (x, y, w, h, ratio, color) =>
   `<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="${h / 2}" fill="${C.track}"/>` +
   (ratio > 0 ? `<rect x="${x}" y="${y}" width="${Math.max(h, w * Math.min(ratio, 1))}" height="${h}" rx="${h / 2}" fill="${color}"/>` : '');
 
-// Pixel-Art-Hintergrund (assets/background.svg), über die ganze Höhe wiederholt; jede zweite Kachel gespiegelt, damit keine Naht sichtbar ist
-function backgroundSvg(w, h) {
-  const f = process.env.STATS_BG; // nur auf Wunsch, z. B. STATS_BG=assets/background.svg
-  if (!f || !existsSync(f)) return '';
-  const src = readFileSync(f, 'utf8');
-  const vb = (src.match(/viewBox="0 0 (\d+) (\d+)"/) || []).slice(1).map(Number);
-  const inner = src.replace(/^[\s\S]*?<svg[^>]*>/, '').replace(/<\/svg>\s*$/, '').replace(/<title>[\s\S]*?<\/title>/, '');
-  if (vb.length !== 2 || !inner) return '';
-  const th = (w * vb[1]) / vb[0];
-  let uses = '';
-  for (let i = 0, y = 0; y < h; i++, y += th) {
-    uses += i % 2 ? `<use href="#bgtile" transform="translate(0 ${(y + th).toFixed(2)}) scale(1 -1)"/>` : `<use href="#bgtile" transform="translate(0 ${y.toFixed(2)})"/>`;
-  }
-  return `<defs><symbol id="bgtile0" viewBox="0 0 ${vb[0]} ${vb[1]}" width="${w}" height="${th.toFixed(2)}" overflow="hidden"><g shape-rendering="crispEdges">${inner}</g></symbol><g id="bgtile"><use href="#bgtile0" width="${w}" height="${th.toFixed(2)}"/></g></defs>${uses}`;
+// theme.json (von der Website-Konfiguration geschrieben): { "theme": "autumn" | "none", "autumn": { fliers, piles, pileLeaves, wind } }
+function readTheme() {
+  const f = process.env.STATS_THEME || 'theme.json';
+  try { return existsSync(f) ? JSON.parse(readFileSync(f, 'utf8')) : { theme: 'autumn' }; } catch { return { theme: 'autumn' }; }
+}
+
+function themeSvg(W, H) {
+  const t = readTheme();
+  return t.theme === 'autumn' ? autumnLayer(W, H, CARD_TOPS, t.autumn || {}) : '';
 }
 
 // Begrüßung (Überschrift + Text) liegt im Bild, damit der Hintergrund bis ganz nach oben reicht. **fett** markiert Hervorhebungen.
@@ -944,9 +940,9 @@ function render(d) {
   const H = y + 14;
 
   return `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" font-family="'Segoe UI', -apple-system, 'Helvetica Neue', Arial, sans-serif">
-${backgroundSvg(W, H)}
 ${parts.join('\n')}
 ${butterfliesLayer(W, H)}
+${themeSvg(W, H)}
 </svg>
 `;
 }

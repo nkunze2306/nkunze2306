@@ -6,7 +6,7 @@ on:
   workflow_dispatch: # manuell per Button
   push:
     branches: [main]
-    paths: [generate.mjs, index.html, .github/workflows/update-stats.yml]
+    paths: [generate.mjs, autumn.mjs, theme.json, index.html, .github/workflows/update-stats.yml]
 
 permissions:
   contents: write

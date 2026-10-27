@@ -124,6 +124,19 @@
     .pills { margin-left: 0; } .repo { grid-template-columns: 100px 1fr 40px; }
   }
   @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+
+  /* Theme-Konfiguration */
+  .cfg { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px 22px; align-items: end; }
+  .cfg label { display: block; font-size: 11.5px; color: var(--mute); }
+  .cfg label b { color: #fff; float: right; }
+  .cfg input[type=range] { width: 100%; accent-color: var(--c); margin: 8px 0 0; }
+  .cfg input[type=text], .cfg input[type=password] { width: 100%; margin-top: 6px; background: #0c0c0c; border: 1px solid #2c2c2c; border-radius: 10px; color: #ddd; padding: 8px 10px; font: inherit; font-size: 12px; }
+  .seg2 { display: inline-flex; border: 1px solid #2c2c2c; border-radius: 999px; overflow: hidden; margin-top: 6px; }
+  .seg2 button { background: #151515; color: #bbb; border: 0; padding: 7px 16px; font: inherit; font-size: 12.5px; cursor: pointer; }
+  .seg2 button.on { background: var(--c); color: #1a0e02; font-weight: 700; }
+  .cfgbar { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; margin-top: 16px; }
+  .cfgbar .msg { font-size: 12px; color: var(--mute); }
+  button.btn { cursor: pointer; font: inherit; font-size: 12.5px; }
 </style>
 </head>
 <body>
@@ -420,9 +433,64 @@ function watchForUpdates(loaded) {
   document.addEventListener('visibilitychange', () => { if (!document.hidden) check(); });
 }
 
+// Theme & look: schreibt theme.json ins Repo (Token mit Contents-Schreibrecht, nur im Browser gespeichert); der Push startet den Workflow
+function themeConfig() {
+  const grid = document.querySelector('.grid'); if (!grid) return;
+  const host = location.hostname, owner0 = host.endsWith('.github.io') ? host.split('.')[0] : '';
+  const path0 = location.pathname.split('/')[1];
+  const ls = (k, v) => { try { return v === undefined ? localStorage.getItem(k) : localStorage.setItem(k, v); } catch { return null; } };
+  let cfg = { theme: 'autumn', autumn: { fliers: 10, piles: 2, pileLeaves: 8, wind: true } };
+  const sec = document.createElement('section');
+  sec.className = 'card c12'; sec.style.setProperty('--c', '#f29a1f');
+  const sl = (id, label, min, max) => `<label>${label}<b id="${id}V"></b><input type="range" id="${id}" min="${min}" max="${max}"></label>`;
+  sec.innerHTML = `<div class="t"><span class="dot"></span>Theme &amp; look<span class="r">applied to stats.svg on the next run</span></div>
+    <div class="cfg">
+      <div><label>Theme</label><div class="seg2" id="thSeg"><button data-v="none">None</button><button data-v="autumn">Autumn leaves</button></div></div>
+      ${sl('cF', 'Flying leaves', 0, 20)}${sl('cP', 'Piles per card', 0, 2)}${sl('cL', 'Leaves per pile', 4, 14)}
+      <div><label>Wind gust at the end of each loop</label><div class="seg2" id="wSeg"><button data-v="1">On</button><button data-v="0">Off</button></div></div>
+    </div>
+    <div class="cfg" style="margin-top:14px">
+      <label>Repository (owner/name)<input type="text" id="cRepo" value="${esc(ls('cfgRepo') || (owner0 ? owner0 + '/' + (path0 || host.split('.')[0] + '.github.io') : ''))}"></label>
+      <label>GitHub token (fine-grained, Contents: read &amp; write)<input type="password" id="cTok" value="${esc(ls('cfgTok') || '')}" placeholder="stored only in this browser"></label>
+    </div>
+    <div class="cfgbar"><button class="btn primary" id="cSave">Save &amp; rebuild</button><button class="btn" id="cCopy">Copy JSON</button><span class="msg" id="cMsg"></span></div>`;
+  grid.appendChild(sec);
+  const $ = (id) => sec.querySelector('#' + id), a = () => cfg.autumn;
+  const paint = () => {
+    sec.querySelectorAll('#thSeg button').forEach((b) => b.classList.toggle('on', b.dataset.v === cfg.theme));
+    sec.querySelectorAll('#wSeg button').forEach((b) => b.classList.toggle('on', (b.dataset.v === '1') === !!a().wind));
+    [['cF', 'fliers'], ['cP', 'piles'], ['cL', 'pileLeaves']].forEach(([id, k]) => { $(id).value = a()[k]; $(id + 'V').textContent = a()[k]; $(id).disabled = cfg.theme !== 'autumn'; });
+  };
+  const json = () => JSON.stringify(cfg, null, 2) + '\n';
+  sec.addEventListener('click', (e) => {
+    const b = e.target.closest('.seg2 button'); if (!b) return;
+    if (b.parentNode.id === 'thSeg') cfg.theme = b.dataset.v; else a().wind = b.dataset.v === '1';
+    paint();
+  });
+  sec.addEventListener('input', (e) => { const k = { cF: 'fliers', cP: 'piles', cL: 'pileLeaves' }[e.target.id]; if (k) { a()[k] = +e.target.value; paint(); } });
+  const msg = (t, bad) => { const m = $('cMsg'); m.textContent = t; m.style.color = bad ? 'var(--pink)' : 'var(--mute)'; };
+  $('cCopy').onclick = () => navigator.clipboard.writeText(json()).then(() => msg('Copied. Paste it into theme.json and commit.'), () => msg('Copy failed', 1));
+  $('cSave').onclick = async () => {
+    const repo = $('cRepo').value.trim(), tok = $('cTok').value.trim();
+    if (!/^[\w.-]+\/[\w.-]+$/.test(repo) || !tok) return msg('Enter repository and token first (or use Copy JSON).', 1);
+    ls('cfgRepo', repo); ls('cfgTok', tok);
+    const url = `https://api.github.com/repos/${repo}/contents/theme.json`, h = { Authorization: `Bearer ${tok}`, Accept: 'application/vnd.github+json' };
+    msg('Saving…');
+    try {
+      const cur = await fetch(url, { headers: h }); const sha = cur.ok ? (await cur.json()).sha : undefined;
+      const r = await fetch(url, { method: 'PUT', headers: h, body: JSON.stringify({ message: 'chore: update theme', content: btoa(json()), sha }) });
+      if (!r.ok) throw new Error((await r.json()).message || r.status);
+      msg('Saved. The workflow rebuilds stats.svg in about a minute.');
+    } catch (err) { msg('Failed: ' + err.message, 1); }
+  };
+  fetch('theme.json?' + Date.now(), { cache: 'no-store' }).then((r) => (r.ok ? r.json() : null)).then((j) => {
+    if (j) cfg = { theme: j.theme || 'autumn', autumn: { ...cfg.autumn, ...(j.autumn || {}) } };
+  }).catch(() => {}).finally(paint);
+}
+
 fetch('stats.json?' + Date.now(), { cache: 'no-store' })
   .then((r) => { if (!r.ok) throw new Error(r.status); return r.json(); })
-  .then((d) => { render(d); watchForUpdates(d.updated); })
+  .then((d) => { render(d); themeConfig(); watchForUpdates(d.updated); })
   .catch((e) => { document.getElementById('err').textContent = 'Could not load stats.json (' + e.message + ')'; });
 </script>
 </body>
