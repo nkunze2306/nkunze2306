@@ -1,5 +1,5 @@
 {
- "updated": "2026-10-28T09:18:10.691Z",
+ "updated": "2026-10-28T10:16:40.741Z",
  "login": "nkunze2306",
  "unlocked": 50,
  "total": 134,
@@ -16,33 +16,33 @@
  "metrics": {
   "followers": 2,
   "issuesClosed": 13,
-  "prsMerged": 77,
+  "prsMerged": 78,
   "ownRepos": 3,
   "stars": 1,
   "forks": 0,
   "maxRepoStars": 1,
   "foreignRepos": 10,
-  "commits": 476,
+  "commits": 478,
   "nightCommits": 16,
   "earlyCommits": 0,
   "weekendCommits": 68,
   "aiCommits": 98,
-  "linesAdded": 143368,
-  "linesDeleted": 26561,
-  "handLines": 123679,
+  "linesAdded": 143369,
+  "linesDeleted": 26562,
+  "handLines": 123680,
   "unicornCommits": 0,
   "christmasCommits": 0,
   "newYearCommits": 0,
-  "languages": 15,
-  "topLanguageLines": 72435,
+  "languages": 16,
+  "topLanguageLines": 61443,
   "maxCommitsPerDay": 45,
   "activeDays": 142,
   "longestStreak": 10,
   "reviews": 49,
   "foreignMergedPRs": 65,
-  "monsterPRs": 10,
+  "monsterPRs": 11,
   "cleanSweeps": 7,
-  "quickdraws": 65,
+  "quickdraws": 66,
   "wakaHours": 129.57,
   "marathonHours": 2.9491666666666667,
   "consistentDays": 6
@@ -79,7 +79,7 @@
    "unit": "commits",
    "format": null,
    "description": "Total commits you authored",
-   "value": 476,
+   "value": 478,
    "tiers": [
     10,
     100,
@@ -91,7 +91,7 @@
    "level": 2,
    "next": 500,
    "maxed": false,
-   "progress": 0.952
+   "progress": 0.956
   },
   {
    "id": "streak-keeper",
@@ -380,7 +380,7 @@
    "unit": "merged PRs",
    "format": null,
    "description": "Merged pull requests",
-   "value": 77,
+   "value": 78,
    "tiers": [
     1,
     10,
@@ -391,7 +391,7 @@
    "level": 3,
    "next": 200,
    "maxed": false,
-   "progress": 0.385
+   "progress": 0.39
   },
   {
    "id": "reviewer",
@@ -598,7 +598,7 @@
    "unit": "quick closes",
    "format": null,
    "description": "Issues or PRs you closed within 5 minutes",
-   "value": 65,
+   "value": 66,
    "tiers": [
     1,
     10,
@@ -765,7 +765,7 @@
    "unit": "lines",
    "format": null,
    "description": "Lines of code you added",
-   "value": 143368,
+   "value": 143369,
    "tiers": [
     1000,
     10000,
@@ -779,7 +779,7 @@
    "level": 4,
    "next": 500000,
    "maxed": false,
-   "progress": 0.286736
+   "progress": 0.286738
   },
   {
    "id": "refactorer",
@@ -811,7 +811,7 @@
    "unit": "lines",
    "format": null,
    "description": "Lines of code you deleted",
-   "value": 26561,
+   "value": 26562,
    "tiers": [
     1000,
     5000,
@@ -824,7 +824,7 @@
    "level": 3,
    "next": 50000,
    "maxed": false,
-   "progress": 0.53122
+   "progress": 0.53124
   },
   {
    "id": "polyglot",
@@ -856,7 +856,7 @@
    "unit": "languages",
    "format": null,
    "description": "Different languages across your repos",
-   "value": 15,
+   "value": 16,
    "tiers": [
     3,
     5,
@@ -868,7 +868,7 @@
    "level": 4,
    "next": 20,
    "maxed": false,
-   "progress": 0.75
+   "progress": 0.8
   },
   {
    "id": "deep-diver",
@@ -901,7 +901,7 @@
    "unit": "lines",
    "format": null,
    "description": "Estimated lines in your biggest language",
-   "value": 72435,
+   "value": 61443,
    "tiers": [
     10000,
     50000,
@@ -911,7 +911,7 @@
    "level": 2,
    "next": 100000,
    "maxed": false,
-   "progress": 0.72435
+   "progress": 0.61443
   },
   {
    "id": "repo-builder",
@@ -990,7 +990,7 @@
    "unit": "lines",
    "format": null,
    "description": "Lines you wrote yourself, without AI co-author",
-   "value": 123679,
+   "value": 123680,
    "tiers": [
     10000,
     50000,
@@ -1002,7 +1002,7 @@
    "level": 3,
    "next": 250000,
    "maxed": false,
-   "progress": 0.494716
+   "progress": 0.49472
   },
   {
    "id": "pair-programmer",
@@ -1337,7 +1337,7 @@
    "unit": "huge PRs",
    "format": null,
    "description": "A merged PR with more than 5,000 changed lines",
-   "value": 10,
+   "value": 11,
    "tiers": [
     1
    ],
@@ -1494,14 +1494,14 @@
    "unit": "languages",
    "format": null,
    "description": "Code in 50 different languages",
-   "value": 15,
+   "value": 16,
    "tiers": [
     50
    ],
    "level": 0,
    "next": 50,
    "maxed": false,
-   "progress": 0.3
+   "progress": 0.32
   },
   {
    "id": "grandmaster",
