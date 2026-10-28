@@ -1,6 +1,6 @@
 {
   "title": "Master Road",
-  "gate": 100,
+  "gate": 50,
   "stations": [
     {
       "id": "bottleneck-buster",
