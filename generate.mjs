@@ -636,6 +636,58 @@ function achRing(a, cx, cy, r, c) {
   return track(5) + (p > 0 ? arc(circ * p, 5, c) : '');
 }
 
+// ---------------------------------------------------------------- Stufen-Look der Achievement-Kacheln
+// Der Rahmen zeigt, wie weit ein Achievement ist (Level im Verhältnis zu allen Stufen); Höchststufe und Legendary sind golden.
+// Gleiche Regeln stehen in achievements-ui.js (Website). Später lässt sich tierOf() durch echte Seltenheits-Prozente ersetzen.
+const TIERS = {
+  locked: { id: 'locked', name: 'Locked', c: '#555555' },
+  common: { id: 'common', name: 'Common', c: '#8b949e' },
+  uncommon: { id: 'uncommon', name: 'Uncommon', c: '#3fb950' },
+  rare: { id: 'rare', name: 'Rare', c: '#58a6ff' },
+  epic: { id: 'epic', name: 'Epic', c: '#a371f7' },
+  legendary: { id: 'legendary', name: 'Legendary', c: '#ffb800' },
+};
+function tierOf(a) {
+  if (a.legendary || a.maxed) return TIERS.legendary;
+  if (a.level === 0) return TIERS.locked;
+  const f = a.level / a.tiers.length;
+  return f < 0.25 ? TIERS.common : f < 0.5 ? TIERS.uncommon : f < 0.75 ? TIERS.rare : TIERS.epic;
+}
+function mixHex(a, b, t) {
+  const p = (h) => [1, 3, 5].map((i) => parseInt(h.slice(i, i + 2), 16));
+  const [x, y] = [p(a), p(b)];
+  return '#' + x.map((v, i) => Math.round(v + (y[i] - v) * t).toString(16).padStart(2, '0')).join('');
+}
+// Pixel-Ecke (Winkel aus zwei Balken) und Pixel-Edelstein
+const pxCorner = (x, y, dx, dy, n, t) => `M${x} ${y}h${dx * n}v${dy * t}h${-dx * n}zM${x} ${y}v${dy * n}h${dx * t}v${-dy * n}z`;
+const pxGem = (cx, cy, s) => [[0, -2, 1], [-1, -1, 3], [-2, 0, 5], [-1, 1, 3], [0, 2, 1]].map(([dx, dy, n]) => `M${(cx + dx * s).toFixed(1)} ${(cy + dy * s - s / 2).toFixed(1)}h${n * s}v${s}h${-n * s}z`).join('');
+function tierFrame(a, x, y, w, h) {
+  const t = tierOf(a), c = t.c, id = `tf${Math.round(x)}_${Math.round(y)}`, inactive = a.legendary && !a.maxed;
+  const bg = t.id === 'locked' ? '#141414' : t.id === 'common' ? '#161616' : mixHex('#161616', c, t.id === 'legendary' ? 0.1 : 0.07);
+  let o = '';
+  if (t.id === 'locked') return `<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="13" fill="${bg}" stroke="#2a2a2a" stroke-dasharray="4 4"/>`;
+  if (t.id === 'legendary' || t.id === 'epic') o += `<defs><linearGradient id="${id}" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="${c}" stop-opacity="${t.id === 'legendary' ? 0.26 : 0.2}"/><stop offset="1" stop-color="${c}" stop-opacity="0.02"/></linearGradient><clipPath id="${id}c"><rect x="${x}" y="${y}" width="${w}" height="${h}" rx="13"/></clipPath></defs>`;
+  if (t.id === 'rare' || t.id === 'epic' || t.id === 'legendary') o += `<rect x="${x - 1.5}" y="${y - 1.5}" width="${w + 3}" height="${h + 3}" rx="14.5" fill="none" stroke="${c}" stroke-opacity="${t.id === 'legendary' ? 0.35 : 0.22}" stroke-width="3"/>`;
+  o += `<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="13" fill="${bg}" stroke="${c}" stroke-opacity="${t.id === 'common' ? 0.55 : 1}" stroke-width="${t.id === 'legendary' ? 2 : t.id === 'epic' ? 1.7 : 1.3}"/>`;
+  if (t.id === 'epic' || t.id === 'legendary') o += `<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="13" fill="url(#${id})"/>`;
+  if (t.id !== 'common' && t.id !== 'uncommon') o += `<rect x="${x + 4}" y="${y + 4}" width="${w - 8}" height="${h - 8}" rx="9.5" fill="none" stroke="${c}" stroke-opacity="0.38"/>`;
+  const cr = (n, th, off) => pxCorner(x + off, y + off, 1, 1, n, th) + pxCorner(x + w - off, y + off, -1, 1, n, th) + pxCorner(x + off, y + h - off, 1, -1, n, th) + pxCorner(x + w - off, y + h - off, -1, -1, n, th);
+  if (t.id === 'uncommon') o += `<path d="${cr(5, 1.4, 6)}" fill="${c}" fill-opacity="0.85"/>`;
+  if (t.id === 'epic') o += `<path d="${cr(7, 2, 8)}" fill="${c}"/><path d="${pxGem(x + w / 2, y, 1.5)}" fill="${c}" shape-rendering="crispEdges"/>`;
+  if (t.id === 'legendary') {
+    const gold = '#ffe27a';
+    o += `<path d="${cr(8, 2, 8)}" fill="${gold}"/><path d="${pxGem(x + w / 2, y, 2)}" fill="#ffd24d" shape-rendering="crispEdges"/>`;
+    if (!inactive) {
+      o += `<g clip-path="url(#${id}c)"><rect x="${x - 30}" y="${y - 4}" width="16" height="${h + 8}" fill="#fff" opacity="0.18" transform="skewX(-20)"><animate attributeName="x" values="${x - 30};${x + w + 20};${x + w + 20}" keyTimes="0;0.55;1" dur="5s" repeatCount="indefinite"/></rect></g>`;
+      [[0.2, 0.28], [0.62, 0.8], [0.88, 0.3]].forEach(([fx, fy], i) => {
+        const sx = (x + w * fx).toFixed(1), sy = (y + h * fy).toFixed(1);
+        o += `<g transform="translate(${sx} ${sy})" fill="#fff" shape-rendering="crispEdges"><rect x="-0.5" y="-2.5" width="1" height="5"/><rect x="-2.5" y="-0.5" width="5" height="1"/><animate attributeName="opacity" values="0;1;0;0" keyTimes="0;0.15;0.3;1" dur="${(3.2 + i * 0.7).toFixed(1)}s" begin="${(i * 0.9).toFixed(1)}s" repeatCount="indefinite"/></g>`;
+      });
+    } else o = `<g opacity="0.55">${o}</g>`;
+  }
+  return o;
+}
+
 function achTile(a, x, y, w, h) {
   const c = achColor(a), r = 17, cx = x + 12 + r, cy = y + h / 2;
   const fv = (v) => (a.format === 'hours' ? `${Math.round(v)}h` : short(v));
@@ -643,7 +695,7 @@ function achTile(a, x, y, w, h) {
   const sub = sub0.length > 21 ? sub0.replace(` ${a.unit}`, '') : sub0;
   const badge = a.legendary ? (a.maxed ? 'UNLOCKED' : 'LEGENDARY') : `${a.level} / ${a.tiers.length}`;
   const bw = badge.length * 6.2 + 14, ox = cx + r + 10, ow = x + w - 14 - ox, lock = a.level === 0 && !a.legendary;
-  return `<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="13" fill="#161616" stroke="${a.legendary || a.maxed ? c + '55' : '#262626'}"/>
+  return `${tierFrame(a, x, y, w, h)}
 ${achRing(a, cx, cy, r, c)}
 ${a.icon ? achIcon(a.icon, cx, cy, r * 0.945, lock ? 0.45 : 1) + `<circle cx="${(cx + r * 0.74).toFixed(1)}" cy="${(cy + r * 0.74).toFixed(1)}" r="6.5" fill="#0b0b0b" stroke="${c}" stroke-width="1.3"/>` + text(cx + r * 0.74, cy + r * 0.74 + 3.4, a.legendary ? (a.maxed ? '★' : '☆') : String(a.level), { size: 9, fill: lock ? '#777' : C.text, weight: 700, anchor: 'middle' }) : text(cx, cy + 6, a.legendary ? (a.maxed ? '★' : '☆') : String(a.level), { size: 18, fill: lock ? '#555' : C.text, weight: 700, anchor: 'middle' })}
 ${text(ox, y + 22, (a.legendary ? '★ ' : '') + a.name, { size: 12.5, fill: lock ? '#9a9a9a' : C.text, weight: 700 })}
