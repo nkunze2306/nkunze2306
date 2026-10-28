@@ -473,12 +473,15 @@ document.addEventListener('mousemove', (e) => {
 function loadAchievements() {
   const box = document.getElementById('achCard');
   fetch('achievements.json?' + Date.now(), { cache: 'no-store' }).then((r) => { if (!r.ok) throw 0; return r.json(); }).then((j) => {
+    const get = (f) => fetch(f + '?' + Date.now(), { cache: 'no-store' }).then((r) => (r.ok ? r.json() : null)).catch(() => null);
+    return Promise.all([get('road.json'), get('road-state.json')]).then(([road, roadState]) => ({ j, road, roadState }));
+  }).then(({ j, road, roadState }) => {
     const sc = document.createElement('script');
     sc.src = 'achievements-ui.js?' + encodeURIComponent(j.updated);
     sc.onload = () => {
-      // startet immer mit Highlights; ein Link mit #achievements scrollt nur zur Kachel
-      const want = /achievements/.test(location.hash);
-      AchUI.mount(box, j, { view: 'highlights' });
+      // startet mit Highlights; #achievements=tree bzw. #achievements=road öffnet direkt die jeweilige Ansicht
+      const m = location.hash.match(/achievements(?:=(\w+))?/), want = !!m;
+      AchUI.mount(box, j, { road, roadState, view: m && ['tree', 'road'].includes(m[1]) ? m[1] : 'highlights' });
       box.style.display = '';
       if (want) setTimeout(() => box.scrollIntoView({ behavior: 'smooth', block: 'start' }), 300);
     };
