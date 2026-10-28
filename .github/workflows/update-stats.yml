@@ -30,7 +30,7 @@ jobs:
         with:
           node-version: 20
       - name: Achievements
-        uses: nkunze2306/github-achievements-by-niounze@v2
+        uses: nkunze2306/github-achievements-by-niounze@v3
         with:
           token: ${{ secrets.STATS_TOKEN || secrets.GITHUB_TOKEN }}
           wakatime-key: ${{ secrets.WAKATIME_API_KEY }}
