@@ -27,7 +27,7 @@ jobs:
           # always the newest state, not the triggering commit (runs wait in the queue, main has moved on by then)
           ref: main
       - name: Stats, achievements, dashboard and Master Road
-        uses: nkunze2306/github-achievements-by-niounze@v9
+        uses: nkunze2306/github-achievements-by-niounze@stable
         with:
           token: ${{ secrets.STATS_TOKEN || secrets.GITHUB_TOKEN }}
           components: stats,achievements,dashboard,road
