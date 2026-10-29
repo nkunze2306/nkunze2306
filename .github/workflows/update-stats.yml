@@ -2,16 +2,16 @@ name: Update stats
 
 on:
   schedule:
-    - cron: '0 * * * *' # stündlich
-  workflow_dispatch: # manuell per Button
+    - cron: '0 * * * *' # hourly
+  workflow_dispatch: # manual button
   push:
     branches: [main]
-    paths: [generate.mjs, gitlab.mjs, autumn.mjs, theme.mjs, themes/**, theme.json, index.html, assets/**, .github/workflows/update-stats.yml]
+    paths: [theme.json, intro.json, road.json, road-state.json, .github/workflows/update-stats.yml]
 
 permissions:
   contents: write
 
-# nie zwei Läufe gleichzeitig (Push vom Skript, Zeitplan, manueller Start)
+# never two runs at once (push from the script, schedule, manual start)
 concurrency:
   group: update-stats
   cancel-in-progress: false
@@ -22,46 +22,31 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          # Push mit dem PAT, damit GitHub Pages danach automatisch neu baut
+          # push with the PAT so GitHub Pages rebuilds afterwards
           token: ${{ secrets.STATS_TOKEN || secrets.GITHUB_TOKEN }}
-          # immer den neuesten Stand, nicht den auslösenden Commit (Läufe warten in der Warteschlange, main ist dann schon weiter)
+          # always the newest state, not the triggering commit (runs wait in the queue, main has moved on by then)
           ref: main
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 20
-      - name: Achievements
-        uses: nkunze2306/github-achievements-by-niounze@v6
+      - name: Stats, achievements, dashboard and Master Road
+        uses: nkunze2306/github-achievements-by-niounze@v7
         with:
           token: ${{ secrets.STATS_TOKEN || secrets.GITHUB_TOKEN }}
+          components: stats,achievements,dashboard,road
           wakatime-key: ${{ secrets.WAKATIME_API_KEY }}
+          # HSMW GitLab (the token is stored in GITLAB_COM_TOKEN); only commits with these author e-mails count
           gitlab-sources: '[{"host":"https://git.hs-mittweida.de","token":"${{ secrets.GITLAB_COM_TOKEN }}"}]'
           gitlab-author-emails: 'nkunze923@gmail.com,nkunze1@hs-mittweida.de'
-      - name: Generate stats.svg
-        env:
-          # PAT mit Repo-Lesezugriff (inkl. privater Repos); Fallback: Standard-Token (nur oeffentlich)
-          STATS_TOKEN: ${{ secrets.STATS_TOKEN || secrets.GITHUB_TOKEN }}
-          STATS_LOGIN: ${{ github.repository_owner }}
-          WAKATIME_API_KEY: ${{ secrets.WAKATIME_API_KEY }}
-          GITLAB_SOURCES: '[{"host":"https://git.hs-mittweida.de","token":"${{ secrets.GITLAB_COM_TOKEN }}"}]'
-          GITLAB_AUTHOR_EMAILS: 'nkunze923@gmail.com,nkunze1@hs-mittweida.de'
-        run: node generate.mjs
-      - name: Commit if changed
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add stats.svg stats.json achievements.svg achievements-closest.svg achievements-all.svg achievements.json achievements.html achievements-ui.js
-          for f in wakatime.json .achievements-state.json; do if [ -f $f ]; then git add $f; fi; done
-          # bei Konflikten in den generierten Dateien gewinnt die gerade erzeugte Fassung (-X theirs = eigener Commit beim Rebase)
-          git diff --cached --quiet || (git commit -m "chore: update stats" && git pull --rebase -X theirs && git push)
+          dashboard-auth-client-id: Ov23linavHFDgDCCIX6E
+          dashboard-auth-worker: https://stats-login.nkunze923.workers.dev
+          commit: 'true'
       - name: Pin README images to the commit that last changed them
-        # GitHub cached README-Bilder (raw-CDN und Bild-Proxy) und ignoriert dabei ?v=. Eine URL mit Commit-SHA ist unveränderlich,
-        # zeigt also immer genau den richtigen Stand. Läuft bei jedem Lauf, damit auch Bilder aus anderen Commits ankommen.
+        # GitHub caches README images (raw CDN and image proxy) and ignores ?v=. A URL with the commit SHA never changes,
+        # so it always shows exactly the right state. Runs on every run so images from other commits arrive too.
         run: |
           git pull --rebase
           for f in stats.svg achievements.svg; do
             [ -f "$f" ] || continue
             url="https://raw.githubusercontent.com/${GITHUB_REPOSITORY}/$(git log -1 --format=%H -- "$f")/${f}"
-            sed -i -E "s#(https://raw\.githubusercontent\.com/[^\"' )]*/)?${f//./\\.}(\?v=[0-9a-f]+)?#${url}#g" README.md
+            sed -i -E "s#(https://raw\.githubusercontent\.com/[^\"' )]*/)?${f//./\.}(\?v=[0-9a-f]+)?#${url}#g" README.md
           done
           git add README.md
           git diff --cached --quiet || (git commit -m "chore: pin README images" && git push)

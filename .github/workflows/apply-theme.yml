@@ -1,8 +1,8 @@
 name: Apply theme
 
-# "Save & rebuild" auf der Website öffnet ein vorausgefülltes Issue mit dem Titel "theme: …".
-# Nur Issues vom Repo-Owner werden übernommen: theme.json committen, stats.svg neu bauen, Issue schließen.
-# Issues von allen anderen werden ohne Änderung geschlossen. So ist auf der Website kein Token nötig.
+# "Save & rebuild" on the website opens a prefilled issue titled "theme: ...".
+# Only issues of the repo owner are applied: commit theme.json, rebuild the stats, close the issue.
+# Issues of everybody else are closed without changes. This way the website needs no token.
 on:
   issues:
     types: [opened]
@@ -32,22 +32,19 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 20
       - name: Write theme.json
         id: write
-        env:
-          ISSUE_BODY: ${{ github.event.issue.body }}
-        run: echo "theme=$(node apply-theme.mjs)" >> "$GITHUB_OUTPUT"
+        uses: nkunze2306/github-achievements-by-niounze/apply-theme@v7
+        with:
+          issue-body: ${{ github.event.issue.body }}
       - name: Commit if changed
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add theme.json
           git diff --cached --quiet || (git commit -m "chore: update theme" && git pull --rebase && git push)
-      # Pushes mit dem Standard-Token starten keine Workflows, ein workflow_dispatch schon
-      - name: Rebuild stats.svg
+      # Pushes with the default token do not start workflows, a workflow_dispatch does
+      - name: Rebuild stats
         env:
           GH_TOKEN: ${{ github.token }}
         run: gh workflow run update-stats.yml -R "$GITHUB_REPOSITORY" --ref main
