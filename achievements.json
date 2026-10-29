@@ -1,7 +1,7 @@
 {
- "updated": "2026-10-29T15:16:20.861Z",
+ "updated": "2026-10-29T16:16:52.213Z",
  "login": "nkunze2306",
- "unlocked": 52,
+ "unlocked": 49,
  "total": 134,
  "achievementsUnlocked": 23,
  "achievementsTotal": 35,
@@ -22,19 +22,19 @@
   "forks": 0,
   "maxRepoStars": 2,
   "foreignRepos": 10,
-  "commits": 511,
+  "commits": 513,
   "nightCommits": 20,
   "earlyCommits": 0,
   "weekendCommits": 68,
-  "aiCommits": 124,
-  "linesAdded": 164905,
-  "linesDeleted": 31169,
-  "handLines": 128494,
+  "aiCommits": 126,
+  "linesAdded": 90106,
+  "linesDeleted": 25613,
+  "handLines": 66237,
   "unicornCommits": 0,
   "christmasCommits": 0,
   "newYearCommits": 0,
   "languages": 16,
-  "topLanguageLines": 67944,
+  "topLanguageLines": 36931,
   "maxCommitsPerDay": 45,
   "activeDays": 143,
   "longestStreak": 11,
@@ -43,7 +43,7 @@
   "monsterPRs": 11,
   "cleanSweeps": 7,
   "quickdraws": 66,
-  "wakaHours": 135.45777777777778,
+  "wakaHours": 136.1925,
   "marathonHours": 2.9491666666666667,
   "consistentDays": 8
  },
@@ -79,7 +79,7 @@
    "unit": "commits",
    "format": null,
    "description": "Total commits you authored",
-   "value": 511,
+   "value": 513,
    "tiers": [
     10,
     100,
@@ -91,7 +91,7 @@
    "level": 3,
    "next": 1000,
    "maxed": false,
-   "progress": 0.511
+   "progress": 0.513
   },
   {
    "id": "streak-keeper",
@@ -765,7 +765,7 @@
    "unit": "lines",
    "format": null,
    "description": "Lines of code you added",
-   "value": 164905,
+   "value": 90106,
    "tiers": [
     1000,
     10000,
@@ -776,10 +776,10 @@
     5000000,
     10000000
    ],
-   "level": 4,
-   "next": 500000,
+   "level": 3,
+   "next": 100000,
    "maxed": false,
-   "progress": 0.32981
+   "progress": 0.90106
   },
   {
    "id": "refactorer",
@@ -811,7 +811,7 @@
    "unit": "lines",
    "format": null,
    "description": "Lines of code you deleted",
-   "value": 31169,
+   "value": 25613,
    "tiers": [
     1000,
     5000,
@@ -824,7 +824,7 @@
    "level": 3,
    "next": 50000,
    "maxed": false,
-   "progress": 0.62338
+   "progress": 0.51226
   },
   {
    "id": "polyglot",
@@ -901,17 +901,17 @@
    "unit": "lines",
    "format": null,
    "description": "Estimated lines in your biggest language",
-   "value": 67944,
+   "value": 36931,
    "tiers": [
     10000,
     50000,
     100000,
     250000
    ],
-   "level": 2,
-   "next": 100000,
+   "level": 1,
+   "next": 50000,
    "maxed": false,
-   "progress": 0.67944
+   "progress": 0.73862
   },
   {
    "id": "repo-builder",
@@ -990,7 +990,7 @@
    "unit": "lines",
    "format": null,
    "description": "Lines you wrote yourself, without AI co-author",
-   "value": 128494,
+   "value": 66237,
    "tiers": [
     10000,
     50000,
@@ -999,10 +999,10 @@
     500000,
     1000000
    ],
-   "level": 3,
-   "next": 250000,
+   "level": 2,
+   "next": 100000,
    "maxed": false,
-   "progress": 0.513976
+   "progress": 0.66237
   },
   {
    "id": "pair-programmer",
@@ -1036,7 +1036,7 @@
    "unit": "AI commits",
    "format": null,
    "description": "Commits with an AI co-author",
-   "value": 124,
+   "value": 126,
    "tiers": [
     10,
     50,
@@ -1046,7 +1046,7 @@
    "level": 2,
    "next": 250,
    "maxed": false,
-   "progress": 0.496
+   "progress": 0.504
   },
   {
    "id": "coding-time",
@@ -1079,7 +1079,7 @@
    "unit": "tracked",
    "format": "hours",
    "description": "Coding time tracked by WakaTime",
-   "value": 135.45777777777778,
+   "value": 136.1925,
    "tiers": [
     10,
     50,
@@ -1092,7 +1092,7 @@
    "level": 3,
    "next": 500,
    "maxed": false,
-   "progress": 0.2709155555555556
+   "progress": 0.272385
   },
   {
    "id": "marathon",
