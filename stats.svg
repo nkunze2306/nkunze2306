@@ -684,12 +684,12 @@
 <text x="407.88" y="1891" text-anchor="start"><tspan font-size="32" font-weight="700" fill="#ffffff">11</tspan><tspan font-size="12" font-weight="400" fill="#9a9a9a" dx="6"> own</tspan><tspan font-size="32" font-weight="700" fill="#ffffff" dx="26">10</tspan><tspan font-size="12" font-weight="400" fill="#9a9a9a" dx="6"> contributed to</tspan></text>
 <rect x="1" y="1939" width="353" height="190" rx="16" fill="#121212" stroke="#262626"/>
 <text x="23" y="1969" font-size="11" fill="#fbbf24" font-weight="700" text-anchor="start" letter-spacing="1.1">LANGUAGES · BY CODE</text><text x="332" y="1969" font-size="12" fill="#9a9a9a" font-weight="400" text-anchor="end">Top: Dart</text>
-<rect x="23" y="1991" width="124.3859452591874" height="11" rx="5.5" fill="#00B4AB"/>
-<rect x="151.3859452591874" y="1991" width="78.2416757435623" height="11" rx="5.5" fill="#7355dd"/>
-<rect x="233.6276210027497" y="1991" width="35.614915969548356" height="11" rx="5.5" fill="#8b949e"/>
-<rect x="273.24253697229807" y="1991" width="21.31785921987592" height="11" rx="5.5" fill="#e34c26"/>
-<rect x="298.560396192174" y="1991" width="21.044944504208317" height="11" rx="5.5" fill="#f1e05a"/>
-<rect x="323.6053406963823" y="1991" width="8.394659303617722" height="11" rx="5.5" fill="#aace60"/>
+<rect x="23" y="1991" width="124.38510704300207" height="11" rx="5.5" fill="#00B4AB"/>
+<rect x="151.38510704300205" y="1991" width="78.2411484859301" height="11" rx="5.5" fill="#7355dd"/>
+<rect x="233.62625552893215" y="1991" width="35.61467596655652" height="11" rx="5.5" fill="#8b949e"/>
+<rect x="273.24093149548867" y="1991" width="21.31966308527612" height="11" rx="5.5" fill="#e34c26"/>
+<rect x="298.5605945807648" y="1991" width="21.044802685829513" height="11" rx="5.5" fill="#f1e05a"/>
+<rect x="323.6053972665943" y="1991" width="8.394602733405678" height="11" rx="5.5" fill="#aace60"/>
 <circle cx="27" cy="2035" r="4.5" fill="#00B4AB"/>
 <text x="38" y="2039" text-anchor="start"><tspan font-size="13" font-weight="600" fill="#ffffff">Dart</tspan><tspan font-size="13" font-weight="400" fill="#9a9a9a">  43%</tspan></text>
 <circle cx="181.5" cy="2035" r="4.5" fill="#7355dd"/>
