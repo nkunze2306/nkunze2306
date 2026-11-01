@@ -37,6 +37,7 @@ jobs:
           gitlab-author-emails: 'nkunze923@gmail.com,nkunze1@hs-mittweida.de'
           dashboard-auth-client-id: Ov23linavHFDgDCCIX6E
           dashboard-auth-worker: https://stats-login.nkunze923.workers.dev
+          dashboard-visits: 'true'
           commit: 'true'
       - name: Pin README images to the commit that last changed them
         # GitHub caches README images (raw CDN and image proxy) and ignores ?v=. A URL with the commit SHA never changes,
