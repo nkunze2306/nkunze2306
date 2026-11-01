@@ -45,7 +45,7 @@
 <text x="505.04" y="339" font-size="11.5" fill="#6a6a6a" font-weight="400" text-anchor="start">tracked since 30 Apr 2026</text>
 <line x1="505.04" x2="697" y1="359" y2="359" stroke="#262626"/>
 <text x="505.04" y="385" font-size="12" fill="#9a9a9a" font-weight="400" text-anchor="start">Last 7 days</text>
-<text x="697" y="385" font-size="13" fill="#ffffff" font-weight="700" text-anchor="end">18h 36m</text>
+<text x="697" y="385" font-size="13" fill="#ffffff" font-weight="700" text-anchor="end">19h 15m</text>
 <text x="505.04" y="409" font-size="12" fill="#9a9a9a" font-weight="400" text-anchor="start">Daily average</text>
 <text x="697" y="409" font-size="13" fill="#ffffff" font-weight="700" text-anchor="end">1h 55m</text>
 <text x="505.04" y="433" font-size="12" fill="#9a9a9a" font-weight="400" text-anchor="start">Weekly average</text>
@@ -554,8 +554,8 @@
 <rect x="591.5" y="1050.9" width="21.1" height="92.1" rx="3" fill="#2f3340"/>
 <text x="602.1" y="1044.9" font-size="10" fill="#9a9a9a" font-weight="400" text-anchor="middle">4.8h</text>
 <text x="602.1" y="1159" font-size="10.5" fill="#6a6a6a" font-weight="400" text-anchor="middle">29</text>
-<rect x="618.6" y="1096.4" width="21.1" height="46.6" rx="3" fill="#2f3340"/>
-<text x="629.2" y="1090.4" font-size="10" fill="#9a9a9a" font-weight="400" text-anchor="middle">2.4h</text>
+<rect x="618.6" y="1083.7" width="21.1" height="59.3" rx="3" fill="#2f3340"/>
+<text x="629.2" y="1077.7" font-size="10" fill="#9a9a9a" font-weight="400" text-anchor="middle">3.1h</text>
 <text x="629.2" y="1159" font-size="10.5" fill="#6a6a6a" font-weight="400" text-anchor="middle">30</text>
 <rect x="645.8" y="1140.0" width="21.1" height="3.0" rx="3" fill="#2f3340"/>
 <text x="656.3" y="1134.0" font-size="10" fill="#9a9a9a" font-weight="400" text-anchor="middle">–</text>
@@ -567,29 +567,29 @@
 <text x="23" y="1225" font-size="11" fill="#fbbf24" font-weight="700" text-anchor="start" letter-spacing="1.1">TIME BY LANGUAGE</text>
 <text x="23" y="1265" font-size="12.5" fill="#e6e6e6" font-weight="400" text-anchor="start">Dart</text>
 <rect x="23" y="1270" width="309" height="6" rx="3" fill="#2a2a2a"/><rect x="23" y="1270" width="309" height="6" rx="3" fill="#fbbf24"/>
-<text x="332" y="1265" font-size="11.5" fill="#ffffff" font-weight="600" text-anchor="end">81h 15m · 59%</text>
+<text x="332" y="1265" font-size="11.5" fill="#ffffff" font-weight="600" text-anchor="end">81h 09m · 59%</text>
 <text x="23" y="1299" font-size="12.5" fill="#e6e6e6" font-weight="400" text-anchor="start">C#</text>
-<rect x="23" y="1304" width="309" height="6" rx="3" fill="#2a2a2a"/><rect x="23" y="1304" width="129.54169415963815" height="6" rx="3" fill="#fbbf24"/>
+<rect x="23" y="1304" width="309" height="6" rx="3" fill="#2a2a2a"/><rect x="23" y="1304" width="129.71287138881186" height="6" rx="3" fill="#fbbf24"/>
 <text x="332" y="1299" font-size="11.5" fill="#ffffff" font-weight="600" text-anchor="end">34h 04m · 25%</text>
 <text x="23" y="1333" font-size="12.5" fill="#e6e6e6" font-weight="400" text-anchor="start">JavaScript</text>
-<rect x="23" y="1338" width="309" height="6" rx="3" fill="#2a2a2a"/><rect x="23" y="1338" width="38.85490206804126" height="6" rx="3" fill="#fbbf24"/>
-<text x="332" y="1333" font-size="11.5" fill="#ffffff" font-weight="600" text-anchor="end">10h 13m · 7%</text>
+<rect x="23" y="1338" width="309" height="6" rx="3" fill="#2a2a2a"/><rect x="23" y="1338" width="41.32968748395313" height="6" rx="3" fill="#fbbf24"/>
+<text x="332" y="1333" font-size="11.5" fill="#ffffff" font-weight="600" text-anchor="end">10h 51m · 8%</text>
 <text x="23" y="1367" font-size="12.5" fill="#e6e6e6" font-weight="400" text-anchor="start">HTML</text>
-<rect x="23" y="1372" width="309" height="6" rx="3" fill="#2a2a2a"/><rect x="23" y="1372" width="22.033624046577938" height="6" rx="3" fill="#fbbf24"/>
+<rect x="23" y="1372" width="309" height="6" rx="3" fill="#2a2a2a"/><rect x="23" y="1372" width="22.0627394193343" height="6" rx="3" fill="#fbbf24"/>
 <text x="332" y="1367" font-size="11.5" fill="#ffffff" font-weight="600" text-anchor="end">5h 48m · 4%</text>
 <text x="23" y="1401" font-size="12.5" fill="#e6e6e6" font-weight="400" text-anchor="start">Markdown</text>
-<rect x="23" y="1406" width="309" height="6" rx="3" fill="#2a2a2a"/><rect x="23" y="1406" width="20.34653109925162" height="6" rx="3" fill="#fbbf24"/>
+<rect x="23" y="1406" width="309" height="6" rx="3" fill="#2a2a2a"/><rect x="23" y="1406" width="20.373417136519087" height="6" rx="3" fill="#fbbf24"/>
 <text x="332" y="1401" font-size="11.5" fill="#ffffff" font-weight="600" text-anchor="end">5h 21m · 4%</text>
 <rect x="366" y="1195" width="353" height="228" rx="16" fill="#121212" stroke="#262626"/>
 <text x="388" y="1225" font-size="11" fill="#b794ff" font-weight="700" text-anchor="start" letter-spacing="1.1">TIME BY EDITOR</text>
 <text x="388" y="1265" font-size="12.5" fill="#e6e6e6" font-weight="400" text-anchor="start">Claude Code</text>
 <rect x="388" y="1270" width="309" height="6" rx="3" fill="#2a2a2a"/><rect x="388" y="1270" width="309" height="6" rx="3" fill="#b794ff"/>
-<text x="697" y="1265" font-size="11.5" fill="#ffffff" font-weight="600" text-anchor="end">82h 43m · 55%</text>
+<text x="697" y="1265" font-size="11.5" fill="#ffffff" font-weight="600" text-anchor="end">83h 25m · 55%</text>
 <text x="388" y="1299" font-size="12.5" fill="#e6e6e6" font-weight="400" text-anchor="start">Android Studio</text>
-<rect x="388" y="1304" width="309" height="6" rx="3" fill="#2a2a2a"/><rect x="388" y="1304" width="187.21807435268832" height="6" rx="3" fill="#b794ff"/>
-<text x="697" y="1299" font-size="11.5" fill="#ffffff" font-weight="600" text-anchor="end">50h 07m · 33%</text>
+<rect x="388" y="1304" width="309" height="6" rx="3" fill="#2a2a2a"/><rect x="388" y="1304" width="185.4277799051028" height="6" rx="3" fill="#b794ff"/>
+<text x="697" y="1299" font-size="11.5" fill="#ffffff" font-weight="600" text-anchor="end">50h 04m · 33%</text>
 <text x="388" y="1333" font-size="12.5" fill="#e6e6e6" font-weight="400" text-anchor="start">Rider</text>
-<rect x="388" y="1338" width="309" height="6" rx="3" fill="#2a2a2a"/><rect x="388" y="1338" width="66.3493367364073" height="6" rx="3" fill="#b794ff"/>
+<rect x="388" y="1338" width="309" height="6" rx="3" fill="#2a2a2a"/><rect x="388" y="1338" width="65.7848730541913" height="6" rx="3" fill="#b794ff"/>
 <text x="697" y="1333" font-size="11.5" fill="#ffffff" font-weight="600" text-anchor="end">17h 46m · 12%</text>
 <text x="388" y="1367" font-size="12.5" fill="#e6e6e6" font-weight="400" text-anchor="start">IntelliJ IDEA</text>
 <rect x="388" y="1372" width="309" height="6" rx="3" fill="#2a2a2a"/><rect x="388" y="1372" width="6" height="6" rx="3" fill="#b794ff"/>
