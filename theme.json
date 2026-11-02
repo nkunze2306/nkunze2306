@@ -1,6 +1,6 @@
 {
   "overlays": [
-    "autumn",
+    "sakura",
     "rain"
   ],
   "ring": "orbit",
@@ -9,6 +9,14 @@
   "wind": false,
   "reduceMotion": true,
   "options": {
+    "sakura": {
+      "color": "#ffffff",
+      "branches": 2,
+      "blossoms": 120,
+      "petals": 56,
+      "landing": 8,
+      "sway": true
+    },
     "rain": {
       "drops": 20,
       "angle": 0,
