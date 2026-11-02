@@ -10,7 +10,7 @@
   "reduceMotion": true,
   "options": {
     "sakura": {
-      "color": "#ffffff",
+      "color": "#006eff",
       "branches": 2,
       "blossoms": 120,
       "petals": 56,
@@ -25,7 +25,7 @@
       "splashes": true,
       "mist": true,
       "lightning": false,
-      "tint": "#9fc8ff"
+      "tint": "#ff0000"
     }
   }
 }
