@@ -614,13 +614,13 @@
 <text x="388" y="1379" font-size="11" fill="#b794ff" font-weight="700" text-anchor="start" letter-spacing="1.1">TIME BY EDITOR</text>
 <text x="388" y="1419" font-size="12.5" fill="#e6e6e6" font-weight="400" text-anchor="start">Claude Code</text>
 <rect x="388" y="1424" width="309" height="6" rx="3" fill="#2a2a2a"/><rect x="388" y="1424" width="309" height="6" rx="3" fill="#b794ff"/>
-<text x="697" y="1419" font-size="11.5" fill="#ffffff" font-weight="600" text-anchor="end">87h 56m · 56%</text>
+<text x="697" y="1419" font-size="11.5" fill="#ffffff" font-weight="600" text-anchor="end">87h 54m · 56%</text>
 <text x="388" y="1453" font-size="12.5" fill="#e6e6e6" font-weight="400" text-anchor="start">Android Studio</text>
-<rect x="388" y="1458" width="309" height="6" rx="3" fill="#2a2a2a"/><rect x="388" y="1458" width="175.93243695779915" height="6" rx="3" fill="#b794ff"/>
+<rect x="388" y="1458" width="309" height="6" rx="3" fill="#2a2a2a"/><rect x="388" y="1458" width="176.01106370875993" height="6" rx="3" fill="#b794ff"/>
 <text x="697" y="1453" font-size="11.5" fill="#ffffff" font-weight="600" text-anchor="end">50h 04m · 32%</text>
 <text x="388" y="1487" font-size="12.5" fill="#e6e6e6" font-weight="400" text-anchor="start">Rider</text>
-<rect x="388" y="1492" width="309" height="6" rx="3" fill="#2a2a2a"/><rect x="388" y="1492" width="64.37540674935394" height="6" rx="3" fill="#b794ff"/>
-<text x="697" y="1487" font-size="11.5" fill="#ffffff" font-weight="600" text-anchor="end">18h 19m · 12%</text>
+<rect x="388" y="1492" width="309" height="6" rx="3" fill="#2a2a2a"/><rect x="388" y="1492" width="64.45800151687523" height="6" rx="3" fill="#b794ff"/>
+<text x="697" y="1487" font-size="11.5" fill="#ffffff" font-weight="600" text-anchor="end">18h 20m · 12%</text>
 <text x="388" y="1521" font-size="12.5" fill="#e6e6e6" font-weight="400" text-anchor="start">IntelliJ IDEA</text>
 <rect x="388" y="1526" width="309" height="6" rx="3" fill="#2a2a2a"/><rect x="388" y="1526" width="6" height="6" rx="3" fill="#b794ff"/>
 <text x="697" y="1521" font-size="11.5" fill="#ffffff" font-weight="600" text-anchor="end">36m · 0%</text>
