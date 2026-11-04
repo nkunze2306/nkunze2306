@@ -710,22 +710,22 @@
 <text x="407.88" y="2045" text-anchor="start"><tspan font-size="32" font-weight="700" fill="#ffffff">11</tspan><tspan font-size="12" font-weight="400" fill="#9a9a9a" dx="6"> own</tspan><tspan font-size="32" font-weight="700" fill="#ffffff" dx="26">10</tspan><tspan font-size="12" font-weight="400" fill="#9a9a9a" dx="6"> contributed to</tspan></text>
 <rect x="1" y="2093" width="353" height="190" rx="16" fill="#121212" stroke="#262626"/>
 <text x="23" y="2123" font-size="11" fill="#fbbf24" font-weight="700" text-anchor="start" letter-spacing="1.1">LANGUAGES · BY CODE</text><text x="332" y="2123" font-size="12" fill="#9a9a9a" font-weight="400" text-anchor="end">Top: Dart</text>
-<rect x="23" y="2145" width="128.52910712524155" height="11" rx="5.5" fill="#00B4AB"/>
-<rect x="155.52910712524155" y="2145" width="80.84782169197649" height="11" rx="5.5" fill="#7355dd"/>
-<rect x="240.37692881721804" y="2145" width="36.8012104612635" height="11" rx="5.5" fill="#8b949e"/>
-<rect x="281.1781392784815" y="2145" width="17.7423806511887" height="11" rx="5.5" fill="#f1e05a"/>
-<rect x="302.9205199296702" y="2145" width="16.405203706820014" height="11" rx="5.5" fill="#e34c26"/>
-<rect x="323.32572363649024" y="2145" width="8.674276363509758" height="11" rx="5.5" fill="#aace60"/>
+<rect x="23" y="2145" width="123.72286118761168" height="11" rx="5.5" fill="#00B4AB"/>
+<rect x="150.72286118761167" y="2145" width="77.8245803168174" height="11" rx="5.5" fill="#7355dd"/>
+<rect x="232.54744150442906" y="2145" width="35.425057835329845" height="11" rx="5.5" fill="#8b949e"/>
+<rect x="271.9724993397589" y="2145" width="22.04946155162683" height="11" rx="5.5" fill="#f1e05a"/>
+<rect x="298.02196089138573" y="2145" width="21.628130559263283" height="11" rx="5.5" fill="#e34c26"/>
+<rect x="323.65009145064903" y="2145" width="8.349908549350953" height="11" rx="5.5" fill="#aace60"/>
 <circle cx="27" cy="2189" r="4.5" fill="#00B4AB"/>
-<text x="38" y="2193" text-anchor="start"><tspan font-size="13" font-weight="600" fill="#ffffff">Dart</tspan><tspan font-size="13" font-weight="400" fill="#9a9a9a">  44%</tspan></text>
+<text x="38" y="2193" text-anchor="start"><tspan font-size="13" font-weight="600" fill="#ffffff">Dart</tspan><tspan font-size="13" font-weight="400" fill="#9a9a9a">  43%</tspan></text>
 <circle cx="181.5" cy="2189" r="4.5" fill="#7355dd"/>
-<text x="192.5" y="2193" text-anchor="start"><tspan font-size="13" font-weight="600" fill="#ffffff">C#</tspan><tspan font-size="13" font-weight="400" fill="#9a9a9a">  28%</tspan></text>
+<text x="192.5" y="2193" text-anchor="start"><tspan font-size="13" font-weight="600" fill="#ffffff">C#</tspan><tspan font-size="13" font-weight="400" fill="#9a9a9a">  27%</tspan></text>
 <circle cx="27" cy="2219" r="4.5" fill="#8b949e"/>
-<text x="38" y="2223" text-anchor="start"><tspan font-size="13" font-weight="600" fill="#ffffff">ShaderLab</tspan><tspan font-size="13" font-weight="400" fill="#9a9a9a">  13%</tspan></text>
+<text x="38" y="2223" text-anchor="start"><tspan font-size="13" font-weight="600" fill="#ffffff">ShaderLab</tspan><tspan font-size="13" font-weight="400" fill="#9a9a9a">  12%</tspan></text>
 <circle cx="181.5" cy="2219" r="4.5" fill="#f1e05a"/>
-<text x="192.5" y="2223" text-anchor="start"><tspan font-size="13" font-weight="600" fill="#ffffff">JavaScript</tspan><tspan font-size="13" font-weight="400" fill="#9a9a9a">  6%</tspan></text>
+<text x="192.5" y="2223" text-anchor="start"><tspan font-size="13" font-weight="600" fill="#ffffff">JavaScript</tspan><tspan font-size="13" font-weight="400" fill="#9a9a9a">  8%</tspan></text>
 <circle cx="27" cy="2249" r="4.5" fill="#e34c26"/>
-<text x="38" y="2253" text-anchor="start"><tspan font-size="13" font-weight="600" fill="#ffffff">HTML</tspan><tspan font-size="13" font-weight="400" fill="#9a9a9a">  6%</tspan></text>
+<text x="38" y="2253" text-anchor="start"><tspan font-size="13" font-weight="600" fill="#ffffff">HTML</tspan><tspan font-size="13" font-weight="400" fill="#9a9a9a">  7%</tspan></text>
 <circle cx="181.5" cy="2249" r="4.5" fill="#aace60"/>
 <text x="192.5" y="2253" text-anchor="start"><tspan font-size="13" font-weight="600" fill="#ffffff">HLSL</tspan><tspan font-size="13" font-weight="400" fill="#9a9a9a">  3%</tspan></text>
 <rect x="366" y="2093" width="353" height="190" rx="16" fill="#121212" stroke="#262626"/>
