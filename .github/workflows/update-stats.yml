@@ -38,16 +38,29 @@ jobs:
           dashboard-auth-client-id: Ov23linavHFDgDCCIX6E
           dashboard-auth-worker: https://stats-login.nkunze923.workers.dev
           dashboard-visits: 'true'
-          commit: 'true'
-      - name: Pin README images to the commit that last changed them
-        # GitHub caches README images (raw CDN and image proxy) and ignores ?v=. A URL with the commit SHA never changes,
-        # so it always shows exactly the right state. Runs on every run so images from other commits arrive too.
+      - name: Commit and push once
+        # Two commits (images first, then the README pinned to them) but ONE push: every push starts a Pages build and the next push cancels
+        # the running one, which showed up as a red or grey run every hour. GitHub caches README images (raw CDN and image proxy) and ignores
+        # ?v=, a URL with the commit SHA never changes, so it always shows exactly the right state.
         run: |
-          git pull --rebase
-          for f in stats.svg achievements.svg; do
-            [ -f "$f" ] || continue
-            url="https://raw.githubusercontent.com/${GITHUB_REPOSITORY}/$(git log -1 --format=%H -- "$f")/${f}"
-            sed -i -E "s#(https://raw\.githubusercontent\.com/[^\"' )]*/)?${f//./\.}(\?v=[0-9a-f]+)?#${url}#g" README.md
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          pin() {
+            for f in stats.svg achievements.svg; do
+              [ -f "$f" ] || continue
+              url="https://raw.githubusercontent.com/${GITHUB_REPOSITORY}/$(git log -1 --format=%H -- "$f")/${f}"
+              sed -i -E "s#(https://raw\.githubusercontent\.com/[^\"' )]*/)?${f//./\.}(\?v=[0-9a-f]+)?#${url}#g" README.md
+            done
+            git add README.md
+            git diff --cached --quiet || git commit -m "chore: pin README images"
+          }
+          git add -A
+          git diff --cached --quiet || git commit -m "chore: update stats and achievements"
+          pin
+          for attempt in 1 2 3; do
+            git push && exit 0
+            # someone pushed in between: in conflicts the freshly generated files win (-X theirs), then pin to the rewritten commits
+            git pull --rebase -X theirs
+            pin
           done
-          git add README.md
-          git diff --cached --quiet || (git commit -m "chore: pin README images" && git push)
+          git push
