@@ -1,7 +1,7 @@
 {
- "updated": "2026-11-12T17:14:23.161Z",
+ "updated": "2026-11-12T18:17:44.849Z",
  "login": "nkunze2306",
- "unlocked": 50,
+ "unlocked": 51,
  "total": 134,
  "achievementsUnlocked": 23,
  "achievementsTotal": 35,
@@ -17,24 +17,24 @@
   "followers": 2,
   "issuesClosed": 16,
   "prsMerged": 81,
-  "ownRepos": 3,
+  "ownRepos": 4,
   "stars": 2,
   "forks": 0,
   "maxRepoStars": 2,
   "foreignRepos": 11,
-  "commits": 590,
+  "commits": 595,
   "nightCommits": 20,
   "earlyCommits": 0,
   "weekendCommits": 74,
-  "aiCommits": 161,
-  "linesAdded": 114982,
-  "linesDeleted": 31089,
+  "aiCommits": 166,
+  "linesAdded": 119249,
+  "linesDeleted": 31090,
   "handLines": 72988,
   "unicornCommits": 0,
   "christmasCommits": 0,
   "newYearCommits": 0,
-  "languages": 17,
-  "topLanguageLines": 46895,
+  "languages": 20,
+  "topLanguageLines": 46956,
   "maxCommitsPerDay": 45,
   "activeDays": 152,
   "longestStreak": 12,
@@ -79,7 +79,7 @@
    "unit": "commits",
    "format": null,
    "description": "Total commits you authored",
-   "value": 590,
+   "value": 595,
    "tiers": [
     10,
     100,
@@ -91,7 +91,7 @@
    "level": 3,
    "next": 1000,
    "maxed": false,
-   "progress": 0.59
+   "progress": 0.595
   },
   {
    "id": "streak-keeper",
@@ -765,7 +765,7 @@
    "unit": "lines",
    "format": null,
    "description": "Lines of code you added",
-   "value": 114982,
+   "value": 119249,
    "tiers": [
     1000,
     10000,
@@ -779,7 +779,7 @@
    "level": 4,
    "next": 500000,
    "maxed": false,
-   "progress": 0.229964
+   "progress": 0.238498
   },
   {
    "id": "refactorer",
@@ -811,7 +811,7 @@
    "unit": "lines",
    "format": null,
    "description": "Lines of code you deleted",
-   "value": 31089,
+   "value": 31090,
    "tiers": [
     1000,
     5000,
@@ -824,7 +824,7 @@
    "level": 3,
    "next": 50000,
    "maxed": false,
-   "progress": 0.62178
+   "progress": 0.6218
   },
   {
    "id": "polyglot",
@@ -856,7 +856,7 @@
    "unit": "languages",
    "format": null,
    "description": "Different languages across your repos",
-   "value": 17,
+   "value": 20,
    "tiers": [
     3,
     5,
@@ -865,10 +865,10 @@
     20,
     30
    ],
-   "level": 4,
-   "next": 20,
+   "level": 5,
+   "next": 30,
    "maxed": false,
-   "progress": 0.85
+   "progress": 0.6666666666666666
   },
   {
    "id": "deep-diver",
@@ -901,7 +901,7 @@
    "unit": "lines",
    "format": null,
    "description": "Estimated lines in your biggest language",
-   "value": 46895,
+   "value": 46956,
    "tiers": [
     10000,
     50000,
@@ -911,7 +911,7 @@
    "level": 1,
    "next": 50000,
    "maxed": false,
-   "progress": 0.9379
+   "progress": 0.93912
   },
   {
    "id": "repo-builder",
@@ -943,7 +943,7 @@
    "unit": "repos",
    "format": null,
    "description": "Repos you own (without forks)",
-   "value": 3,
+   "value": 4,
    "tiers": [
     1,
     5,
@@ -954,7 +954,7 @@
    "level": 1,
    "next": 5,
    "maxed": false,
-   "progress": 0.6
+   "progress": 0.8
   },
   {
    "id": "hand-crafted",
@@ -1036,7 +1036,7 @@
    "unit": "AI commits",
    "format": null,
    "description": "Commits with an AI co-author",
-   "value": 161,
+   "value": 166,
    "tiers": [
     10,
     50,
@@ -1046,7 +1046,7 @@
    "level": 2,
    "next": 250,
    "maxed": false,
-   "progress": 0.644
+   "progress": 0.664
   },
   {
    "id": "coding-time",
@@ -1494,14 +1494,14 @@
    "unit": "languages",
    "format": null,
    "description": "Code in 50 different languages",
-   "value": 17,
+   "value": 20,
    "tiers": [
     50
    ],
    "level": 0,
    "next": 50,
    "maxed": false,
-   "progress": 0.34
+   "progress": 0.4
   },
   {
    "id": "grandmaster",
