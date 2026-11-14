@@ -713,12 +713,12 @@
 <text x="407.88" y="2045" text-anchor="start"><tspan font-size="32" font-weight="700" fill="#ffffff">14</tspan><tspan font-size="12" font-weight="400" fill="#9a9a9a" dx="6"> own</tspan><tspan font-size="32" font-weight="700" fill="#ffffff" dx="26">11</tspan><tspan font-size="12" font-weight="400" fill="#9a9a9a" dx="6"> contributed to</tspan></text>
 <rect x="1" y="2093" width="353" height="190" rx="16" fill="#121212" stroke="#262626"/>
 <text x="23" y="2123" font-size="11" fill="#fbbf24" font-weight="700" text-anchor="start" letter-spacing="1.1">LANGUAGES · BY CODE</text><text x="332" y="2123" font-size="12" fill="#9a9a9a" font-weight="400" text-anchor="end">Top: Dart</text>
-<rect x="23" y="2145" width="121.25274727438396" height="11" rx="5.5" fill="#00B4AB"/>
-<rect x="148.25274727438398" y="2145" width="76.201223368705" height="11" rx="5.5" fill="#7355dd"/>
-<rect x="228.45397064308898" y="2145" width="34.68612016884764" height="11" rx="5.5" fill="#8b949e"/>
-<rect x="267.1400908119366" y="2145" width="25.709451026419906" height="11" rx="5.5" fill="#f1e05a"/>
-<rect x="296.8495418383565" y="2145" width="21.265373874558765" height="11" rx="5.5" fill="#e34c26"/>
-<rect x="322.11491571291526" y="2145" width="9.885084287084732" height="11" rx="5.5" fill="#3572A5"/>
+<rect x="23" y="2145" width="121.12804142587426" height="11" rx="5.5" fill="#00B4AB"/>
+<rect x="148.12804142587424" y="2145" width="76.12285204573473" height="11" rx="5.5" fill="#7355dd"/>
+<rect x="228.25089347160898" y="2145" width="34.65044623861183" height="11" rx="5.5" fill="#8b949e"/>
+<rect x="266.9013397102208" y="2145" width="25.6896411929914" height="11" rx="5.5" fill="#f1e05a"/>
+<rect x="296.5909809032122" y="2145" width="21.243502893879853" height="11" rx="5.5" fill="#e34c26"/>
+<rect x="321.83448379709205" y="2145" width="10.165516202907932" height="11" rx="5.5" fill="#3572A5"/>
 <circle cx="27" cy="2189" r="4.5" fill="#00B4AB"/>
 <text x="38" y="2193" text-anchor="start"><tspan font-size="13" font-weight="600" fill="#ffffff">Dart</tspan><tspan font-size="13" font-weight="400" fill="#9a9a9a">  42%</tspan></text>
 <circle cx="181.5" cy="2189" r="4.5" fill="#7355dd"/>
@@ -730,7 +730,7 @@
 <circle cx="27" cy="2249" r="4.5" fill="#e34c26"/>
 <text x="38" y="2253" text-anchor="start"><tspan font-size="13" font-weight="600" fill="#ffffff">HTML</tspan><tspan font-size="13" font-weight="400" fill="#9a9a9a">  7%</tspan></text>
 <circle cx="181.5" cy="2249" r="4.5" fill="#3572A5"/>
-<text x="192.5" y="2253" text-anchor="start"><tspan font-size="13" font-weight="600" fill="#ffffff">Python</tspan><tspan font-size="13" font-weight="400" fill="#9a9a9a">  3%</tspan></text>
+<text x="192.5" y="2253" text-anchor="start"><tspan font-size="13" font-weight="600" fill="#ffffff">Python</tspan><tspan font-size="13" font-weight="400" fill="#9a9a9a">  4%</tspan></text>
 <rect x="366" y="2093" width="353" height="190" rx="16" fill="#121212" stroke="#262626"/>
 <text x="388" y="2123" font-size="11" fill="#38bdf8" font-weight="700" text-anchor="start" letter-spacing="1.1">TOP REPOS BY COMMITS</text>
 <text x="388" y="2163" font-size="12.5" fill="#e6e6e6" font-weight="400" text-anchor="start">private repo 1</text>
