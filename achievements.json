@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-15T14:12:17.821Z",
+ "updated": "2026-11-15T15:12:00.705Z",
  "login": "nkunze2306",
  "unlocked": 52,
  "total": 134,
@@ -16,7 +16,7 @@
  "metrics": {
   "followers": 2,
   "issuesClosed": 16,
-  "prsMerged": 81,
+  "prsMerged": 82,
   "ownRepos": 5,
   "stars": 2,
   "forks": 0,
@@ -34,12 +34,12 @@
   "christmasCommits": 0,
   "newYearCommits": 0,
   "languages": 20,
-  "topLanguageLines": 49106,
+  "topLanguageLines": 49120,
   "maxCommitsPerDay": 45,
   "activeDays": 154,
   "longestStreak": 12,
   "reviews": 55,
-  "foreignMergedPRs": 68,
+  "foreignMergedPRs": 69,
   "monsterPRs": 12,
   "cleanSweeps": 7,
   "quickdraws": 70,
@@ -380,7 +380,7 @@
    "unit": "merged PRs",
    "format": null,
    "description": "Merged pull requests",
-   "value": 81,
+   "value": 82,
    "tiers": [
     1,
     10,
@@ -391,7 +391,7 @@
    "level": 3,
    "next": 200,
    "maxed": false,
-   "progress": 0.405
+   "progress": 0.41
   },
   {
    "id": "reviewer",
@@ -555,7 +555,7 @@
    "unit": "merged PRs",
    "format": null,
    "description": "Merged pull requests in repos you do not own",
-   "value": 68,
+   "value": 69,
    "tiers": [
     1,
     5,
@@ -565,7 +565,7 @@
    "level": 3,
    "next": 100,
    "maxed": false,
-   "progress": 0.68
+   "progress": 0.69
   },
   {
    "id": "quickdraw",
@@ -901,7 +901,7 @@
    "unit": "lines",
    "format": null,
    "description": "Estimated lines in your biggest language",
-   "value": 49106,
+   "value": 49120,
    "tiers": [
     10000,
     50000,
@@ -911,7 +911,7 @@
    "level": 1,
    "next": 50000,
    "maxed": false,
-   "progress": 0.98212
+   "progress": 0.9824
   },
   {
    "id": "repo-builder",
