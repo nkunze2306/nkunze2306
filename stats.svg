@@ -45,9 +45,9 @@
 <text x="505.04" y="339" font-size="11.5" fill="#6a6a6a" font-weight="400" text-anchor="start">tracked since 30 Apr 2026</text>
 <line x1="505.04" x2="697" y1="359" y2="359" stroke="#262626"/>
 <text x="505.04" y="385" font-size="12" fill="#9a9a9a" font-weight="400" text-anchor="start">Last 7 days</text>
-<text x="697" y="385" font-size="13" fill="#ffffff" font-weight="700" text-anchor="end">23h 03m</text>
+<text x="697" y="385" font-size="13" fill="#ffffff" font-weight="700" text-anchor="end">23h 07m</text>
 <text x="505.04" y="409" font-size="12" fill="#9a9a9a" font-weight="400" text-anchor="start">Daily average</text>
-<text x="697" y="409" font-size="13" fill="#ffffff" font-weight="700" text-anchor="end">2h 03m</text>
+<text x="697" y="409" font-size="13" fill="#ffffff" font-weight="700" text-anchor="end">2h 04m</text>
 <text x="505.04" y="433" font-size="12" fill="#9a9a9a" font-weight="400" text-anchor="start">Weekly average</text>
 <text x="697" y="433" font-size="13" fill="#ffffff" font-weight="700" text-anchor="end">5h 44m</text>
 <rect x="1" y="473" width="718" height="142" rx="16" fill="#121212" stroke="#262626"/>
@@ -589,8 +589,8 @@
 <rect x="645.8" y="1294.0" width="21.1" height="3.0" rx="3" fill="#2f3340"/>
 <text x="656.3" y="1288.0" font-size="10" fill="#9a9a9a" font-weight="400" text-anchor="middle">–</text>
 <text x="656.3" y="1313" font-size="10.5" fill="#6a6a6a" font-weight="400" text-anchor="middle">15</text>
-<rect x="672.9" y="1226.0" width="21.1" height="71.0" rx="3" fill="#2f3340"/>
-<text x="683.4" y="1220.0" font-size="10" fill="#9a9a9a" font-weight="400" text-anchor="middle">3.2h</text>
+<rect x="672.9" y="1224.7" width="21.1" height="72.3" rx="3" fill="#2f3340"/>
+<text x="683.4" y="1218.7" font-size="10" fill="#9a9a9a" font-weight="400" text-anchor="middle">3.2h</text>
 <text x="683.4" y="1313" font-size="10.5" fill="#6a6a6a" font-weight="400" text-anchor="middle">16</text>
 <rect x="1" y="1349" width="353" height="228" rx="16" fill="#121212" stroke="#262626"/>
 <text x="23" y="1379" font-size="11" fill="#fbbf24" font-weight="700" text-anchor="start" letter-spacing="1.1">TIME BY LANGUAGE</text>
@@ -604,8 +604,8 @@
 <rect x="23" y="1492" width="309" height="6" rx="3" fill="#2a2a2a"/><rect x="23" y="1492" width="53.746120257649366" height="6" rx="3" fill="#fbbf24"/>
 <text x="332" y="1487" font-size="11.5" fill="#ffffff" font-weight="600" text-anchor="end">15h 08m · 9%</text>
 <text x="23" y="1521" font-size="12.5" fill="#e6e6e6" font-weight="400" text-anchor="start">Python</text>
-<rect x="23" y="1526" width="309" height="6" rx="3" fill="#2a2a2a"/><rect x="23" y="1526" width="37.45057039075118" height="6" rx="3" fill="#fbbf24"/>
-<text x="332" y="1521" font-size="11.5" fill="#ffffff" font-weight="600" text-anchor="end">10h 33m · 7%</text>
+<rect x="23" y="1526" width="309" height="6" rx="3" fill="#2a2a2a"/><rect x="23" y="1526" width="37.65276066570058" height="6" rx="3" fill="#fbbf24"/>
+<text x="332" y="1521" font-size="11.5" fill="#ffffff" font-weight="600" text-anchor="end">10h 36m · 7%</text>
 <text x="23" y="1555" font-size="12.5" fill="#e6e6e6" font-weight="400" text-anchor="start">Other</text>
 <rect x="23" y="1560" width="309" height="6" rx="3" fill="#2a2a2a"/><rect x="23" y="1560" width="30.448869113356782" height="6" rx="3" fill="#fbbf24"/>
 <text x="332" y="1555" font-size="11.5" fill="#ffffff" font-weight="600" text-anchor="end">8h 35m · 5%</text>
@@ -613,12 +613,12 @@
 <text x="388" y="1379" font-size="11" fill="#b794ff" font-weight="700" text-anchor="start" letter-spacing="1.1">TIME BY EDITOR</text>
 <text x="388" y="1419" font-size="12.5" fill="#e6e6e6" font-weight="400" text-anchor="start">Claude Code</text>
 <rect x="388" y="1424" width="309" height="6" rx="3" fill="#2a2a2a"/><rect x="388" y="1424" width="309" height="6" rx="3" fill="#b794ff"/>
-<text x="697" y="1419" font-size="11.5" fill="#ffffff" font-weight="600" text-anchor="end">110h 45m · 60%</text>
+<text x="697" y="1419" font-size="11.5" fill="#ffffff" font-weight="600" text-anchor="end">110h 48m · 60%</text>
 <text x="388" y="1453" font-size="12.5" fill="#e6e6e6" font-weight="400" text-anchor="start">Android Studio</text>
-<rect x="388" y="1458" width="309" height="6" rx="3" fill="#2a2a2a"/><rect x="388" y="1458" width="150.40491079155098" height="6" rx="3" fill="#b794ff"/>
+<rect x="388" y="1458" width="309" height="6" rx="3" fill="#2a2a2a"/><rect x="388" y="1458" width="150.3276114501176" height="6" rx="3" fill="#b794ff"/>
 <text x="697" y="1453" font-size="11.5" fill="#ffffff" font-weight="600" text-anchor="end">53h 54m · 29%</text>
 <text x="388" y="1487" font-size="12.5" fill="#e6e6e6" font-weight="400" text-anchor="start">Rider</text>
-<rect x="388" y="1492" width="309" height="6" rx="3" fill="#2a2a2a"/><rect x="388" y="1492" width="54.94015396076483" height="6" rx="3" fill="#b794ff"/>
+<rect x="388" y="1492" width="309" height="6" rx="3" fill="#2a2a2a"/><rect x="388" y="1492" width="54.91191792979307" height="6" rx="3" fill="#b794ff"/>
 <text x="697" y="1487" font-size="11.5" fill="#ffffff" font-weight="600" text-anchor="end">19h 41m · 11%</text>
 <text x="388" y="1521" font-size="12.5" fill="#e6e6e6" font-weight="400" text-anchor="start">IntelliJ IDEA</text>
 <rect x="388" y="1526" width="309" height="6" rx="3" fill="#2a2a2a"/><rect x="388" y="1526" width="6" height="6" rx="3" fill="#b794ff"/>
@@ -708,14 +708,14 @@
 <text x="407.88" y="2045" text-anchor="start"><tspan font-size="32" font-weight="700" fill="#ffffff">15</tspan><tspan font-size="12" font-weight="400" fill="#9a9a9a" dx="6"> own</tspan><tspan font-size="32" font-weight="700" fill="#ffffff" dx="26">11</tspan><tspan font-size="12" font-weight="400" fill="#9a9a9a" dx="6"> contributed to</tspan></text>
 <rect x="1" y="2093" width="353" height="190" rx="16" fill="#121212" stroke="#262626"/>
 <text x="23" y="2123" font-size="11" fill="#fbbf24" font-weight="700" text-anchor="start" letter-spacing="1.1">LANGUAGES · BY CODE</text><text x="332" y="2123" font-size="12" fill="#9a9a9a" font-weight="400" text-anchor="end">Top: Dart</text>
-<rect x="23" y="2145" width="120.16002535976513" height="11" rx="5.5" fill="#00B4AB"/>
-<rect x="147.16002535976514" y="2145" width="75.44565845066305" height="11" rx="5.5" fill="#7355dd"/>
-<rect x="226.6056838104282" y="2145" width="34.34219372798511" height="11" rx="5.5" fill="#8b949e"/>
-<rect x="264.9478775384133" y="2145" width="25.474688320515547" height="11" rx="5.5" fill="#f1e05a"/>
-<rect x="294.42256585892886" y="2145" width="21.055583545350615" height="11" rx="5.5" fill="#e34c26"/>
-<rect x="319.47814940427946" y="2145" width="12.52185059572055" height="11" rx="5.5" fill="#3572A5"/>
+<rect x="23" y="2145" width="119.85703131059691" height="11" rx="5.5" fill="#00B4AB"/>
+<rect x="146.8570313105969" y="2145" width="75.25541560178142" height="11" rx="5.5" fill="#7355dd"/>
+<rect x="226.11244691237835" y="2145" width="34.25559687263486" height="11" rx="5.5" fill="#8b949e"/>
+<rect x="264.3680437850132" y="2145" width="25.422252844537233" height="11" rx="5.5" fill="#f1e05a"/>
+<rect x="293.7902966295504" y="2145" width="21.00249004360655" height="11" rx="5.5" fill="#e34c26"/>
+<rect x="318.79278667315697" y="2145" width="13.207213326843016" height="11" rx="5.5" fill="#3572A5"/>
 <circle cx="27" cy="2189" r="4.5" fill="#00B4AB"/>
-<text x="38" y="2193" text-anchor="start"><tspan font-size="13" font-weight="600" fill="#ffffff">Dart</tspan><tspan font-size="13" font-weight="400" fill="#9a9a9a">  42%</tspan></text>
+<text x="38" y="2193" text-anchor="start"><tspan font-size="13" font-weight="600" fill="#ffffff">Dart</tspan><tspan font-size="13" font-weight="400" fill="#9a9a9a">  41%</tspan></text>
 <circle cx="181.5" cy="2189" r="4.5" fill="#7355dd"/>
 <text x="192.5" y="2193" text-anchor="start"><tspan font-size="13" font-weight="600" fill="#ffffff">C#</tspan><tspan font-size="13" font-weight="400" fill="#9a9a9a">  26%</tspan></text>
 <circle cx="27" cy="2219" r="4.5" fill="#8b949e"/>
@@ -725,7 +725,7 @@
 <circle cx="27" cy="2249" r="4.5" fill="#e34c26"/>
 <text x="38" y="2253" text-anchor="start"><tspan font-size="13" font-weight="600" fill="#ffffff">HTML</tspan><tspan font-size="13" font-weight="400" fill="#9a9a9a">  7%</tspan></text>
 <circle cx="181.5" cy="2249" r="4.5" fill="#3572A5"/>
-<text x="192.5" y="2253" text-anchor="start"><tspan font-size="13" font-weight="600" fill="#ffffff">Python</tspan><tspan font-size="13" font-weight="400" fill="#9a9a9a">  4%</tspan></text>
+<text x="192.5" y="2253" text-anchor="start"><tspan font-size="13" font-weight="600" fill="#ffffff">Python</tspan><tspan font-size="13" font-weight="400" fill="#9a9a9a">  5%</tspan></text>
 <rect x="366" y="2093" width="353" height="190" rx="16" fill="#121212" stroke="#262626"/>
 <text x="388" y="2123" font-size="11" fill="#38bdf8" font-weight="700" text-anchor="start" letter-spacing="1.1">TOP REPOS BY COMMITS</text>
 <text x="388" y="2163" font-size="12.5" fill="#e6e6e6" font-weight="400" text-anchor="start">private repo 1</text>

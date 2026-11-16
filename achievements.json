@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-16T15:22:54.149Z",
+ "updated": "2026-11-16T16:17:04.985Z",
  "login": "nkunze2306",
  "unlocked": 52,
  "total": 134,
@@ -34,7 +34,7 @@
   "christmasCommits": 0,
   "newYearCommits": 0,
   "languages": 20,
-  "topLanguageLines": 49229,
+  "topLanguageLines": 49113,
   "maxCommitsPerDay": 45,
   "activeDays": 156,
   "longestStreak": 12,
@@ -901,7 +901,7 @@
    "unit": "lines",
    "format": null,
    "description": "Estimated lines in your biggest language",
-   "value": 49229,
+   "value": 49113,
    "tiers": [
     10000,
     50000,
@@ -911,7 +911,7 @@
    "level": 1,
    "next": 50000,
    "maxed": false,
-   "progress": 0.98458
+   "progress": 0.98226
   },
   {
    "id": "repo-builder",
