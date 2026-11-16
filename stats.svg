@@ -45,7 +45,7 @@
 <text x="505.04" y="339" font-size="11.5" fill="#6a6a6a" font-weight="400" text-anchor="start">tracked since 30 Apr 2026</text>
 <line x1="505.04" x2="697" y1="359" y2="359" stroke="#262626"/>
 <text x="505.04" y="385" font-size="12" fill="#9a9a9a" font-weight="400" text-anchor="start">Last 7 days</text>
-<text x="697" y="385" font-size="13" fill="#ffffff" font-weight="700" text-anchor="end">22h 13m</text>
+<text x="697" y="385" font-size="13" fill="#ffffff" font-weight="700" text-anchor="end">22h 34m</text>
 <text x="505.04" y="409" font-size="12" fill="#9a9a9a" font-weight="400" text-anchor="start">Daily average</text>
 <text x="697" y="409" font-size="13" fill="#ffffff" font-weight="700" text-anchor="end">2h 03m</text>
 <text x="505.04" y="433" font-size="12" fill="#9a9a9a" font-weight="400" text-anchor="start">Weekly average</text>
@@ -589,8 +589,8 @@
 <rect x="645.8" y="1294.0" width="21.1" height="3.0" rx="3" fill="#2f3340"/>
 <text x="656.3" y="1288.0" font-size="10" fill="#9a9a9a" font-weight="400" text-anchor="middle">–</text>
 <text x="656.3" y="1313" font-size="10.5" fill="#6a6a6a" font-weight="400" text-anchor="middle">15</text>
-<rect x="672.9" y="1244.9" width="21.1" height="52.1" rx="3" fill="#2f3340"/>
-<text x="683.4" y="1238.9" font-size="10" fill="#9a9a9a" font-weight="400" text-anchor="middle">2.3h</text>
+<rect x="672.9" y="1237.1" width="21.1" height="59.9" rx="3" fill="#2f3340"/>
+<text x="683.4" y="1231.1" font-size="10" fill="#9a9a9a" font-weight="400" text-anchor="middle">2.7h</text>
 <text x="683.4" y="1313" font-size="10.5" fill="#6a6a6a" font-weight="400" text-anchor="middle">16</text>
 <rect x="1" y="1349" width="353" height="228" rx="16" fill="#121212" stroke="#262626"/>
 <text x="23" y="1379" font-size="11" fill="#fbbf24" font-weight="700" text-anchor="start" letter-spacing="1.1">TIME BY LANGUAGE</text>
@@ -598,8 +598,8 @@
 <rect x="23" y="1424" width="309" height="6" rx="3" fill="#2a2a2a"/><rect x="23" y="1424" width="309" height="6" rx="3" fill="#fbbf24"/>
 <text x="332" y="1419" font-size="11.5" fill="#ffffff" font-weight="600" text-anchor="end">87h 02m · 54%</text>
 <text x="23" y="1453" font-size="12.5" fill="#e6e6e6" font-weight="400" text-anchor="start">C#</text>
-<rect x="23" y="1458" width="309" height="6" rx="3" fill="#2a2a2a"/><rect x="23" y="1458" width="139.53002930155063" height="6" rx="3" fill="#fbbf24"/>
-<text x="332" y="1453" font-size="11.5" fill="#ffffff" font-weight="600" text-anchor="end">39h 18m · 24%</text>
+<rect x="23" y="1458" width="309" height="6" rx="3" fill="#2a2a2a"/><rect x="23" y="1458" width="142.44650073094283" height="6" rx="3" fill="#fbbf24"/>
+<text x="332" y="1453" font-size="11.5" fill="#ffffff" font-weight="600" text-anchor="end">40h 07m · 25%</text>
 <text x="23" y="1487" font-size="12.5" fill="#e6e6e6" font-weight="400" text-anchor="start">JavaScript</text>
 <rect x="23" y="1492" width="309" height="6" rx="3" fill="#2a2a2a"/><rect x="23" y="1492" width="53.70666849668363" height="6" rx="3" fill="#fbbf24"/>
 <text x="332" y="1487" font-size="11.5" fill="#ffffff" font-weight="600" text-anchor="end">15h 08m · 9%</text>
@@ -607,19 +607,19 @@
 <rect x="23" y="1526" width="309" height="6" rx="3" fill="#2a2a2a"/><rect x="23" y="1526" width="36.096388695602215" height="6" rx="3" fill="#fbbf24"/>
 <text x="332" y="1521" font-size="11.5" fill="#ffffff" font-weight="600" text-anchor="end">10h 10m · 6%</text>
 <text x="23" y="1555" font-size="12.5" fill="#e6e6e6" font-weight="400" text-anchor="start">Other</text>
-<rect x="23" y="1560" width="309" height="6" rx="3" fill="#2a2a2a"/><rect x="23" y="1560" width="32.25674605961174" height="6" rx="3" fill="#fbbf24"/>
-<text x="332" y="1555" font-size="11.5" fill="#ffffff" font-weight="600" text-anchor="end">9h 05m · 6%</text>
+<rect x="23" y="1560" width="309" height="6" rx="3" fill="#2a2a2a"/><rect x="23" y="1560" width="30.57314216039886" height="6" rx="3" fill="#fbbf24"/>
+<text x="332" y="1555" font-size="11.5" fill="#ffffff" font-weight="600" text-anchor="end">8h 37m · 5%</text>
 <rect x="366" y="1349" width="353" height="228" rx="16" fill="#121212" stroke="#262626"/>
 <text x="388" y="1379" font-size="11" fill="#b794ff" font-weight="700" text-anchor="start" letter-spacing="1.1">TIME BY EDITOR</text>
 <text x="388" y="1419" font-size="12.5" fill="#e6e6e6" font-weight="400" text-anchor="start">Claude Code</text>
 <rect x="388" y="1424" width="309" height="6" rx="3" fill="#2a2a2a"/><rect x="388" y="1424" width="309" height="6" rx="3" fill="#b794ff"/>
-<text x="697" y="1419" font-size="11.5" fill="#ffffff" font-weight="600" text-anchor="end">110h 04m · 60%</text>
+<text x="697" y="1419" font-size="11.5" fill="#ffffff" font-weight="600" text-anchor="end">110h 17m · 60%</text>
 <text x="388" y="1453" font-size="12.5" fill="#e6e6e6" font-weight="400" text-anchor="start">Android Studio</text>
-<rect x="388" y="1458" width="309" height="6" rx="3" fill="#2a2a2a"/><rect x="388" y="1458" width="151.32346505893963" height="6" rx="3" fill="#b794ff"/>
+<rect x="388" y="1458" width="309" height="6" rx="3" fill="#2a2a2a"/><rect x="388" y="1458" width="151.0322656208676" height="6" rx="3" fill="#b794ff"/>
 <text x="697" y="1453" font-size="11.5" fill="#ffffff" font-weight="600" text-anchor="end">53h 54m · 29%</text>
 <text x="388" y="1487" font-size="12.5" fill="#e6e6e6" font-weight="400" text-anchor="start">Rider</text>
-<rect x="388" y="1492" width="309" height="6" rx="3" fill="#2a2a2a"/><rect x="388" y="1492" width="54.80624247639766" height="6" rx="3" fill="#b794ff"/>
-<text x="697" y="1487" font-size="11.5" fill="#ffffff" font-weight="600" text-anchor="end">19h 31m · 11%</text>
+<rect x="388" y="1492" width="309" height="6" rx="3" fill="#2a2a2a"/><rect x="388" y="1492" width="55.078253576043345" height="6" rx="3" fill="#b794ff"/>
+<text x="697" y="1487" font-size="11.5" fill="#ffffff" font-weight="600" text-anchor="end">19h 39m · 11%</text>
 <text x="388" y="1521" font-size="12.5" fill="#e6e6e6" font-weight="400" text-anchor="start">IntelliJ IDEA</text>
 <rect x="388" y="1526" width="309" height="6" rx="3" fill="#2a2a2a"/><rect x="388" y="1526" width="6" height="6" rx="3" fill="#b794ff"/>
 <text x="697" y="1521" font-size="11.5" fill="#ffffff" font-weight="600" text-anchor="end">48m · 0%</text>
