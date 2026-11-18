@@ -1,6 +1,6 @@
 {
   "overlays": [
-    "rain",
+    "autumn",
     "night"
   ],
   "ring": "orbit",
@@ -9,16 +9,6 @@
   "wind": false,
   "reduceMotion": true,
   "options": {
-    "rain": {
-      "drops": 20,
-      "angle": 14,
-      "dim": 0,
-      "puddles": false,
-      "splashes": true,
-      "mist": true,
-      "lightning": false,
-      "tint": "#002aff"
-    },
     "night": {
       "dark": 4,
       "fireflies": 6,
