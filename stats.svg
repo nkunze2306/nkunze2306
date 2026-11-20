@@ -38,7 +38,7 @@
 <text x="293.3066666666667" y="417" font-size="9" fill="#6a6a6a" font-weight="700" text-anchor="start" letter-spacing="0.8">REFACTORED</text>
 <text x="293.3066666666667" y="441" font-size="17" fill="#ffffff" font-weight="700" text-anchor="start">26k</text>
 <text x="371.17333333333335" y="417" font-size="9" fill="#6a6a6a" font-weight="700" text-anchor="start" letter-spacing="0.8">ALL REPOS</text>
-<text x="371.17333333333335" y="441" font-size="17" fill="#ffffff" font-weight="700" text-anchor="start">763k</text>
+<text x="371.17333333333335" y="441" font-size="17" fill="#ffffff" font-weight="700" text-anchor="start">0</text>
 <rect x="483.04" y="229" width="235.96" height="232" rx="16" fill="#121212" stroke="#262626"/>
 <text x="505.04" y="259" font-size="11" fill="#38bdf8" font-weight="700" text-anchor="start" letter-spacing="1.1">CODING TIME · ALL-TIME</text>
 <text x="505.04" y="317" font-size="32" fill="#ffffff" font-weight="800" text-anchor="start">175h 39m</text>
