@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-24T15:17:44.290Z",
+ "updated": "2026-11-24T16:17:21.153Z",
  "login": "nkunze2306",
  "unlocked": 53,
  "total": 134,
@@ -16,34 +16,34 @@
  "metrics": {
   "followers": 2,
   "issuesClosed": 17,
-  "prsMerged": 86,
+  "prsMerged": 87,
   "ownRepos": 5,
   "stars": 2,
   "forks": 0,
   "maxRepoStars": 2,
   "foreignRepos": 11,
-  "commits": 666,
+  "commits": 669,
   "nightCommits": 24,
   "earlyCommits": 0,
   "weekendCommits": 87,
   "aiCommits": 200,
-  "linesAdded": 138570,
-  "linesDeleted": 32624,
-  "handLines": 82646,
+  "linesAdded": 138678,
+  "linesDeleted": 32634,
+  "handLines": 82754,
   "unicornCommits": 0,
   "christmasCommits": 0,
   "newYearCommits": 0,
   "languages": 20,
-  "topLanguageLines": 52774,
+  "topLanguageLines": 52815,
   "maxCommitsPerDay": 45,
   "activeDays": 162,
   "longestStreak": 13,
   "reviews": 56,
-  "foreignMergedPRs": 73,
-  "monsterPRs": 13,
+  "foreignMergedPRs": 74,
+  "monsterPRs": 14,
   "cleanSweeps": 7,
   "quickdraws": 71,
-  "wakaHours": 185.68944444444443,
+  "wakaHours": 186.57638888888889,
   "marathonHours": 3.511388888888889,
   "consistentDays": 9
  },
@@ -79,7 +79,7 @@
    "unit": "commits",
    "format": null,
    "description": "Total commits you authored",
-   "value": 666,
+   "value": 669,
    "tiers": [
     10,
     100,
@@ -91,7 +91,7 @@
    "level": 3,
    "next": 1000,
    "maxed": false,
-   "progress": 0.666
+   "progress": 0.669
   },
   {
    "id": "streak-keeper",
@@ -380,7 +380,7 @@
    "unit": "merged PRs",
    "format": null,
    "description": "Merged pull requests",
-   "value": 86,
+   "value": 87,
    "tiers": [
     1,
     10,
@@ -391,7 +391,7 @@
    "level": 3,
    "next": 200,
    "maxed": false,
-   "progress": 0.43
+   "progress": 0.435
   },
   {
    "id": "reviewer",
@@ -555,7 +555,7 @@
    "unit": "merged PRs",
    "format": null,
    "description": "Merged pull requests in repos you do not own",
-   "value": 73,
+   "value": 74,
    "tiers": [
     1,
     5,
@@ -565,7 +565,7 @@
    "level": 3,
    "next": 100,
    "maxed": false,
-   "progress": 0.73
+   "progress": 0.74
   },
   {
    "id": "quickdraw",
@@ -765,7 +765,7 @@
    "unit": "lines",
    "format": null,
    "description": "Lines of code you added",
-   "value": 138570,
+   "value": 138678,
    "tiers": [
     1000,
     10000,
@@ -779,7 +779,7 @@
    "level": 4,
    "next": 500000,
    "maxed": false,
-   "progress": 0.27714
+   "progress": 0.277356
   },
   {
    "id": "refactorer",
@@ -811,7 +811,7 @@
    "unit": "lines",
    "format": null,
    "description": "Lines of code you deleted",
-   "value": 32624,
+   "value": 32634,
    "tiers": [
     1000,
     5000,
@@ -824,7 +824,7 @@
    "level": 3,
    "next": 50000,
    "maxed": false,
-   "progress": 0.65248
+   "progress": 0.65268
   },
   {
    "id": "polyglot",
@@ -901,7 +901,7 @@
    "unit": "lines",
    "format": null,
    "description": "Estimated lines in your biggest language",
-   "value": 52774,
+   "value": 52815,
    "tiers": [
     10000,
     50000,
@@ -911,7 +911,7 @@
    "level": 2,
    "next": 100000,
    "maxed": false,
-   "progress": 0.52774
+   "progress": 0.52815
   },
   {
    "id": "repo-builder",
@@ -990,7 +990,7 @@
    "unit": "lines",
    "format": null,
    "description": "Lines you wrote yourself, without AI co-author",
-   "value": 82646,
+   "value": 82754,
    "tiers": [
     10000,
     50000,
@@ -1002,7 +1002,7 @@
    "level": 2,
    "next": 100000,
    "maxed": false,
-   "progress": 0.82646
+   "progress": 0.82754
   },
   {
    "id": "pair-programmer",
@@ -1079,7 +1079,7 @@
    "unit": "tracked",
    "format": "hours",
    "description": "Coding time tracked by WakaTime",
-   "value": 185.68944444444443,
+   "value": 186.57638888888889,
    "tiers": [
     10,
     50,
@@ -1092,7 +1092,7 @@
    "level": 3,
    "next": 500,
    "maxed": false,
-   "progress": 0.37137888888888887
+   "progress": 0.3731527777777778
   },
   {
    "id": "marathon",
@@ -1337,7 +1337,7 @@
    "unit": "huge PRs",
    "format": null,
    "description": "A merged PR with more than 5,000 changed lines",
-   "value": 13,
+   "value": 14,
    "tiers": [
     1
    ],
