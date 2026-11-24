@@ -1,5 +1,5 @@
 <a href="https://nkunze2306.github.io/nkunze2306/#achievements=all">
-  <img src="https://raw.githubusercontent.com/nkunze2306/nkunze2306/59f9eb272fcd8f75dfd57953bac4c06d9e788e22/stats.svg" alt="Hey, I'm Nicolas Kunze. I'm currently studying Media Informatics and Interactive Entertainment at HSMW (University of Applied Sciences Mittweida) in Saxony, Germany. I'm a frontend dev with a focus on mobile apps and interactive experiences. GitHub all-time stats and achievements." width="100%">
+  <img src="https://raw.githubusercontent.com/nkunze2306/nkunze2306/0735df14c48363555974cf9dd72bcfb60d717c34/stats.svg" alt="Hey, I'm Nicolas Kunze. I'm currently studying Media Informatics and Interactive Entertainment at HSMW (University of Applied Sciences Mittweida) in Saxony, Germany. I'm a frontend dev with a focus on mobile apps and interactive experiences. GitHub all-time stats and achievements." width="100%">
 </a>
 
 <p align="center">
